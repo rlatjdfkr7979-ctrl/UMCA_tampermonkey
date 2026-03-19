@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Nexacro 계정 행 복사 자동화
 // @namespace    http://tampermonkey.net/
-// @version      1.2
-// @description  ds_acct 행을 사용자 입력 횟수만큼 복사
+// @version      1.3
+// @description  ds_acct 행을 사용자 입력 횟수만큼 복사s
 // @match        http://10.10.1.20:8080/umca/*
 // @grant        none
 // ==/UserScript==
