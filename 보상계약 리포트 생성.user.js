@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         보상계약 리포트 생성
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      2.1
 // @description  ds_master 선택 행 기준으로 리포트 payload 생성 및 전송
 // @author       김성락
 // @match        http://10.10.1.20:8080/umca/*
