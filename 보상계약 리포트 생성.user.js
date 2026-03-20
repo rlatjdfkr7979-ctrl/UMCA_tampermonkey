@@ -7,6 +7,7 @@
 // @match        http://10.10.1.20:8080/umca/*
 // @grant        none
 // @updateURL    https://github.com/rlatjdfkr7979-ctrl/UMCA_tampermonkey/raw/refs/heads/main/%EB%B3%B4%EC%83%81%EA%B3%84%EC%95%BD%20%EB%A6%AC%ED%8F%AC%ED%8A%B8%20%EC%83%9D%EC%84%B1.user.js
+// @downloadURL  https://github.com/rlatjdfkr7979-ctrl/UMCA_tampermonkey/raw/refs/heads/main/%EB%B3%B4%EC%83%81%EA%B3%84%EC%95%BD%20%EB%A6%AC%ED%8F%AC%ED%8A%B8%20%EC%83%9D%EC%84%B1.user.js
 // ==/UserScript==
 
 (function () {
