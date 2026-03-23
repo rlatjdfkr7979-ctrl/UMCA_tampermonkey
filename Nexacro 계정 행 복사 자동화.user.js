@@ -34,9 +34,11 @@
             const workframe = nx.getApplication()
                 .mainframe?.vframeset?.hframeset?.bodyframe?.workframe;
             if (!workframe) return null;
-            for (const k in workframe) {
-                if (workframe[k]?.form) return k;
-            }
+    
+            // ★ _active_frame으로 현재 활성 WIN 직접 참조
+            const active = workframe._active_frame;
+            if (active?.id) return active.id;
+            if (active?.name) return active.name;
         } catch (e) {}
         return null;
     }
