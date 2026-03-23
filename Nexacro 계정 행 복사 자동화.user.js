@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexacro 계정 행 복사 자동화
 // @namespace    http://tampermonkey.net/
-// @version      1.73
+// @version      1.74
 // @description  ds_acct 행 복사 + 초과근무 기안 자동화
 // @match        http://10.10.1.20:8080/umca/*
 // @grant        none
