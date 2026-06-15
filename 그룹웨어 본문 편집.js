@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 버튼
 // @namespace    http://tampermonkey.net/
-// @version      1.4
-// @description  전자문서 열람 시 링크 복사 + 문서번호 복사 + 본문 복사 버튼 자동 생성
+// @version      1.5
+// @description  전자문서 열람 시 링크 복사 + 문서번호 복사 + 본문 복사 버튼 자동 생성 + 게시판 공유링크 복사
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
 // ==/UserScript==
@@ -11,6 +11,62 @@
     'use strict';
 
     const BASE_URL = 'http://10.10.11.20/jsp/call/docu_view.jsp?docid=';
+
+    // ✅ 추가: 게시판 URL 여부 감지
+    function isBBSPage() {
+        return location.href.includes('SLET=bbs.BBSMtrlRead.java');
+    }
+
+    // ✅ 추가: 게시판 공유 URL 생성 (_x, K 제거)
+    function getBBSShareURL() {
+        const url = new URL(location.href);
+        url.searchParams.delete('_x');
+        url.searchParams.delete('K');
+        url.searchParams.delete('popup');   // 팝업 파라미터도 제거 (선택)
+        return url.toString();
+    }
+
+    // ✅ 추가: 게시판 페이지 전용 버튼 생성
+    function createBBSButton() {
+        if (document.getElementById('docBtnWrapper')) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.id = 'docBtnWrapper';
+        wrapper.style.cssText = `
+            position: fixed;
+            top: 10px;
+            right: 16px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+        `;
+
+        const btnBase = `
+            padding: 7px 14px;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            white-space: nowrap;
+        `;
+
+        const shareBtn = document.createElement('button');
+        shareBtn.id = 'bbsShareBtn';
+        shareBtn.textContent = '🔗 게시글 링크 복사';
+        shareBtn.style.cssText = btnBase + 'background: #e65100;';
+        shareBtn.addEventListener('click', () => {
+            const shareURL = getBBSShareURL();
+            GM_setClipboard(shareURL);
+            shareBtn.textContent = '✅ 복사됨!';
+            setTimeout(() => shareBtn.textContent = '🔗 게시글 링크 복사', 2000);
+        });
+
+        wrapper.appendChild(shareBtn);
+        document.body.appendChild(wrapper);
+    }
 
     function getDocId() {
         const checkbox = document.querySelector('input[id^="flag_JHOMS"]');
@@ -36,7 +92,6 @@
         return `${docNo}(${date})`;
     }
 
-    // ✅ 추가: 본문 텍스트 추출
     function getBodyText() {
         return getHwpFieldText('본문');
     }
@@ -67,7 +122,6 @@
             white-space: nowrap;
         `;
 
-        // 🔗 링크 복사 버튼
         const linkBtn = document.createElement('button');
         linkBtn.id = 'docLinkCopyBtn';
         linkBtn.textContent = '🔗 링크 복사';
@@ -78,7 +132,6 @@
             setTimeout(() => linkBtn.textContent = '🔗 링크 복사', 2000);
         });
 
-        // 📋 문서번호 복사 버튼
         const docBtn = document.createElement('button');
         docBtn.id = 'docRefCopyBtn';
         docBtn.textContent = '📋 문서번호 복사';
@@ -95,7 +148,6 @@
             setTimeout(() => docBtn.textContent = '📋 문서번호 복사', 2000);
         });
 
-        // ✅ 추가: 📄 본문 복사 버튼
         const bodyBtn = document.createElement('button');
         bodyBtn.id = 'docBodyCopyBtn';
         bodyBtn.textContent = '📄 본문 복사';
@@ -114,7 +166,7 @@
 
         wrapper.appendChild(linkBtn);
         wrapper.appendChild(docBtn);
-        wrapper.appendChild(bodyBtn); // ✅ 추가
+        wrapper.appendChild(bodyBtn);
         document.body.appendChild(wrapper);
     }
 
@@ -124,6 +176,12 @@
 
     function init() {
         if (hasBlockedTitle()) return;
+
+        // ✅ 추가: 게시판 페이지면 게시판 버튼만 생성하고 종료
+        if (isBBSPage()) {
+            createBBSButton();
+            return;
+        }
 
         const docId = getDocId();
         if (docId) {
