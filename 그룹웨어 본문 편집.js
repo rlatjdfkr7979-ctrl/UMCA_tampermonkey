@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      3.6
-// @description  전자문서 링크/문서번호/본문 복사 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
+// @version      3.9
+// @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
 // @grant        unsafeWindow
@@ -166,6 +166,279 @@
         return getHwpFieldText('본문');
     }
 
+    function appendInfoMessage(container, message) {
+        const p = document.createElement('p');
+        p.textContent = message;
+        container.appendChild(p);
+    }
+
+    function renderApprovalRoute(container, hox) {
+        const participants = hox.querySelectorAll('participant');
+        if (!participants.length) {
+            appendInfoMessage(container, '등록된 결재경로가 없습니다.');
+            return;
+        }
+
+        const table = document.createElement('table');
+        const header = table.createTHead().insertRow();
+        for (const label of ['순서', '구분', '이름', '직위', '일시', '상태']) {
+            const th = document.createElement('th');
+            th.scope = 'col';
+            th.textContent = label;
+            header.appendChild(th);
+        }
+        const body = table.createTBody();
+        participants.forEach((participant, index) => {
+            const get = name => participant.querySelector(`:scope > ${name}`)?.textContent.trim() ?? '';
+            const row = body.insertRow();
+            const values = [index + 1, get('displayApprovalType'), get('name'),
+                get('dutyName') || get('position'), get('date').replace('T', ' '),
+                get('approvalStatus').replace('partapprstatus_', '')];
+            values.forEach(value => row.insertCell().textContent = value || '—');
+        });
+        container.appendChild(table);
+    }
+
+    function parseOriginalRoute(parsed) {
+        // 원결재경로는 표가 아닌 목록으로 내려오므로 블록 경계를 유지해 읽는다.
+        const blocks = new Set(['DIV', 'P', 'LI', 'TR', 'TD', 'TH', 'DT', 'DD',
+            'SECTION', 'HEADER', 'H1', 'H2', 'H3', 'H4', 'UL', 'OL']);
+        function readText(node) {
+            if (node.nodeType === Node.TEXT_NODE) return node.textContent.replace(/\s+/g, ' ');
+            if (node.nodeType !== Node.ELEMENT_NODE) return '';
+            if (node.tagName === 'BR') return '\n';
+            const text = Array.from(node.childNodes, readText).join(' ');
+            return blocks.has(node.tagName) ? `\n${text}\n` : text;
+        }
+        const text = readText(parsed.body).split('\n')
+            .map(line => line.replace(/\s+/g, ' ').trim()).filter(Boolean).join('\n');
+        const heading = /(?:^|\n)(완료|진행|대기|미결|예정|회수|반려|보류|취소|승인|반송|후결|-)\s+(?:(의견\s*있음)\s+)?(기안|전결|대결|결재|검토|협조|합의|병렬합의|순차합의|병렬협조|순차협조|확인|공람|통보|보고|접수|시행)(?=\s|$)/g;
+        const matches = Array.from(text.matchAll(heading));
+        if (!matches.length) return [];
+
+        const rows = [];
+        for (let index = 0; index < matches.length; index++) {
+            const match = matches[index];
+            const content = text.slice(match.index + match[0].length,
+                matches[index + 1]?.index ?? text.length).trim();
+            const date = /\d{4}[.\/-]\d{1,2}[.\/-]\d{1,2}\.?\s+\d{1,2}:\d{2}(?::\d{2})?|(?:^|\n)-(?:\n|$)/.exec(content);
+            // 형식이 다르면 일부 경로만 표시하지 않고 기존 원문 표시로 돌아간다.
+            if (!date) return [];
+            const identity = content.slice(0, date.index).replace(/의견\s*펼치기/g, '').trim()
+                .split(/\s+/).filter(Boolean);
+            if (!identity.length) return [];
+            const remainder = content.slice(date.index + date[0].length).trim();
+            const status = /^(완료|진행|대기|미결|예정|회수|반려|보류|취소|승인|반송|후결|-)(?=\s|$)/.exec(remainder);
+            const opinion = (status ? remainder.slice(status[0].length) : remainder)
+                .replace(/의견\s*펼치기/g, '').trim();
+            rows.push({
+                type: match[3], name: identity[0], position: identity.slice(1).join(' '),
+                date: date[0].trim(), status: status?.[1] || match[1],
+                opinion: opinion || (match[2] ? '의견 있음' : '')
+            });
+        }
+        return rows;
+    }
+
+    function renderOriginalRouteTable(container, rows) {
+        const table = document.createElement('table');
+        const header = table.createTHead().insertRow();
+        const showOpinion = rows.some(row => row.opinion);
+        const labels = ['순서', '구분', '이름', '직위', '일시', '상태'];
+        if (showOpinion) labels.push('의견');
+        labels.forEach(label => {
+            const th = document.createElement('th');
+            th.scope = 'col';
+            th.textContent = label;
+            header.appendChild(th);
+        });
+        const body = table.createTBody();
+        rows.forEach((entry, index) => {
+            const row = body.insertRow();
+            const values = [index + 1, entry.type, entry.name, entry.position, entry.date, entry.status];
+            if (showOpinion) values.push(entry.opinion);
+            values.forEach((value, column) => {
+                const cell = row.insertCell();
+                cell.textContent = value || '—';
+                if (column === 4) cell.className = 'route-date';
+                if (column === 5) {
+                    const badge = document.createElement('span');
+                    badge.className = 'route-status';
+                    if (['완료', '승인'].includes(value)) badge.classList.add('route-status-done');
+                    if (['회수', '반려', '취소', '반송'].includes(value)) badge.classList.add('route-status-returned');
+                    badge.textContent = value || '—';
+                    cell.replaceChildren(badge);
+                }
+            });
+        });
+        container.appendChild(table);
+    }
+
+    function renderOriginalRoute(container, html) {
+        const parsed = new DOMParser().parseFromString(html, 'text/html');
+        parsed.querySelectorAll('script, style, noscript, iframe, object, embed, template, input, button, select, textarea')
+            .forEach(element => element.remove());
+
+        const rows = parseOriginalRoute(parsed);
+        let originalContainer = container;
+        if (rows.length) {
+            renderOriginalRouteTable(container, rows);
+            const details = document.createElement('details');
+            const summary = document.createElement('summary');
+            summary.textContent = '원문 보기';
+            originalContainer = document.createElement('div');
+            details.append(summary, originalContainer);
+            container.appendChild(details);
+        }
+
+        // 서버의 표시 내용과 표 구조만 복사하고 이벤트, 링크, 외부 리소스는 가져오지 않는다.
+        const allowed = new Set(['TABLE', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'TD', 'TH',
+            'P', 'DIV', 'SPAN', 'BR', 'STRONG', 'B', 'UL', 'OL', 'LI', 'H1', 'H2', 'H3', 'CAPTION']);
+        function copyContent(source, target) {
+            for (const node of source.childNodes) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    target.appendChild(document.createTextNode(node.textContent));
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    const element = allowed.has(node.tagName) ? document.createElement(node.tagName) : null;
+                    if (element && ['TD', 'TH'].includes(node.tagName)) {
+                        for (const attr of ['colspan', 'rowspan']) {
+                            const value = Number(node.getAttribute(attr));
+                            if (Number.isInteger(value) && value > 0 && value <= 100) {
+                                element.setAttribute(attr, String(value));
+                            }
+                        }
+                    }
+                    copyContent(node, element || target);
+                    if (element) target.appendChild(element);
+                }
+            }
+        }
+        copyContent(parsed.body, originalContainer);
+        if (!container.textContent.trim()) {
+            appendInfoMessage(container, '표시할 원결재경로가 없습니다.');
+        }
+    }
+
+    async function showDocumentInfo() {
+        const existing = document.getElementById('umca-document-info');
+        if (existing) {
+            existing.focus();
+            return;
+        }
+
+        const dialog = document.createElement('dialog');
+        dialog.id = 'umca-document-info';
+        dialog.setAttribute('aria-labelledby', 'umca-document-info-title');
+        const style = document.createElement('style');
+        style.textContent = `
+            #umca-document-info { box-sizing:border-box; width:min(960px,94vw); max-height:85vh;
+                padding:24px; border:0; border-radius:12px; color:#243247; background:#fff;
+                box-shadow:0 12px 48px #0004; font:14px/1.6 sans-serif; overflow:auto; }
+            #umca-document-info::backdrop { background:#0006; }
+            #umca-document-info header { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+            #umca-document-info h2 { margin:0; font-size:21px; }
+            #umca-document-info h3 { margin:24px 0 10px; font-size:16px; }
+            #umca-document-info button { padding:6px 14px; border:1px solid #cbd5e1;
+                border-radius:6px; background:#f8fafc; color:#243247; cursor:pointer; font:inherit; }
+            #umca-document-info .route-content { overflow-x:auto; }
+            #umca-document-info table { width:100%; border-collapse:collapse; font:inherit; margin:8px 0; }
+            #umca-document-info th, #umca-document-info td { padding:10px 12px; border:1px solid #dbe2ea;
+                text-align:left; vertical-align:top; min-width:55px; overflow-wrap:anywhere; }
+            #umca-document-info th { background:#edf3fa; font-weight:600; }
+            #umca-document-info tbody tr:nth-child(even) { background:#f8fafc; }
+            #umca-document-info .route-date { white-space:nowrap; }
+            #umca-document-info .route-status { display:inline-block; padding:2px 8px; border-radius:12px;
+                background:#edf1f5; color:#475569; white-space:nowrap; font-size:12px; }
+            #umca-document-info .route-status-done { background:#e5f5eb; color:#22663e; }
+            #umca-document-info .route-status-returned { background:#fff0e5; color:#9a4515; }
+            #umca-document-info details { margin-top:12px; padding:10px 12px; border:1px solid #dbe2ea; border-radius:6px; }
+            #umca-document-info summary { cursor:pointer; color:#52657c; }
+        `;
+        dialog.appendChild(style);
+        const header = document.createElement('header');
+        const title = document.createElement('h2');
+        title.id = 'umca-document-info-title';
+        title.textContent = '문서정보';
+        const close = document.createElement('button');
+        close.type = 'button';
+        close.textContent = '닫기';
+        close.addEventListener('click', () => dialog.close());
+        header.append(title, close);
+        dialog.appendChild(header);
+
+        function addSection(label) {
+            const heading = document.createElement('h3');
+            heading.textContent = label;
+            const content = document.createElement('div');
+            content.className = 'route-content';
+            content.setAttribute('aria-live', 'polite');
+            dialog.append(heading, content);
+            return content;
+        }
+        const route = addSection('결재경로');
+        const original = addSection('원결재경로');
+        const controller = new AbortController();
+        let timeout;
+        dialog.addEventListener('close', () => {
+            controller.abort();
+            clearTimeout(timeout);
+            dialog.remove();
+        }, { once: true });
+        dialog.addEventListener('click', event => {
+            if (event.target !== dialog) return;
+            const rect = dialog.getBoundingClientRect();
+            if (event.clientX < rect.left || event.clientX > rect.right ||
+                event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+        });
+        document.body.appendChild(dialog);
+        dialog.showModal();
+
+        try {
+            const hox = win.feMain?.hox;
+            if (!hox?.querySelectorAll) {
+                appendInfoMessage(route, '문서정보를 아직 불러오지 못했습니다. 문서 로딩 후 다시 열어 주세요.');
+                appendInfoMessage(original, '결재경로 정보가 준비되지 않았습니다.');
+                return;
+            }
+            renderApprovalRoute(route, hox);
+            const orgId = hox.querySelector('orgApprID')?.textContent.trim();
+            if (!orgId) {
+                appendInfoMessage(original, '원결재경로가 없습니다.');
+                return;
+            }
+
+            const info = win.rInfo;
+            if (!info?.apprId || !info.applID || !info.user?.ID) {
+                appendInfoMessage(original, '조회에 필요한 문서정보가 없습니다. 문서 로딩 후 다시 열어 주세요.');
+                return;
+            }
+            appendInfoMessage(original, '원결재경로를 불러오는 중입니다…');
+            const params = new URLSearchParams({
+                DOCID: info.apprId, APPRID: info.apprId,
+                ORGAPPRID: orgId, ORGDOCID: orgId,
+                APPLID: info.applID, USERID: info.user.ID, DEPTID: '000010000',
+                APPRTYPE: '3', APPLTYPE: '3', FORMTYPE: '5', WORDTYPE: '5', APPRSTATUS: '256',
+                GWTIMEZONE: '540', _: Date.now()
+            });
+            timeout = setTimeout(() => controller.abort(), 20000);
+            const response = await fetch(`/bms/com/hs/gwweb/appr/retrieveOrgReportCours.act?${params}`, {
+                credentials: 'same-origin', signal: controller.signal
+            });
+            if (!response.ok) throw new Error(`서버 응답 오류 (${response.status})`);
+            const html = await response.text();
+            original.replaceChildren();
+            renderOriginalRoute(original, html);
+        } catch (error) {
+            if (!dialog.open) return;
+            original.replaceChildren();
+            appendInfoMessage(original, error.name === 'AbortError'
+                ? '조회 시간이 초과되었습니다. 닫은 후 다시 시도해 주세요.'
+                : `원결재경로를 불러오지 못했습니다. ${error.message}`);
+        } finally {
+            clearTimeout(timeout);
+        }
+    }
+
     function createBBSButton() {
         if (document.getElementById('docBtnWrapper')) return;
 
@@ -238,6 +511,13 @@
             setTimeout(() => bodyBtn.textContent = '📄 본문 복사', 2000);
         });
 
+        const infoBtn = document.createElement('button');
+        infoBtn.type = 'button';
+        infoBtn.textContent = 'ℹ️ 문서정보';
+        infoBtn.style.cssText = btnBase + 'background:#37474f;';
+        infoBtn.addEventListener('click', showDocumentInfo);
+
+        wrapper.appendChild(infoBtn);
         wrapper.appendChild(linkBtn);
         wrapper.appendChild(docBtn);
         wrapper.appendChild(bodyBtn);
@@ -366,8 +646,54 @@
         }, 500);
     }
 
+    function initApprovalBoxConfirm() {
+        const confirmSelector = '.popup_window > .footer #btnVerify';
+        const routeSelector = '.popup_window > .tab_area .tab_bundle > button[target="#flowInfo"]';
+
+        function syncConfirmButton() {
+            const routeButton = document.querySelector(routeSelector);
+            const original = document.querySelector(confirmSelector);
+            if (!routeButton || !original) return;
+
+            let shortcut = document.getElementById('umca-approval-confirm');
+            if (!shortcut) {
+                shortcut = document.createElement('button');
+                shortcut.id = 'umca-approval-confirm';
+                shortcut.type = 'button';
+                shortcut.className = 'btn btn-primary';
+                shortcut.textContent = '확인';
+                shortcut.title = '선택한 결재정보 확인 (하단 확인 버튼과 동일)';
+                shortcut.style.cssText = 'margin-left:12px;vertical-align:middle;';
+                shortcut.addEventListener('click', () => {
+                    const current = document.querySelector(confirmSelector);
+                    if (current && !current.matches(':disabled') && current.getAttribute('aria-disabled') !== 'true') {
+                        current.click();
+                    }
+                });
+            }
+            if (routeButton.nextElementSibling !== shortcut) routeButton.after(shortcut);
+            const disabled = original.matches(':disabled') || original.getAttribute('aria-disabled') === 'true';
+            if (shortcut.disabled !== disabled) shortcut.disabled = disabled;
+        }
+
+        // 화면 로딩과 탭 전환 중 DOM이 바뀌어도 위치 및 활성 상태를 맞춘다.
+        const observer = new MutationObserver(syncConfirmButton);
+        observer.observe(document.body, {
+            childList: true, subtree: true, attributes: true,
+            attributeFilter: ['disabled', 'aria-disabled']
+        });
+        syncConfirmButton();
+        window.addEventListener('pagehide', () => observer.disconnect(), { once: true });
+    }
+
     function main() {
-        if (isWritingPage()) {
+        if (location.pathname === '/bms/fe/approvalBox.html') {
+            if (document.body) {
+                initApprovalBoxConfirm();
+            } else {
+                document.addEventListener('DOMContentLoaded', initApprovalBoxConfirm, { once: true });
+            }
+        } else if (isWritingPage()) {
             if (document.body) {
                 initPrefixButton();
             } else {
