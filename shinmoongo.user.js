@@ -6,7 +6,7 @@
 // @author       김성락
 // @match        https://gov.epeople.go.kr/*
 // @grant        none
-// @updateURL    https://github.com/rlatjdfkr7979-ctrl/UMCA_tampermonkey/raw/refs/heads/main/%EA%B5%AD%EB%AF%BC%EC%8B%A0%EB%AC%B8%EA%B3%A0%20%EB%AF%BC%EC%9B%90%20%EC%A0%95%EB%B3%B4%20%EB%B3%B5%EC%82%AC.user.js
+// @updateURL    https://github.com/rlatjdfkr7979-ctrl/UMCA_tampermonkey/raw/refs/heads/main/shinmoongo.user.js
 // ==/UserScript==
 
 (function () {
