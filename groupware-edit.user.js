@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.0
+// @version      4.1
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -688,7 +688,67 @@
         window.addEventListener('pagehide', () => observer.disconnect(), { once: true });
     }
 
+    // 문서 목록 표: 각 행에 "문서번호(등록일)호" 복사 버튼 추가
+    function initListCopyButtons() {
+        function headerIndex(table, label) {
+            const ths = table.querySelectorAll('thead th');
+            for (let i = 0; i < ths.length; i++) {
+                if (ths[i].textContent.trim() === label) return i;
+            }
+            return -1;
+        }
+
+        function addButtons() {
+            document.querySelectorAll('table').forEach(table => {
+                const docIdx = headerIndex(table, '문서번호');
+                const dateIdx = headerIndex(table, '등록일');
+                if (docIdx < 0 || dateIdx < 0) return;
+
+                table.querySelectorAll('tbody tr').forEach(tr => {
+                    if (tr.querySelector('.umca-ref-copy')) return;
+                    const docCell = tr.children[docIdx];
+                    const dateCell = tr.children[dateIdx];
+                    if (!docCell || !dateCell) return;
+
+                    const docNo = docCell.textContent.trim();
+                    const m = dateCell.textContent.trim().match(/(\d{4})-(\d{2})-(\d{2})/);
+                    if (!docNo || !m) return;
+                    const text = `${docNo}(${m[1]}. ${+m[2]}. ${+m[3]}.)호`;
+
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'umca-ref-copy';
+                    btn.textContent = '📋';
+                    btn.title = `${text} 복사`;
+                    btn.style.cssText = 'margin-left:4px;padding:0 4px;border:1px solid #2e7d32;border-radius:4px;background:#fff;cursor:pointer;font-size:12px;';
+                    btn.addEventListener('click', e => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        GM_setClipboard(text);
+                        btn.textContent = '✅';
+                        setTimeout(() => btn.textContent = '📋', 1500);
+                    });
+
+                    const titleDiv = tr.querySelector('td .title');
+                    (titleDiv || docCell).appendChild(btn);
+                });
+            });
+        }
+
+        let timer = null;
+        const observer = new MutationObserver(() => {
+            clearTimeout(timer);
+            timer = setTimeout(addButtons, 200);
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+        addButtons();
+    }
+
     function main() {
+        const startList = () => initListCopyButtons();
+        if (document.body) startList();
+        else document.addEventListener('DOMContentLoaded', startList, { once: true });
+
         if (location.pathname === '/bms/fe/approvalBox.html') {
             if (document.body) {
                 initApprovalBoxConfirm();
