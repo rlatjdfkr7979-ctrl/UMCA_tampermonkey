@@ -7,7 +7,7 @@
 // @match        https://gov.epeople.go.kr/*
 // @grant        none
 // @updateURL    https://github.com/rlatjdfkr7979-ctrl/UMCA_tampermonkey/raw/refs/heads/main/shinmoongo.user.js
-// @updateURL    https://github.com/rlatjdfkr7979-ctrl/UMCA_tampermonkey/raw/refs/heads/main/shinmoongo.user.js
+// @downloadURL    https://github.com/rlatjdfkr7979-ctrl/UMCA_tampermonkey/raw/refs/heads/main/shinmoongo.user.js
 // ==/UserScript==
 
 (function () {
