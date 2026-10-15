@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         국민신문고 민원 정보 복사
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  민원 상세 페이지에서 신청번호/접수번호/민원인 성명을 추출해 엑셀용 1행으로 복사
 // @author       김성락
 // @match        https://gov.epeople.go.kr/*
 // @grant        none
+// @updateURL    https://github.com/rlatjdfkr7979-ctrl/UMCA_tampermonkey/raw/refs/heads/main/shinmoongo.user.js
 // @updateURL    https://github.com/rlatjdfkr7979-ctrl/UMCA_tampermonkey/raw/refs/heads/main/shinmoongo.user.js
 // ==/UserScript==
 
