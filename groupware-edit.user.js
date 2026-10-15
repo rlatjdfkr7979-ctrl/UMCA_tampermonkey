@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      3.9
+// @version      4.0
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
 // @grant        unsafeWindow
 // @run-at       document-start
+// @updateURL    https://raw.githubusercontent.com/rlatjdfkr7979-ctrl/UMCA_tampermonkey/main/groupware-edit.user.js
+// @downloadURL  https://raw.githubusercontent.com/rlatjdfkr7979-ctrl/UMCA_tampermonkey/main/groupware-edit.user.js
 // ==/UserScript==
 
 (function () {
