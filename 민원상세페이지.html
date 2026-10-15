@@ -1,0 +1,4634 @@
+<body style="padding-bottom: 64px;"><div class="loading loading_wrap" style="display: none;">
+		<div class="apload_ing"></div>
+		<div class="load_box">
+			<span><img src="/resource/images/paid/biz/content/load_ing.png" alt="불러오는 중"></span>
+			<strong>화면을 불러오는 중</strong>
+			<p>요청하신 화면을 불러오는 중입니다. 잠시만 기다려주십시오.</p>
+		</div>
+	</div>
+<script type="text/javascript">
+	$(function() {
+		
+			$(document).on("contextmenu",function(e){
+				return false;
+			});
+		
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+	
+<div id="skip">
+	<strong class="hide">반복영역 건너뛰기</strong>
+	<a href="#gnbAcc">주메뉴 바로가기</a>
+	<a href="#lnbAcc">보조메뉴 바로가기</a>
+	<a href="#containerAcc">본문 바로가기</a>
+</div>
+
+<div id="wrap"><div class="blind" style="display: none; position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; background: rgb(0, 0, 0); opacity: 0; z-index: 9997;"></div>
+
+	<header id="header">
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="layerPopup" style="width: 30%">
+	<div class="lPop_top">
+		<strong>개인정보 보호 요청</strong>
+		<button type="button" class="layer_close">
+			<span>닫기</span>
+		</button>
+	</div>
+	<div class="prog_regend"></div>
+	<div class="lPop_body">
+		<div class="lPop_content">
+			<!-- 레이어팝업 내용 : s -->
+			<div class="guidance-main" style="display: none;">
+				민원인 정보 등 개인정보와 민원내용은 민원처리 목적으로만 사용하여야 하며, <br> <span class="blue"><u>정보주체의 동의 없이 무단으로 제3자에게 제공한 경우에는<br>5년 이하의 징역 또는 5천만원 이하의 벌금</u></span>에 처할 수 있습니다.<br>
+				<br> ( 개인정보보호법 제17조 및 제71조, 민원처리에 관한 법률 제7조 )
+			</div>
+
+			<div class="guidance-pet" style="display: none;">
+				개인정보 노출 위험 최소화를 위하여 민원인·신고자 개인정보는 인쇄되지 않습니다. <br>
+				<br> 민원내용 등에 개인정보가 포함되어 있을 수 있으니, 개인정보 보호에 각별히 <br>유의하여 주시기
+				바랍니다.
+			</div>
+
+			<div class="guidance-cpp" style="display: none;">
+				개인정보 노출 위험 최소화를 위하여 제안인 개인정보는 인쇄되지 않습니다. <br>
+				<br> 제안내용 등에 개인정보가 포함되어 있을 수 있으니, 개인정보 보호에 각별히 <br>유의하여 주시기
+				바랍니다.
+			</div>
+
+			<div class="guidance-bgw" style="display: none;">
+				개인정보 노출 위험 최소화를 위하여 신고자 개인정보는 인쇄되지 않습니다. <br>
+				<br> 신고내용 등에 개인정보가 포함되어 있을 수 있으니, 개인정보 보호에 각별히 <br>유의하여 주시기 바랍니다
+			</div>
+			<br>
+			<div class="prog_regend"></div>
+
+			<div>
+				<span class="normal_close right"> <a href="#" class="bbs_btn layer_close"><span>확인</span></a>
+				</span> 
+				<span class="main_close right"> 
+					<input type="checkbox" name="nlook_day_btn" id="nlook_day_btn" class="v_middle">
+					<label for="nlook_day_btn">
+						<span style="padding: 2px 10px 0px 0px;">오늘하루 그만보기</span> 
+					</label> 
+					<a href="#" class="bbs_btn layer_close"><span>닫기</span></a>
+				</span>
+			</div>
+
+			<!-- 레이어팝업 내용 : e -->
+		</div>
+	</div>
+</div>
+<script language="javascript" type="text/javascript">
+	function fn_indvInfoScryPopup(printCode) {
+		var speed = 500;
+		var close = $(".layer_close");
+		$('.main_close').css('display', 'none');
+
+		event.preventDefault();
+
+		if ($(".layerPopup").is(":hidden")) {
+			blind_on();
+			$(".layerPopup").fadeIn(speed, 'easeOutCubic');
+			/* var popH = $(this).next().outerHeight() / 2;
+			$(".layerPopup").next().css({
+				marginTop : popH * -1
+			}); */
+		}
+		
+		var temp = $('.layerPopup');
+		
+		// 화면의 중앙에 레이어를 띄운다.
+		if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2-100+'px');
+		else temp.css('top', '0px');
+		if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+		else temp.css('left', '0px');
+
+		close.on("click", function() {
+			blind_off();
+			$(".layerPopup").fadeOut(speed, 'easeOutCubic');
+		});
+
+		$(document).on("click", ".blind", function() {
+			blind_off();
+			$(".layerPopup").fadeOut(speed, 'easeOutCubic');
+		});
+		
+		//메인화면 
+		if (printCode == "MAIN") {
+			$('.guidance-main').css('display', 'block');
+			$('.main_close').css('display', 'block');
+			$('.normal_close').css('display', 'none');
+		}
+		//민원, 고충민원
+		if (printCode == "PET") { 
+			$('.guidance-pet').css('display', 'block');
+		}
+		//제안
+		if (printCode == "CPP") {
+			$('.guidance-cpp').css('display', 'block');
+		}
+		//예산낭비
+		if (printCode == "BGW") { 
+			$('.guidance-bgw').css('display', 'block');
+		}
+	}
+
+	$('.layer_close').click(function(e) {
+		if ($("#nlook_day_btn").is(":checked") == true) {
+			$.cookie('alert_nlook_day', 'done', {
+				expires : 1
+			});
+		}
+		e.preventDefault();
+	});
+</script>
+<div class="header_top">
+	<form id="topMenu" name="topMenu">
+		<input type="hidden" name="_csrf" value="2e924a50-f356-4aaa-bf38-6fcb4b39b13e">
+		<input type="hidden" name="g_menuId"> 
+	</form>
+	<div class="layout">
+						
+			<h1 class="logo">		
+			<a href="/" title="국민신문고 업무처리시스템 메인"><img src="/resource/images/paid/biz/layout/epeople_logo_new6.png" alt="국민신문고"></a>
+			</h1>
+					
+		<div class="util_info">
+			
+			
+				<b class="part"><img src="/resource/images/paid/biz/layout/util_info_part.png" alt="">울산광역시도시공사</b>
+				<span class="people"><a href="#" title="울산광역시도시공사 기획감사실">기획감사실</a> <b>김성락</b>님</span>
+				<div class="message">
+					<a href="javascript:void(0);" onclick="fn_goPagePost('/biz/main/note/rcpnNoteList.paid'); return false;">쪽지 <span id="newNoteCnt">0</span></a>
+				</div>
+				<div class="transition">
+					<a href="javascript:void(0);" onclick="fn_goPagePost('/biz/mng/athr/athrRqstListFrom.paid'); return false;">권한신청 <span id="athrRqstCnt">0</span>건</a>
+					
+					
+					</div>
+				<div class="authr">
+					<a href="javascript:void(0);" onclick="fn_goPagePost('/biz/main/mypage/pbsvMyAthrList.paid'); return false;">나의권한</a>
+				</div>
+				<div class="qna">
+				    <a href="javascript:void(0);" onclick="fn_mngrBbsListPopup('QNA'); return false;">시스템 문의</a>
+				</div>				
+
+				<a href="/biz/main/prtl/mngrLogout.npaid?returnUrl=/index.npaid" class="member_state">로그아웃</a>
+			
+		</div>	
+	</div>
+</div>
+<div class="header_bottom sub">
+	<div class="layout">
+		<nav id="gnb">
+			<h2 class="hide">국민신문고 공무원포털 주 메뉴</h2>
+			<div class="gnb_title">
+				<strong tabindex="0"><span id="firstDpMenuNm">민원</span></strong>
+				<ul id="firstDpMenu">
+				<li>	<a name="firstMenu" href="javascript:fn_sendMenuId('A0014','/biz/pet/todo/todo/PttnMyWorkList.paid')">민원</a></li><li>	<a name="firstMenu" href="javascript:fn_sendMenuId('C0007','/biz/vsl/todo/todo/MyWorkList.paid')">선순환</a></li><li>	<a name="firstMenu" href="javascript:fn_sendMenuId('E0059','/biz/ida/mywork/ideaMyWorkList.paid')">국민생각함</a></li><li>	<a name="firstMenu" href="javascript:fn_sendMenuId('F0013','/biz/cpp/mywork/mywork/MyWorkList.paid')">제안</a></li><li>	<a name="firstMenu" href="javascript:fn_sendMenuId('H0082','/biz/mng/chrgr/chrgrInfoAndAthrListForm.paid')">운영관리</a></li><li>	<a name="firstMenu" href="javascript:fn_sendMenuId('I0004','/biz/main/mypage/pbsvMyInfoView.paid')">마이 페이지</a></li></ul>
+			</div>
+			<ul class="gnb_list" id="secondDpMenu">
+			<li><a name="secondMenu" href="javascript:fn_sendMenuId('A0014','/biz/pet/todo/todo/PttnMyWorkList.paid')">나의할일</a></li><li><a name="secondMenu" href="javascript:fn_sendMenuId('A0015','/biz/pet/rcpt/dept/PttnRcptList.paid')">민원접수</a></li><li><a name="secondMenu" href="javascript:fn_sendMenuId('A0018','/biz/pet/prcs/prcs/PttnPrcsList.paid')">민원처리</a></li><li><a name="secondMenu" href="javascript:fn_sendMenuId('A0019','/biz/pet/afctm/stts/AfctmPrcsSttsList.paid')">사후관리</a></li><li><a name="secondMenu" class="ov" href="javascript:fn_sendMenuId('A0022','/biz/pet/mng/sttsns/PttnMngPttnSttsList.paid')">민원관리</a></li><li><a name="secondMenu" href="javascript:fn_sendMenuId('A0074','/biz/pet/qna/qna/PttnQnaList.paid')">민원·정책 질의응답</a></li><li><a name="secondMenu" href="javascript:fn_sendMenuId('A0012','/biz/pet/stst/ststHome/selectStstHomePrcsCntSmrzList.paid')">운영통계</a></li><li><a name="secondMenu" href="javascript:fn_sendMenuId('A0134','/biz/pet/orgl/pttn/OrglOppbPttnList.paid')">원문공개관리</a></li></ul>
+		</nav>
+	</div>
+</div>
+
+<script>
+$(document).ready(function() {
+	fn_sendMenuIdAjax('A0022');
+	$("form").each(function() {
+		if ($(this).prop("name") != "topMenu" && $(this).prop("name") != "leftMenu" && $(this).prop("name") != "navMenu") {
+			$(this).append('<input type="hidden" name="g_menuId" value="A0022"/>');
+		}
+	});
+	
+	//상단 쪽지, 권한요청건수 표시
+	fn_setHdrInfo();
+
+	if ($.cookie('lnbfadeOut') == 'lnb_close') {
+		$('.lnb_close').trigger('click');
+	} else if ($.cookie('lnbfadeOut') == 'lnb_open') {
+		$('.lnb_open').trigger('click');
+	}
+});
+
+	
+function fn_sendMenuId(id, url) {
+	$.paidLoading.startFullScreen();
+	var f = document.topMenu;
+	$("form[name=topMenu]").find("[name=g_menuId]").val(id);
+	f.action = url;
+	f.method = "post";
+	f.submit();
+}
+	
+function fn_sendMenuIdAjax(menuId) {
+	$.paidLoading.startFullScreen();
+	var url = "/paid/cmmn/selectAdmMenuList.paid";
+	var param = {"menuId" : menuId ,"acesSctnCd":"5B060001"};
+	var options = $.sendAjaxReq.setOptions(url, "post", param, true, fn_success_sendMenuId, fn_error);
+	$.sendAjaxReq.start(options);
+}
+
+function fn_success_sendMenuId(result) {
+	var menuId = result.menu.menuId;
+	if(result.menuMap[menuId] == null){
+		jAlert('해당 사용자의 권한으로 접근할 수 없는 페이지 입니다.',function(){
+			$('#topMenu').attr("action", "/index.paid");
+			$('#topMenu').submit(); 
+		});
+	}
+	var menuDfno = result.menuMap[menuId].menuDfno;
+	var menu = result.menu;
+	var seqNo = result.seqNo;
+	var subMenuMap = result.subMenuMap;
+	var menuMap = result.menuMap;
+	var uprMenuCd =menuMap[menuId].uprMenuCd;
+	
+	if (menuDfno == '1') {
+		fn_navMenu(menu,menuMap,subMenuMap,menuDfno,menuId,'','');
+		fn_firstDpMenu(menu, menuMap, subMenuMap,menuId);
+		if (subMenuMap[menuId] == null || subMenuMap[menuId] == '') {
+			jAlert('2 DEPTH 메뉴가 없는 1 DEPTH 메뉴 입니다.',function(){
+				$('#topMenu').attr("action", "/index.paid");
+				$('#topMenu').submit(); 
+			});
+		} else {
+			fn_secondDpMenu(menu, menuMap, subMenuMap, menuId, menuMap[menuId].menuNm, subMenuMap[menuId][0].menuId);
+			fn_thirdDpMenu(menu, menuMap, subMenuMap, subMenuMap[menuId][0].menuId,'', subMenuMap[subMenuMap[menuId][0].menuId].length);
+		}
+	} else if (menuDfno == '2') {
+		fn_navMenu(menu,menuMap,subMenuMap,menuDfno,uprMenuCd,menuId,'');
+		fn_firstDpMenu(menu, menuMap, subMenuMap,uprMenuCd);
+		fn_secondDpMenu(menu, menuMap, subMenuMap, uprMenuCd, menuMap[uprMenuCd].menuNm, menuId);
+		fn_thirdDpMenu(menu, menuMap, subMenuMap, menuId,'',subMenuMap[menuId].length);
+	}else if (menuDfno == '3') {
+		fn_navMenu(menu,menuMap,subMenuMap,menuDfno,menuMap[uprMenuCd].uprMenuCd,uprMenuCd,menuId);
+		fn_firstDpMenu(menu, menuMap, subMenuMap,menuMap[uprMenuCd].uprMenuCd);
+		fn_secondDpMenu(menu, menuMap, subMenuMap,  menuMap[uprMenuCd].uprMenuCd, menuMap[menuMap[uprMenuCd].uprMenuCd].menuNm, uprMenuCd);
+		fn_thirdDpMenu(menu, menuMap, subMenuMap, uprMenuCd,menuId,seqNo);
+	}else if (menuDfno == '4') {
+		var paramId=menuId;
+		var thirdId=menuMap[paramId].uprMenuCd;
+		var secondId=menuMap[uprMenuCd].uprMenuCd;
+		var firstId=menuMap[secondId].uprMenuCd;
+		fn_navMenu(menu,menuMap,subMenuMap,menuDfno,firstId,secondId,thirdId);
+		fn_firstDpMenu(menu, menuMap, subMenuMap,firstId);
+		fn_secondDpMenu(menu, menuMap, subMenuMap,  firstId, menuMap[firstId].menuNm, secondId);
+		fn_thirdDpMenu(menu, menuMap, subMenuMap, secondId,paramId,seqNo);
+	}
+}
+
+function fn_error(error) {
+	jAlert('메뉴목록 조회 오류.<br/>시스템 관리자에게 문의 바랍니다.');
+	$.paidLoading.remove();
+}
+
+//상단 쪽지, 권한요청건수 표시
+function fn_setHdrInfo() {
+	var url = "/biz/main/prtl/selectHdrInfo.npaid";
+	var options = $.sendAjaxReq.setOptions(url, "post", null, true, fn_viewHdrInfo, fn_execError);
+	$.sendAjaxReq.start(options);
+
+	function fn_viewHdrInfo(data) {
+		var mainInfo = data.mainInfo;
+
+		if(mainInfo!=null) {
+			$("#newNoteCnt").text(mainInfo.newNoteCnt);
+			if (mainInfo.athrMenuUseYn == "Y") {
+				$("#athrRqstCnt").text(mainInfo.athrRqstCnt);
+				
+				if(mainInfo.evlRqstCnt > 0) {
+					$(".spEvlRqstCnt").show();
+					$("#evlRqstCnt").text(mainInfo.evlRqstCnt);
+				}
+				
+				if(mainInfo.instOprtrRqstCnt > 0) {
+					$(".spInstOprtrRqstCnt").show();
+					$("#instOprtrRqstCnt").text(mainInfo.instOprtrRqstCnt);
+				} 
+				
+				if(mainInfo.admRqstCnt > 0) {
+					$(".spAdmRqstCnt").show();
+					$("#admRqstCnt").text(mainInfo.admRqstCnt);
+				} 
+			} else {
+				$(".transition").hide();
+			}
+		}
+	}
+	
+	function fn_execError() {
+		console.log("fn_setHdrInfo() error");
+	}
+}
+
+function fn_goSysAdminCnst(url) {
+	var paramArr = new Array();
+	paramArr.push(["onlySysAdminCnstYn", "Y"]);
+	fn_goPagePost(url, paramArr);
+}
+</script>
+
+	</header>
+
+	<div id="containerAcc"></div>
+
+	<main id="container">
+		<div class="layout">
+			<div id="lnbAcc"></div>
+			
+
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+	$(function() {
+		$(".myWorkBtn").click(function() {
+			if(!chkMyDutyClickFg) {
+				fn_getMyDutyItem();
+			}
+		});
+	});
+	
+	//나의할일
+	var chkMyDutyClickFg = false;
+	
+	//나의할일 조회대상 업무 목록 구성하기
+	function fn_getMyDutyItem() {
+		chkMyDutyClickFg = true;
+		var url = "/biz/main/prtl/todayToDoDutyList.npaid";
+		var options = $.sendAjaxReq.setOptions(url, "post", null, true, fn_viewMyDutyItem, fn_viewErrorMsg);
+		$.sendAjaxReq.start(options);
+
+		function fn_viewMyDutyItem(data) {
+			var dutyItemArr = new Array(
+				//new Array("5B050010", "SPCT_PRTL", "RCPT_NAPNT", "RCPT_APNT", "CHRGR_APNT", "PRCS_LIST", "CHRGR_DSCT"),
+				new Array("5B050010", "SPCT_PRTL", "RCPT_NAPNT", "RCPT_APNT", "CHRGR_APNT", "PRCS_LIST", "CHRGR_STSFD"),
+				new Array("5B050020", "RCPT_CLSF", "MTG_LIST", "TRAN_WDRW", "CHRGR_RAPPN", "PTRCD_WDRW", "RDLBR_LIST", "LAST_STSFD", "PET_TRAN")
+			);
+
+			for(var i=0;i<data.myDutyItemList.length;i++) {
+				var epDutySctnCd = data.myDutyItemList[i].cd;
+				var itemArr = null;
+
+				for(var j=0;j<dutyItemArr.length;j++) {
+					if(epDutySctnCd == dutyItemArr[j][0]) {
+						itemArr = dutyItemArr[j];
+						break;
+					}
+				}
+				
+				if(itemArr!=null && itemArr.length>1) {
+					for(var j=1;j<itemArr.length;j++) {
+						var $dutyList = $("<div id='item_" + epDutySctnCd + itemArr[j] + "'></div>");
+						$(".workB_bot > ul").append($dutyList);
+						fn_getMyDutyList(epDutySctnCd, itemArr[j]);
+					}
+				} else {
+					var $dutyList = $("<div id='item_" + epDutySctnCd+"'></div>");
+					$(".workB_bot > ul").append($dutyList);
+					fn_getMyDutyList(epDutySctnCd, "");
+				}
+			}
+		}
+	}
+	
+	//나의할일 업무 목록 가져오기
+	function fn_getMyDutyList(epDutySctnCd, prcsDutyStr) {
+		var url = "/biz/main/prtl/todayToDoList.npaid";
+		var param = {"epDutySctnCd":epDutySctnCd, "prcsDutyStr":prcsDutyStr};
+		var options = $.sendAjaxReq.setOptions(url, "post", param, true, fn_viewMyDutyList, fn_viewErrorMsg);
+		$.sendAjaxReq.start(options);
+
+		function fn_viewMyDutyList(data) {
+			var dutyList = data.resultList;
+			
+			if(dutyList.length==0) {
+				if(data.login!=null && data.login=="null") {
+					$(".workB_bot > ul").html("<li>로그인이 필요합니다.</li>");
+					$(".workB_bot > .more").text("로그인").attr("href", "/index.npaid");
+				} else if($(".workB_bot > ul > li").length <= 0){
+					$(".workB_bot > ul").append($("<li id='duty_nodata'>대상건이 없습니다.</li>"));
+					$(".workB_bot > .more").hide();
+				}
+			} else {
+				if($("#duty_nodata").length>0) $("#duty_nodata").hide();
+				
+				//var viewCnt = 0;
+				for(var i=0;i<dutyList.length;i++) {
+					if(dutyList[i].dutyCnt=="0") continue;
+					//else viewCnt++;
+					
+					//var hideStr = (viewCnt>5?"style='display:none;'":"");
+					//var $dutyAdd = $("<li "+hideStr+"><a href='javascript:void(0);' onclick='fn_goPagePost(\""+dutyList[i].linkUrl+"\")'><span>["+dutyList[i].epDutySctnNm+"]"+dutyList[i].dutyNm+"</span></a> <span class='count'><span>"+dutyList[i].dutyCnt+"</span>건</span></li>");
+					var $dutyAdd = $("<li><a href='javascript:void(0);' onclick='fn_goPagePost(\""+dutyList[i].linkUrl+"\")'><span>["+dutyList[i].epDutySctnNm+"]"+dutyList[i].dutyNm+"</span></a> <span class='count'><span>"+dutyList[i].dutyCnt+"</span>건</span></li>");
+
+					if($("#item_" + dutyList[i].epDutySctnCd + data.inputVO.prcsDutyStr).length > 0) {
+						$("#item_" + dutyList[i].epDutySctnCd + data.inputVO.prcsDutyStr).append($dutyAdd);
+					} else if($("#item_" + dutyList[i].epDutySctnCd).length > 0) {
+						$("#item_" + dutyList[i].epDutySctnCd).append($dutyAdd);
+					} else {
+						$(".workB_bot > ul").append($dutyAdd);
+					}
+				}
+				
+				//if(hideStr=="") {
+					$(".workB_bot > .more").hide();
+				//} else {
+				//	$(".workB_bot > .more").text("더보기").attr("onclick", "fn_viewMoreMyDutyList();return false;");
+				//}
+			}
+		}
+	}
+	
+	/**
+	//나의할일 더보기
+	function fn_viewMoreMyDutyList() {
+		$(".workB_bot > .more").hide();
+		$(".workB_bot > ul > li").show();
+	}
+	**/
+//]]>
+</script>
+
+<section id="lnb">
+	<header class="lnb_title">
+		<h2 class="hide"></h2>
+		<strong><span id="secondDpMenuNm">민원</span></strong>
+		<a class="lnb_close" href="#">
+			<span class="hide">보조메뉴 닫기</span></a>
+	</header>
+
+	<div class="work_box">
+		<button type="button" class="myWorkBtn btnArr">
+			<strong>나의 할 일</strong>
+		</button>
+
+		<div class="workB_bot">
+			<ul>
+				<!-- 임시 주석 해제 --
+				<li><a href="#"><span>[일반민원]부서미지정</span></a> <span class="count"><span>00</span>건</span></li>
+				<li><a href="#"><span>[일반민원]부서지정중</span></a> <span class="count"><span>00</span>건</span></li>
+				<li><a href="#"><span>[일반민원]담당자 미지정</span></a> <span class="count"><span>00</span>건</span></li>
+				<li><a href="#"><span>[일반민원]부서지정중</span></a> <span class="count"><span>00</span>건</span></li>
+				<li><a href="#"><span>[일반민원]담당자 미지정</span></a> <span class="count"><span>00</span>건</span></li>
+				-- -->
+			</ul>
+
+			<!-- 임시 주석 처리 -->
+			<a class="more" href="javascript:void(0);">불러오는 중</a>
+		</div>
+	</div>
+
+	<nav class="lnb_nav">
+		<ul class="menu_group" id="thirdDpMenu">
+		<li class="group_title"><a name="thirdDp" class="none_child ov" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0022','/biz/pet/mng/sttsns/PttnMngPttnSttsList.paid');return false;">민원현황(기관)</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0152','/biz/pet/mng/sttssmrz/PttnHstrTotalList.paid');return false;">민원현황목록(이력조회)</a></li><li class="group_title"><a name="thirdDp" style="cursor:pointer">이송민원관리</a><ul class="group_child" style=""><li><a name="fourthDpMenu" class="fourthDpMenu" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0087','/biz/pet/mng/trnf/TrnfPttnSttsList.paid');return false;"><span>이송민원현황</span></a></li><li><a name="fourthDpMenu" class="fourthDpMenu" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0088','/biz/pet/mng/trnf/TrnfTimeMngList.paid');return false;"><span>이송시간관리</span></a></li><li><a name="fourthDpMenu" class="fourthDpMenu" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0146','/biz/pet/mng/trnf/TrnfDeptPttnSttsList.paid');return false;"><span>이송민원현황(부서)</span></a></li></ul></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0026','/biz/pet/mng/dataextc/PttnDataBndlExtcList.paid');return false;">민원자료일괄추출</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0202','/biz/pet/mng/dataextc/RptnPttnDataBndlExtcList.paid');return false;">반복민원일괄추출</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0027','/biz/pet/mng/aditmsch/AddnCltnItmDataSchList.paid');return false;">추가수집항목자료검색</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0028','/biz/pet/mng/frcrgrp/FrcrPttnGrpMngList.paid');return false;">빈발민원 그룹관리</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0030','/biz/pet/mng/ans/ApntAnsMngList.paid');return false;">지정답변관리</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0031','/biz/pet/mng/apntdp/ApntDeptMngList.paid');return false;">지정부서관리</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0032','/biz/pet/clsf/clsf/selectApntInstMngList.paid');return false;">지정기관관리</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0033','/biz/pet/mng/tfct/PttnTfctList.paid');return false;">민원이관</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0034','/biz/pet/mng/dptfct/DeptPttnTfctList.paid');return false;">부서민원이관</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0035','/biz/pet/mng/tfctrslt/PttnTfctRsltRdList.paid');return false;">민원이관결과 조회</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0036','/biz/pet/mng/mngrchg/AfctmChrgrChgList.paid');return false;">관리담당자 변경</a></li><li class="group_title"><a name="thirdDp" class="none_child" style="cursor:pointer" href="#" onclick="javascript:fn_sendMenuId('A0037','/biz/pet/mng/pbst/PbstCnvrPttnSttsList.paid');return false;">부패공익신고 전환 현황</a></li><script>	$('.fourthDpMenu').click(function(){		$(this).addClass('ov');	});	$("a[name=secondMenu]").click(function(){		$("a[name=thridDp").each(function() {			$(this).removeClass('ov');		});	});	$("a[name=firstMenu]").click(function(){		$("#firstDpMenu").hide();	});	lnb([0,])</script></ul>
+	</nav>
+
+	<div class="banner">
+		
+		<a href="javascript:void(0);" onclick="gfn_openPopupPost('dutymanual', null, 'dutymanual', '/biz/mng/dutymanual/DutymanualListPopup.paid', 1000, 900)"><img src="/resource/images/paid/biz/layout/aside_icon_2.png" alt="업무자료실">
+			업무자료실
+		</a>
+		<a href="javascript:void(0);" onclick="gfn_openPopupPost('formDwldPopup', null, 'formDwldPopup', '/biz/main/prtl/manualDwldPopup.paid', 650, 500)"><img src="/resource/images/paid/biz/layout/aside_icon_1.png" alt="사용자 지침서">
+			업무매뉴얼
+		</a>
+		<a href="javascript:void(0);" onclick="gfn_openPopupPost('lwrdDcrtPopup', null, 'lwrdDcrtPopup', '/biz/mng/bbs/lwrdDcrtBbsListPopup.paid', 1000, 800)"><img src="/resource/images/paid/biz/layout/aside_icon_4.png" alt="법령 해설집 조회">
+			법령 해설집 조회
+		</a>
+		<a href="javascript:void(0);" onclick="gfn_openPopupPost('mngrBbsQnaListPopup', null, 'mngrBbsQnaListPopup', '/biz/mng/bbs/mngrBbsQnaListPopup.paid', 900 , 900)"> 
+			<img src="/resource/images/paid/biz/layout/aside_icon_5.png" alt="시스템 문의">
+			시스템 문의
+		</a> 
+		
+	</div>
+</section>
+			
+
+ 
+
+
+<nav id="navigator">
+	<div class="nav_locate" id="navMenu"> <a class="home" href="/index.paid" title="HOME">H</a> <a href="javascript:fn_sendMenuId('A0014','/biz/pet/todo/todo/PttnMyWorkList.paid')">민원</a><a href="javascript:fn_sendMenuId('A0022','/biz/pet/mng/sttsns/PttnMngPttnSttsList.paid')">민원관리</a><a href="#">민원현황(기관)<span class="arr"></span></a><ul class="nav_shortcut"><li><a href="#" onclick="javascript:fn_sendMenuId('A0022','/biz/pet/mng/sttsns/PttnMngPttnSttsList.paid');return false;">민원현황(기관)</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0152','/biz/pet/mng/sttssmrz/PttnHstrTotalList.paid');return false;">민원현황목록(이력조회)</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0087','/biz/pet/mng/trnf/TrnfPttnSttsList.paid');return false;">이송민원관리</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0026','/biz/pet/mng/dataextc/PttnDataBndlExtcList.paid');return false;">민원자료일괄추출</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0202','/biz/pet/mng/dataextc/RptnPttnDataBndlExtcList.paid');return false;">반복민원일괄추출</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0027','/biz/pet/mng/aditmsch/AddnCltnItmDataSchList.paid');return false;">추가수집항목자료검색</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0028','/biz/pet/mng/frcrgrp/FrcrPttnGrpMngList.paid');return false;">빈발민원 그룹관리</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0030','/biz/pet/mng/ans/ApntAnsMngList.paid');return false;">지정답변관리</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0031','/biz/pet/mng/apntdp/ApntDeptMngList.paid');return false;">지정부서관리</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0032','/biz/pet/clsf/clsf/selectApntInstMngList.paid');return false;">지정기관관리</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0033','/biz/pet/mng/tfct/PttnTfctList.paid');return false;">민원이관</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0034','/biz/pet/mng/dptfct/DeptPttnTfctList.paid');return false;">부서민원이관</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0035','/biz/pet/mng/tfctrslt/PttnTfctRsltRdList.paid');return false;">민원이관결과 조회</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0036','/biz/pet/mng/mngrchg/AfctmChrgrChgList.paid');return false;">관리담당자 변경</a></li><li><a href="#" onclick="javascript:fn_sendMenuId('A0037','/biz/pet/mng/pbst/PbstCnvrPttnSttsList.paid');return false;">부패공익신고 전환 현황</a></li></ul> <script>	navLocateShortCut();</script></div>
+</nav>
+			
+
+ 
+
+
+<script type="text/javascript">
+//<![CDATA[
+	$(function() {
+		fn_getMyFvrMenuList();
+	});
+
+	//나의 즐겨찾기 메뉴
+	function fn_getMyFvrMenuList() {
+ 		var url = "/biz/main/prtl/selectMyFvrMenuList.npaid";
+		var options = $.sendAjaxReq.setOptions(url, "post", null, true, fn_viewMyFvrMenuList, fn_viewErrorMsg);
+		$.sendAjaxReq.start(options);
+
+		function fn_viewMyFvrMenuList(data) {
+			$("#myMenuAside > .aside_body > .body_lsit > ul > li").remove();
+			
+			var myFvrMenuList = data.myFvrMenuList;
+			
+			if(myFvrMenuList!=null && myFvrMenuList.length>0) {
+				for(var i=0;i<myFvrMenuList.length;i++) {
+					if(myFvrMenuList[i].linkUrl.indexOf("?")>0){
+						var $fvrMenuAdd = $("<li class='obj_item'><a href='javascript:void(0);' onclick='fn_goPagePost(\""+myFvrMenuList[i].linkUrl+"&g_menuId="+myFvrMenuList[i].menuId+"\")' style='word-break:keep-all;'>"+myFvrMenuList[i].menuNm+"</a></li>");
+					} else{
+						var $fvrMenuAdd = $("<li class='obj_item'><a href='javascript:void(0);' onclick='fn_goPagePost(\""+myFvrMenuList[i].linkUrl+"?g_menuId="+myFvrMenuList[i].menuId+"\")' style='word-break:keep-all;'>"+myFvrMenuList[i].menuNm+"</a></li>");
+					}
+					$("#myMenuAside > .aside_body > .body_lsit > ul").append($fvrMenuAdd);
+				}
+			} else {
+				var $fvrMenuAdd = $("<li class='obj_item'><a href='javascript:void(0)'>마이 메뉴를<br/>설정하십시오.</a></li>");
+				$("#myMenuAside > .aside_body > .body_lsit > ul").append($fvrMenuAdd);
+			}
+			
+			var param = "#myMenuAside",
+			obj = ".obj_item",
+			btn = param + " .body_control",
+			interval = 5000,
+			speed = 300,
+			viewSize = 1, 
+			moreSize = 0,
+			dir = "y",
+			data = 0,
+			auto = false,
+			hover = false,
+			method = "easeOutCubic",
+			op1 = false;
+
+			stateScrollObj(param,obj,btn,interval,speed,viewSize,moreSize,dir,data,auto,hover,method,op1);
+		}
+	}
+//]]>
+</script>
+
+
+
+
+	<aside id="myMenuAside" class="">
+		<div class="aside_head">
+			<a href="javascript:void(0)" onclick="fn_goPagePost('/biz/main/mypage/myItrsMenuStup.paid')">
+				<strong class="head_title">마이 메뉴 <img src="/resource/images/paid/biz/layout/aside_title_icon_white.png" alt=""></strong>
+			</a>
+		</div>
+
+<!-- 		<div class="aside_down">
+			<span class="foot_help"><a href="javascript:void(0);" onclick="fn_helpPopup();">도움말<br>팝업보기</a></span>
+		</div> -->
+
+		<div class="aside_body">
+<!-- 			<div class="body_control"> -->
+
+
+<!-- 			</div> -->
+
+			<div class="body_lsit mt_0 mb_0">
+				<ul class="lsit_obj">
+<!--
+ 					<li class="obj_item"><a href="#">민원현황<br>목록</a></li>
+					<li class="obj_item"><a href="#">접수증<br>출력</a></li>
+					<li class="obj_item"><a href="#">대비실 서신<br>민원 형황</a></li>
+					<li class="obj_item"><a href="#">대비실 서신<br>민원 통계</a></li>
+					<li class="obj_item"><a href="#">ARS 대비실<br>민원 현황</a></li>
+-->
+				<li class="obj_item"><a href="javascript:void(0);" onclick="fn_goPagePost(&quot;/biz/pet/rcpt/dept/PttnRcptList.paid?g_menuId=A0015&quot;)" style="word-break:keep-all;">부서지정</a></li></ul>
+			</div>
+		</div>
+
+		<div class="aside_foot">
+			<div class="topBtn" style="bottom: 64px;">
+				<a href="#"><img src="/resource/images/paid/biz/layout/aside_control_top_btn.png" alt=""></a>
+			</div>
+		</div>
+	</aside>
+
+
+
+
+			<section id="contents_wrap">
+				<header class="hide">
+					<h2>국민신문고 공무원포털 콘텐츠</h2>
+				</header>
+
+				<article id="txt">
+<!-- 					<header class="contents_locate"> -->
+<!-- 						<h3>페이지타이틀</h3> -->
+<!-- 						<a class="lnb_open" href="#"><span class="hide">보조메뉴 열기</span></a> -->
+<!-- 					</header> -->
+
+					<!-- 본문 시작 -->
+					
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/resource/js/paid/biz/pet/common.pet.js?ver=20261015132508"></script>
+<script src="/resource/js/paid/cmmn/common.file.js"></script>
+
+
+<form id="viewForm" name="viewForm" action="/biz/pet/mng/sttsns/PttnMngPttnSttsView.paid" method="post">
+<input type="hidden" name="_csrf" value="2e924a50-f356-4aaa-bf38-6fcb4b39b13e">
+	
+	<input id="pageIndex" name="pageIndex" type="hidden" value="1">
+	<input id="pageUnit" name="pageUnit" type="hidden" value="10">
+	<input id="pageSize" name="pageSize" type="hidden" value="10">
+	<input id="firstIndex" name="firstIndex" type="hidden" value="0">
+	<input id="lastIndex" name="lastIndex" type="hidden" value="1">
+	<input id="recordCountPerPage" name="recordCountPerPage" type="hidden" value="10">
+	<input id="searchKeywordFrom" name="searchKeywordFrom" type="hidden" value="">
+	<input id="searchKeywordTo" name="searchKeywordTo" type="hidden" value="">
+	<input id="srchPrdSch" name="srchPrdSch" type="hidden" value="3">
+	<input id="srchPrdChce" name="srchPrdChce" type="hidden" value="14d">
+	<input id="srchClsDeptYn" name="srchClsDeptYn" type="hidden" value="N">
+	<input id="srchInstSch" name="srchInstSch" type="hidden" value="2">
+	<input id="srchDeptNm" name="srchDeptNm" type="hidden" value="">
+	<input id="srchDeptCd" name="srchDeptCd" type="hidden" value="">
+	<input id="srchAcfrMsnf" name="srchAcfrMsnf" type="hidden" value="">
+	<input id="srchMpttnYn" name="srchMpttnYn" type="hidden" value="">
+	<input id="beginDt" name="beginDt" type="hidden" value="2026-10-01">
+	<input id="endDt" name="endDt" type="hidden" value="2026-10-15">
+	<input id="srchTitlOtlnChce" name="srchTitlOtlnChce" type="hidden" value="1">
+	<input id="srchTitlOtln" name="srchTitlOtln" type="hidden" value="">
+	<input id="srchPttnNo" name="srchPttnNo" type="hidden" value="">
+	<input id="srchRltnrNm" name="srchRltnrNm" type="hidden" value="">
+	<input id="srchPttnRqstPathGrpCd" name="srchPttnRqstPathGrpCd" type="hidden" value="">
+	<input id="srchPttnRqstPathSctnCd" name="srchPttnRqstPathSctnCd" type="hidden" value="">
+	<input id="srchMenuClsfNm" name="srchMenuClsfNm" type="hidden" value="">
+	<input id="srchMenuClsfCd" name="srchMenuClsfCd" type="hidden" value="">
+	<input id="srchStatusCode" name="srchStatusCode" type="hidden" value="00620090">
+	<input id="srchLowerPcdGubun" name="srchLowerPcdGubun" type="hidden" value="">
+	<input id="srchPttnPrcsSttsCd" name="srchPttnPrcsSttsCd" type="hidden" value="">
+	<input id="srchMngrSctn" name="srchMngrSctn" type="hidden" value="1">
+	<input id="srchMngrNm" name="srchMngrNm" type="hidden" value="">
+	<input id="srchAdrsArea" name="srchAdrsArea" type="hidden" value="1">
+	<input id="srchSiGnNm" name="srchSiGnNm" type="hidden" value="">
+	<input id="srchGuNm" name="srchGuNm" type="hidden" value="">
+	<input id="srchRltnrCpno" name="srchRltnrCpno" type="hidden" value="선택">
+	<input id="srchRltnrMdlCpno" name="srchRltnrMdlCpno" type="hidden" value="">
+	<input id="srchRltnrLastCpno" name="srchRltnrLastCpno" type="hidden" value="">
+	<input id="srchInstMenu" name="srchInstMenu" type="hidden" value="">
+	<input id="srchPrdSctn" name="srchPrdSctn" type="hidden" value="1">
+	<input id="srchprcsExtnTcnt" name="srchprcsExtnTcnt" type="hidden" value="">
+	<input id="srchPrcsDtOver" name="srchPrcsDtOver" type="hidden" value="">
+	<input id="srchBgnRmndNumd" name="srchBgnRmndNumd" type="hidden" value="">
+	<input id="srchFnshRmndNumd" name="srchFnshRmndNumd" type="hidden" value="">
+	<input id="srchSafeReportYn" name="srchSafeReportYn" type="hidden" value="">
+	<input id="srchPubicReportYn" name="srchPubicReportYn" type="hidden" value="">
+	<input id="srchPttnDutySctnCdArr" name="srchPttnDutySctnCdArr" type="hidden" value="">
+	<input id="srchFrlgPttnYn" name="srchFrlgPttnYn" type="hidden" value="">
+	<input id="srchAvdnYn" name="srchAvdnYn" type="hidden" value="">
+	<input id="srchGapjilYn" name="srchGapjilYn" type="hidden" value="">
+	<input id="srchPrcsTransEmalYn" name="srchPrcsTransEmalYn" type="hidden" value="">
+	<input id="srchTransSmsYn" name="srchTransSmsYn" type="hidden" value="">
+	<input id="srchReplyTransEmalYn" name="srchReplyTransEmalYn" type="hidden" value="">
+	<input id="srchTransLtrYn" name="srchTransLtrYn" type="hidden" value="">
+	<input id="srchMlnpPttnYn" name="srchMlnpPttnYn" type="hidden" value="">
+	<input id="srchSctyEntrPttnYnN" name="srchSctyEntrPttnYnN" type="hidden" value="">
+	<input id="srchSctyEntrPttnYnY" name="srchSctyEntrPttnYnY" type="hidden" value="">
+	<input id="rsltInrSchYn" name="rsltInrSchYn" type="hidden" value="">
+	<input id="srchTitlOtlnRe" name="srchTitlOtlnRe" type="hidden" value="">
+	<input id="srchRMrgYn" name="srchRMrgYn" type="hidden" value="">
+	<input id="srchFrcrPttnYn" name="srchFrcrPttnYn" type="hidden" value="">
+	<input id="srchWdrwYn" name="srchWdrwYn" type="hidden" value="">
+	<input id="srchHelpPrcsYn" name="srchHelpPrcsYn" type="hidden" value="">
+	<input id="srchMmsnfYn" name="srchMmsnfYn" type="hidden" value="">
+	<input id="srchAcfrMsnfYn" name="srchAcfrMsnfYn" type="hidden" value="">
+	<input id="srchLwrdNm" name="srchLwrdNm" type="hidden" value="">
+	<input id="srchLwrdCd" name="srchLwrdCd" type="hidden" value="">
+	<input id="srchStsfdReg" name="srchStsfdReg" type="hidden" value="">
+	<input id="srchStsfdCnfmYn" name="srchStsfdCnfmYn" type="hidden" value="">
+	<input id="srchStsfdAddAnswYn" name="srchStsfdAddAnswYn" type="hidden" value="">
+	<input id="srchFrstStsfdCd" name="srchFrstStsfdCd" type="hidden" value="">
+	<input id="srchFrstMrwdCntnCl" name="srchFrstMrwdCntnCl" type="hidden" value="">
+	<input id="srchFrstSltnYnCd" name="srchFrstSltnYnCd" type="hidden" value="">
+	<input id="srchLastStsfdCd" name="srchLastStsfdCd" type="hidden" value="">
+	<input id="srchLastMrwdCntnCl" name="srchLastMrwdCntnCl" type="hidden" value="">
+	<input id="srchLastSltnYnCd" name="srchLastSltnYnCd" type="hidden" value="">
+	<input id="srchOppbYn" name="srchOppbYn" type="hidden" value="">
+	<input id="srchOtnsOppbYn" name="srchOtnsOppbYn" type="hidden" value="">
+	<input id="srchPttnrNacvtYn" name="srchPttnrNacvtYn" type="hidden" value="">
+	
+	<input id="srchInstCd" name="srchInstCd" type="hidden" value="XK70000">
+	<input id="srchInstNm" name="srchInstNm" type="hidden" value="">
+	<input id="srchShghInstCd" name="srchShghInstCd" type="hidden" value="">
+	<input id="srchShghInstNm" name="srchShghInstNm" type="hidden" value="">
+	
+	<input type="hidden" id="schYn" name="schYn" value="Y">
+	<input type="hidden" id="sortItm" name="sortItm" value="prcs_rsltn_dt">
+	<input type="hidden" id="sortSeq" name="sortSeq" value="">
+	<input type="hidden" id="srchDtlYn" name="srchDtlYn" value="">
+	
+	
+	<input type="hidden" id="pttnRqstNo" name="pttnPttnBaseVO.pttnRqstNo" value="1BA-2609-1315163">
+	<input type="hidden" id="instRcptSn" name="pttnInstRcptVO.instRcptSn" value="215275716">
+	<input type="hidden" name="deptPrcsSn" value="1">
+	<input type="hidden" id="deptPrcsSn" name="pttnDeptPrcsVO.deptPrcsSn" value="1">
+	<input type="hidden" id="instCd" name="pttnInstRcptVO.instCd" value="XK70000">
+	<input type="hidden" id="modTcnt" name="pttnDeptPrcsVO.modTcnt" value="0">
+	<!-- <input type="hidden" name="pttnInstRcptVO.pttnCnrsChgRsnCd"" /> -->
+	
+	<input type="hidden" id="instRcptNo" name="instRcptNo" value="2BA-2609-1310894">
+	<input type="hidden" id="otnsOppbYn" value="">
+	<input type="hidden" id="prcsRsltnDt" value="2026-10-08 14:54:27">
+	
+	<input type="hidden" id="srcRltnrZpcd" value="">
+	<input type="hidden" id="srcBaseAdrs" value="">
+	<input type="hidden" id="srcDtlAdrs" value="">
+	<input type="hidden" id="srcRoadNmCd" value="">
+	<input type="hidden" id="srcRltnrEmal" value="">
+	<input type="hidden" id="srcrltnrCpno" value="">
+	<input type="hidden" id="srcRltnrTpno" value="">
+	
+		<input type="hidden" name="pttnRqstNo" value="1BA-2609-1315163">
+	<input type="hidden" name="instRcptSn" value="215275716">
+	<input type="hidden" name="pttnBaseRltnrVO.pttnRqstNo" value="1BA-2609-1315163">
+	<input type="hidden" name="pttnBaseRltnrVO.rltnrSctnCd" value="0A010010">
+	<input type="hidden" id="rltnrZpcd" name="pttnBaseRltnrVO.rltnrZpcd" value="44959">
+	<input type="hidden" id="baseAdrs" name="pttnBaseRltnrVO.baseAdrs" value="울산광역시 울주군 청량읍 율리영해2길 7">
+	<input type="hidden" id="dtlAdrs" name="pttnBaseRltnrVO.dtlAdrs" value="201동 1701호(문수데시앙2단지)">
+	<input type="hidden" id="roadNmCd" name="pttnBaseRltnrVO.roadNmCd">
+	<input type="hidden" id="rltnrEmal" name="pttnBaseRltnrVO.rltnrEmal" value="">
+	<input type="hidden" id="rltnrCpno" name="pttnBaseRltnrVO.rltnrCpno" value="010-2360-1222">
+	<input type="hidden" id="rltnrTpno" name="pttnBaseRltnrVO.rltnrTpno" value="">
+	
+	<!-- 접수처리(부서 및 담당자 지정)-->
+<!-- 	<input type="hidden" name="dept_count" 					value="0"/>
+	<input type="hidden" name="objGubun" 					value="0"/> -->
+<!-- 	<input type="hidden" name="k_do_seq_n" 				value=""/>-->
+	<input type="hidden" id="pttnRqstPrcsSttsCd" name="pttnPttnBaseVO.pttnRqstPrcsSttsCd" value="00620090">
+	<input type="hidden" id="instPrcsSttsCd" name="pttnInstRcptVO.instPrcsSttsCd" value="00620090">
+	<input type="hidden" id="pttnRcptPrcsSttsCd" name="pttnInstRcptVO.pttnRcptPrcsSttsCd" value="0A190024">
+	<input type="hidden" id="instCd" name="pttnInstRcptVO.instCd" value="XK70000">
+		
+	<!-- Bonz 추가필드 끝-->
+	<input type="hidden" id="pttnrRvsnYn" name="pttnrRvsnYn">
+	<input type="hidden" id="inrPrcsPrdUseYn" name="inrPrcsPrdUseYn" value="">
+	<!-- 공개여부 상태구분 -->
+    <input type="hidden" id="orgOpenYnFlag" name="orgOpenYnFlag" value="">
+
+	
+	<input type="hidden" id="avdnPttnRdStreYn" name="avdnPttnRdStreYn">
+	
+	<input type="hidden" id="acfrMsnfYn" name="acfrMsnfYn" value="Y">
+	<input type="hidden" id="acfrDeptYn" name="acfrDeptYn" value="Y">
+
+	<header class="contents_locate">
+
+		<h3>민원현황상세</h3>
+
+		<a class="lnb_open" href="#"><span class="hide">보조메뉴 열기</span></a>
+	</header>
+
+	<!-- 본문 시작 -->
+
+	<div class="minwon_history" style="z-index: 0; position: relative; top: 0px; left: 0px; background-color: rgb(255, 255, 255); border-bottom: 0px solid rgb(210, 210, 210); width: 100%; padding: 0px; opacity: 1;">
+		<div class="layout">
+			<span class="code_name">1BA-2609-1315163
+				/2BA-2609-1310894
+				
+			</span>
+
+			
+			
+			<a href="#" class="off_line">
+			오프라인 &gt; 서신
+			</a>
+			
+			
+			
+			
+			
+			
+			
+			<a title="문수데시앙 2단지 201동 1701호 계약 전 확인 하자 점검 및 정석 보수에 관한 서면 이행 요청의 건">
+				<strong>문수데시앙 2단지 201동 1701호 계약 전 확인 하자 점검 및 정석 보수에 관한 서면 이행 요청의 건</strong>
+			</a>
+
+			<div class="history_button" id="divHistory">
+				<a href="#" class="bbs_btn" onclick="javascript:fn_print('1BA-2609-1315163', '215275716', '1');"><span>인쇄</span></a>
+				
+				<a href="#" class="bbs_btn fill" onclick="javascript:fn_update();"><span>저장</span></a>
+				
+				<a href="#" class="bbs_btn fill" onclick="javascript:fn_moveList();"><span>목록</span></a>
+			</div>
+		</div>
+	</div><div id="minwonFollowDummy" style="display: none; height: 54px;"></div>
+
+	<div class="top_box_plus">
+		<div class="minwon_topbox">
+			 
+				<div class="min_type">
+					<ul class="minT_list">
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<li>일반민원</li>
+						
+					</ul>
+				</div>
+			
+			<div class="min_state">
+				<div class="state_item state_1">
+					<strong>신청</strong>
+					<span>2026-09-30</span>
+				</div>
+				<div class="state_count" id="idHstrCnt" style="">4</div><div class="mid"></div>
+				<div class="state_item state_2" style="">
+					
+					<strong id="idRcntHstr">완료</strong>
+					<span id="idRcntHstrDe">2026-10-08</span>
+				</div>
+			</div>
+			<div class="min_txt">
+				<!-- <strong>&lt;현재상태의 민원처리 방법&gt;</strong>
+				<p>
+					※ 본 민원은 민원인이 답변내용에 만족하지 못하여 다시신청한 민원입니다. 감사부서로 지정하여
+					처리하시기 바랍니다. 상위기관으로 이송하시기 바랍니다. (감사과 처리에 대한 재신청인 경우)
+				</p>
+				<strong>&lt;대통령 비서실 우편민원&gt;</strong>
+				<p>1.대통령비서실 이첩민원입니다.</p>
+				<p>2.귀 기관 관련 민원을 이첩하오니...</p>
+				<p>3.민원인에 대한 처리결과 통보시...</p> -->
+				<strong>&lt;최근 이력&gt;</strong>
+				<p id="idRcntChgRsn" style="height:57px">완료 [2BA-2609-1310894]</p>
+			</div>
+			<div class="min_button">
+				<a href="#" name="aCallPttnHstrList" onclick="javascript:fn_callPttnHstrListPopup('1BA-2609-1315163');return false;" class="other2"><span>민원이력보기</span></a>
+				<a href="#" onclick="javascript:fn_callTrnfHstrListPopup();return false;" class="other2"><span>이송이력보기</span></a>
+				
+			</div>
+		</div>
+	</div>
+	
+	
+
+
+<!-- 주석처리후 원복 -->
+
+<!-- // request.setAttribute("JBOSS_NODE_NAME", egovframework.com.cmm.service.Globals.JBOSS_NODE_NAME); -->
+
+	<!-- 공익신고사후관리/공익신고 현황목록이 아닐 때만 출력한다 - 쿱스 김현철 -->
+		<div class="details_top mt_10" id="pttnGdncWrdsDiv">
+
+
+		<!-- AS-IS 데이터 시작 -->
+		<!-- *****************************************************************************************-->
+		<!-- ************************    대통령비서실 국민인수위원회 	    **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    대통령비서실 국민인수위원회 	//  **************************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************    대통령비서실 ARS민원 	        **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    대통령비서실 ARS민원 	//      **************************************-->
+		<!-- *****************************************************************************************-->
+		<!-- AS-IS 데이터 끝 -->
+
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************ 보안민원 	                    **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************ 보안민원 	//                  **************************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************    대통령비서실 서신민원 	        **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    대통령비서실 서신민원 	//      **************************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************    OFFLINE 민원 	        **************************************-->
+		<!-- *****************************************************************************************-->
+		
+			<div class="open_Box">
+				<div class="top_Txtbox_tit">
+					<p class="tit"><b class="blue">[오프라인 신청 민원]</b> 오프라인으로 제출된 민원이므로, 국민신문고 처리결과 통보와 별개로 <span class="red">처리결과 통지 방식이 서신인 경우 별도 서신 통보</span>하여 주시기 바랍니다.</p>
+				</div>
+			</div>
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    OFFLINE 민원 	//      **************************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************ 공익신고 	                    **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************ 공익신고 	//                  **************************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************ 기피신청민원 + 서신민원 + 관리유형별 민원 	          ************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************ 기피신청민원 + 서신민원 + 관리유형별 민원 	//        ************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************    제보·고발성민원	            **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    제보·고발성민원 	//          **************************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************    소극행정신고 	            **************************************-->
+		<!-- *****************************************************************************************-->
+		
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************    적극행정신청 	            **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    소극행정신고 	//          **************************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************    갑질피해신고 	            **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    갑질피해신고 	//          **************************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************    기타갑질 신고	            **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    기타갑질 신고 	//          **************************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************    안전신문고 민원 	            **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    안전신문고 민원 	//          **************************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************ 안전제보 	                    **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************ 안전제보 	//                  **************************************-->
+		<!-- *****************************************************************************************-->
+
+		<!-- *****************************************************************************************-->
+		<!-- ************************    규제신문고 민원 	        **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    규제신문고 민원 	//      **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    국민제안(대통령비서실) 민원  start   ********************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    국민제안(대통령비서실) 민원 end //  ********************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    빛의 혁명 기록물 민원 	        **************************************-->
+		<!-- *****************************************************************************************-->
+		
+		<!-- *****************************************************************************************-->
+		<!-- ************************    빛의 혁명 기록물 민원 	//      **************************************-->
+		<!-- *****************************************************************************************-->
+		</div>
+
+		<script type="text/javascript">
+			var btn = $(".more_bt");
+			var speed = 300;
+
+			btn.on("click",function () {
+				var t = $(this);
+				if(t.prev('.top_txtbox_con').is(":hidden")){
+					t.find(">span").text("닫기");
+					t.addClass("on");
+					t.prev('.top_txtbox_con').slideDown(speed, "easeOutCubic");
+				}else{
+					t.find(">span").text("열기");
+					t.removeClass("on");
+					t.prev('.top_txtbox_con').slideUp(speed, "easeOutCubic");
+				}
+
+				return false;
+			});
+			
+			if(typeof $("#pttnGdncWrdsDiv .open_Box").html() == 'undefined') {
+				$("#pttnGdncWrdsDiv").remove();
+			}
+			
+
+			/**
+			 * 처리부서 기피신청 기능 관련 법령
+			 */
+			function evadeOpen() {
+				var params = {
+				};
+				
+				gfn_openPopupPost("prcsDeptAvdnRqstFnctRltnLwrdViewPopup", params, "prcsDeptAvdnRqstFnctRltnLwrdViewPopup", "/biz/pet/prcs/prcs/PrcsDeptAvdnRqstFnctRltnLwrdViewPopup.paid", 724, 708);
+			}
+			//주석 처리 후 원복
+// 			function reportOpen(){
+				
+// 				var jbossNodeName = "egov41";
+// 				var first = jbossNodeName.substr(0,1);
+				
+// 				if(first == 'e'){
+// 					$("#bt_report").hide();
+// 				}else{
+// 					$("#bt_report").show();
+// 				}
+// 			}
+		</script>
+	<!-- 공익신고사후관리/공익신고 현황목록이 아닐 때만 출력한다 - 쿱스 김현철 -->
+
+
+	<div class="mt_10 mb_10 right" id="divTopButton">
+		
+		<a href="#" class="bbs_btn" onclick="javascript:fn_print('1BA-2609-1315163', '215275716', '1');"><span>인쇄</span></a>
+		
+		<a href="#" class="bbs_btn fill" onclick="javascript:fn_update();"><span>저장</span></a>
+		
+		<a href="#" class="bbs_btn fill" onclick="javascript:fn_moveList();"><span>목록</span></a>
+	</div>
+
+	
+
+	<h4>민원정보</h4>
+	<table class="tbl board">
+		<caption rowspan="1">
+			<strong>민원상세내용</strong>
+			<details>
+				민원상세내용의 신청경로, 기관메뉴/접수경로, 진행상황통지방식, 민원답변통지방식, 신청일시, 접수일시, 민원내용, 추가수집항목, 민원종류, 법정처리기간, 다수인민원 항목에대한 표입니다.
+			</details>
+		</caption>
+		<colgroup rowspan="1">
+			<col style="width:180px">
+			<col>
+			<col style="width:180px">
+			<col>
+		</colgroup>
+		<tbody>
+		<tr>
+			<th scope="row">신청경로<br> 
+						<a href="#" class="tbl_btn large mt_5" onclick="fn_pttnRqstPathSctnHpcmPopup();"><span>도움말</span></a>
+			</th>
+			<td>
+				
+					
+					 <!-- 전자정부 전문포털명 추가 2009.11.15 kby  -->
+						우편
+					
+				
+		        
+		        
+		  		
+		  		<!-- 쿱스 추가 -->
+		        &nbsp;
+		        <!-- 쿱스 추가 끝 -->
+				
+			</td>
+			<th scope="row">기관메뉴/접수경로</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th scope="row">자동분류여부</th>
+			<td colspan="3">
+				
+			</td>
+		</tr>
+		
+		<tr>
+			<th scope="row">신청인구분</th>
+			
+				
+				<td colspan="3">
+			
+				<strong>신청단계 : </strong>
+				
+	        		
+					
+					개인
+	     		&nbsp;&nbsp;&nbsp;&nbsp;
+	     		<strong>처리단계 : </strong> 
+	        	
+	        		
+					일반
+	     		
+			</td>
+			
+		</tr>
+		
+		
+		
+		<tr>
+			<th scope="row">진행상황통지방식</th>
+			<td>휴대전화</td>
+			<th scope="row">민원답변통지방식</th>
+			<td>서면, 누리집(홈페이지)</td>
+		</tr>
+		<tr>
+			
+			
+			
+				<th scope="row">신청일시</th>
+				<td>2026-09-30 17:07:32</td>
+				
+				<th scope="row">접수일시</th>
+				<td>2026-09-30 17:07:32</td>
+				
+			
+			
+		</tr>
+		
+		
+			
+			
+			
+			
+				<tr>
+					<th scope="row" class="fileDList"><strong>&lt;첨부파일&gt;</strong> 
+							
+								<ul class="txt_list">
+									
+										<li> <a href="#" onclick="javascript:gfn_fileDownload('20260930170732457819', '20260930170732419348');" style="word-break: break-all">민원서류.pdf</a>
+											
+										</li>										
+									
+									
+								</ul>
+							
+							
+						</th>
+					<td colspan="3">
+						<div class="minwon_txtScroll">청약 당첨 이후 해당 아파트 하자 보수 요청</div>
+					</td>
+				</tr>
+				
+			
+		
+		
+		
+		
+		
+		<input type="hidden" id="selPttnClsfCd" value="09990004,7,5,">
+		<input type="hidden" id="selPttnPrcsPrd" value="7">
+		<input type="hidden" id="selPttnInrPrcsPrd" value="5">
+		
+			
+				<tr>
+					<th rowspan="2">민원종류</th>
+					<td rowspan="2">
+						일반질의
+					</td>
+					<th scope="row">민원처리기간</th>
+					<td>
+						<p>처리완료 예정일 : 2026-10-12 23:59:59</p>
+						<p>설정된 처리기간 : 7</p>
+		
+						<p>연장횟수 : 0</p>
+		
+					</td>
+				</tr>
+				
+				<tr>
+					<th>내부처리기한</th>
+					<td>
+						<p>처리완료 예정일 : 2026-10-08 17:07:59</p>
+						<p>설정된 처리기간 : 5</p>
+					</td>
+				</tr>
+				
+			
+			
+		
+		
+		
+			<tr>
+				<th scope="row">민원확인 보안설정</th>
+				<td colspan="3">
+					<span>설정안함</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<!-- 민원인 정보 -->
+	
+
+
+
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		//관계인정보
+		$("#rltnrZpcd").val($("#rvsnRltnrZpcd").val());
+		$("#baseAdrs").val($("#rvsnBaseAdrs").val());
+		$("#dtlAdrs").val($("#rvsnDtlAdrs").val());
+		$("#rltnrEmal").val($("#rvsnRltnrEmal").val());
+		$("#rltnrCpno").val($("#rvsnRltnrCpno").val());
+		$("#rltnrTpno").val($("#rvsnRltnrTpno").val());
+		
+		$("#pttnAplcntInfoBtn").on("click", fn_pttnAplcntInfo); //민원인 정보 열기 버튼 이벤트 추가
+		
+		
+		
+		//이메일 선택 유지
+		var rltnrEmal = "";
+		var rltnrEmal1 = "";
+		var rltnrEmal2 = "";
+		
+		if(rltnrEmal != ""){
+			var values = $.map($("#email_Id > option"), function(e){
+				return e.value;
+			});
+			values = values.join();
+			
+			var valuesList = values.split(",");
+			for (var i = 0; i < valuesList.length; i++) {
+				if(rltnrEmal2 == valuesList[i]){
+					$('#email_Id').val(rltnrEmal2).prop('selected',true);
+					$('#email2').attr("readonly", true);
+					break;
+				}else{
+					$('#email_Id').val("").prop('selected',true);
+					$('#email2').attr("readonly", false);
+				}
+			}
+		}
+	});
+	
+	//민원인 개인정보열람동의 관련 법규 표시
+	function fn_pttnAplcntInfo() {
+		$('.lpop_Btn').click();
+	}
+
+	//민원인정보 표시
+	function fn_indvifRdngAgre(chkObj) {
+		
+		
+			
+																/* 민원인 정보 동의 받고 노출   */
+				//jConfirm("민원인 정보를 열람하시겠습니까?", function() {
+				jConfirmForCancel("민원인 정보를 열람하시겠습니까?", function(r) {
+					
+					if(r) {
+						$(".layer_close").click();
+						chkObj.prop("checked", false);
+						var sendAjaxReqUrl = "/biz/pet/cmmn/pttn/selectPttnAplcntInfo.paid";
+			
+			
+		
+		var options = $.sendAjaxReq.setOptions(
+			sendAjaxReqUrl,
+			"post",
+			{pttnRqstNo: $("#pttnRqstNo").val(), instCd: $("#instCd").val()},
+			true,
+			function(result) { //성공 시
+				var aplcntInfo = result.pttnAplcntInfo;
+				
+				  /* 민원현황(총괄기관)이외 화면상단 이력표시 */
+					//화면상단 이력표시 시작
+					var rcntHstrInfo = aplcntInfo.rcntHstrInfo;
+					if(rcntHstrInfo != null) {
+						var hstrCntTxt = $("#idHstrCnt").text();
+						if(hstrCntTxt == '') {
+							hstrCntTxt = 0;
+						}
+						var hstrCnt = parseInt(hstrCntTxt) + 1;
+						$("#idHstrCnt").text(hstrCnt);
+						$("#idRcntHstr").text(rcntHstrInfo.rcntSttsNm);
+						$("#idRcntHstrDe").text(rcntHstrInfo.clsfDe);
+						if(rcntHstrInfo.rcntChgRsn != null) {
+							$("#idRcntChgRsn").text(rcntHstrInfo.rcntChgRsn);
+						} else {
+							$("#idRcntChgRsn").text('');
+						}
+						if(hstrCnt >= 1) {
+							$("#idHstrCnt").show();
+						}
+						if(hstrCnt >= 0) {
+							$("#idRcntHstr").parent().show();
+						}
+					}
+					//화면상단 이력표시 끝
+				
+				
+				var aplcntInfoRltnrNm = aplcntInfo.rltnrNm==null?'':aplcntInfo.rltnrNm;
+				
+				//회원 아이디가 있을 경우 : "# 2021-01-21 o. 민원처리상세 민원인이름옆에 회원아이디. 홍길동 (hong***) 비회원 또는 회원으로 민원을 신청하였더라도, 회원정보가 존재한다면 해당 아이디를 괄호하여 노출요청"
+
+				var aplcntInfoMbrId = aplcntInfo.mbrId==null?'': aplcntInfo.mbrId;
+				if(aplcntInfoMbrId != '') { aplcntInfoRltnrNm += " ("+aplcntInfoMbrId+")"}
+				
+				var aplcntInfoRltnrZpcd = aplcntInfo.rltnrZpcd==null?'':aplcntInfo.rltnrZpcd;
+				
+				var aplcntInfoBaseAdrs = aplcntInfo.baseAdrs==null?'':aplcntInfo.baseAdrs;				
+				aplcntInfoBaseAdrs = aplcntInfoBaseAdrs.replace("&#x28;", "(").replace("&#x29;", ")");				
+				var aplcntInfoDtlAdrs = aplcntInfo.dtlAdrs==null?'':aplcntInfo.dtlAdrs;				
+				aplcntInfoDtlAdrs = aplcntInfoDtlAdrs.replace("&#x28;", "(").replace("&#x29;", ")");
+								
+				var aplcntInfoRltnrTpno = aplcntInfo.rltnrTpno==null?'':aplcntInfo.rltnrTpno;
+				var aplcntInfoRltnrCpno = aplcntInfo.rltnrCpno==null?'':aplcntInfo.rltnrCpno;
+				var aplcntInfoRltnrEmal = aplcntInfo.rltnrEmal==null?'':aplcntInfo.rltnrEmal;
+				var aplcntInfoRltnrAdrs = aplcntInfoRltnrZpcd + " " + aplcntInfoBaseAdrs + " " + aplcntInfoDtlAdrs;
+				$("#pttnAplcntInfoRltnrNm").text(aplcntInfoRltnrNm);
+				var sctyEntrSctnCd = aplcntInfo.sctyEntrSctnCd==null?'':aplcntInfo.sctyEntrSctnCd;
+				
+				if(sctyEntrSctnCd == '0A250002')
+				{
+					
+					//단체명 특수문자 깨짐 현상 수정.2022.01.14 상담팀 요청.
+					var clubSctyNm = aplcntInfo.clubSctyNm;
+					clubSctyNm = clubSctyNm.replace("&#x28;", "(").replace("&#x29;", ")");
+					
+					$("#trClubSctyNm").show();
+					$("#clubSctyNm").text(clubSctyNm);
+				}
+				else
+				{
+					$("#trClubSctyNm").hide();
+					$("#clubSctyNm").text("");
+				}
+				 
+				$("#rvsnRltnrZpcd").val(aplcntInfoRltnrZpcd);
+				$("#rvsnBaseAdrs").val(aplcntInfoBaseAdrs);
+				$("#rvsnDtlAdrs").val(aplcntInfoDtlAdrs);
+				$("#rvsnRltnrTpno").val(aplcntInfoRltnrTpno);
+				$("#rvsnRltnrCpno").val(aplcntInfoRltnrCpno);
+				$("#rvsnRltnrEmal").val(aplcntInfoRltnrEmal);
+				
+				
+				$("#pttnAplcntInfoChk").addClass("sTog");
+				$("#pttnAplcntInfoBtn").off("click", fn_pttnAplcntInfo);
+				$("#pttnAplcntInfoBtn").click();
+				
+				//민원인 정보 수정 여부 확인 용
+				$("#rltnrZpcd").val($("#rvsnRltnrZpcd").val());
+				$("#baseAdrs").val($("#rvsnBaseAdrs").val());
+				$("#dtlAdrs").val($("#rvsnDtlAdrs").val());
+				$("#rltnrEmal").val($("#rvsnRltnrEmal").val());
+				$("#rltnrCpno").val($("#rvsnRltnrCpno").val());
+				$("#rltnrTpno").val($("#rvsnRltnrTpno").val());
+				
+			},
+			function(error) {
+				//실패 시
+			}
+		);
+		$.sendAjaxReq.start(options);
+		
+		
+			
+																/* 민원인 정보 동의 받고 노출   */
+					} else {
+						chkObj.prop("checked", false);
+					}
+				});
+				/* var timeoutFn = setTimeout(function() {
+					chkObj.prop("checked", false);
+					clearTimeout(timeoutFn);
+				}, 3000); */
+			
+		
+	}
+	
+	/* 민원인정보 수정이력 팝업 */
+	function fn_callPttnrInfoHstrListPopup() {
+		var param = {'pttnRqstNo' : "1BA-2609-1315163"};
+		
+		gfn_openPopupPost("PttnrInfoHstrListPopup", param, "PttnrInfoHstrListPopup", "/biz/pet/cmmn/pop/PttnrInfoHstrListPopup.paid", 750, 350);
+	}
+	
+	function fn_select_email(obj){
+		if(obj == ""){
+			$("#email2").val("");
+			$("#email2").focus();
+			$("#email2").attr("readonly", false);
+		}else{
+			$("#email2").val(obj);
+			$("#email2").attr("readonly", true);
+		}
+	}
+</script>
+
+	<!-- 민원인 정보 -->
+	
+		
+
+		
+
+		
+
+		
+			<button type="button" class="lpop_Btn"></button>
+			<div class="layerPopup">
+				<div class="lPop_top">
+					<strong>민원인정보열람</strong>
+					<button type="button" class="layer_close"><span>닫기</span></button>
+				</div>
+				<div class="lPop_body">
+					<div class="lPop_content">
+						<!-- 레이어팝업 내용 : s -->
+						<div class="top_Txtbox icon01 mb_0">
+							
+
+
+
+	
+					<p class="blue">민원처리를 위해 부득이하게 민원인의 개인정보 열람이 필요한 경우 아래 관련 법규 준수에 동의하면 민원인의 개인정보 열람이 가능하고 민원이력에 저장됩니다.</p>
+					<p class="blue right"><label>동의 <input type="checkbox" onclick="javascript:fn_indvifRdngAgre($(this));"></label></p>
+					
+					<p class="blue">- 민원처리법 제7조, 개인정보 보호법 제15조에 따라 민원인 정보 등은 민원처리 목적으로만 사용하여야 합니다.</p>
+					<p class="blue">&nbsp;&nbsp;(위반 시 5년 이하 징역 또는 5천만원 이하 <b class="blue">벌금</b>)</p>
+					
+					<p class="blue">- 개인정보 보호법 제17조에 따라 정보주체의 동의 없이 제3자에게 민원인 정보 등을 제공해서는 안 됩니다.</p>
+					<p class="blue">&nbsp;&nbsp;(위반 시 5년 이하 징역 또는 5천만원 이하 <b class="blue">벌금</b>)</p>
+					
+					 	
+						</div>
+						<!-- 레이어팝업 내용 : e -->
+					</div>
+				</div>
+			</div>
+			<div class="sTogBox" id="divStogBox">
+				<h4>민원인 정보</h4>
+				<a href="#" class="s_toggle" id="pttnAplcntInfoBtn">열기▼</a>
+			</div>
+			<div id="pttnAplcntInfoChk" style="display:none">
+				<table class="tbl board">
+					<caption>
+						<strong>민원인정보</strong>
+						<details>
+							민원인정보의 민원인, 주소, 연락처, 휴대전화, 전자우편 항목에대한 표입니다.
+						</details>
+					</caption>
+					<colgroup>
+						<col style="width:180px">
+						<col>
+						<col style="width:180px">
+						<col>
+					</colgroup>
+					<tbody>
+					 
+						<tr>
+							<th scope="row">민원인</th>
+							<td colspan="3">
+								<span class="min_vAlign" id="pttnAplcntInfoRltnrNm"></span>
+								<a href="#" onclick="javascript:fn_callPttnrInfoHstrListPopup();return false;" class="tbl_btn f_right mod_btn"><span>수정이력</span></a>
+							</td>
+						</tr>
+						<tr id="trClubSctyNm" hidden="hidden">							
+							<th scope="row">단체명</th>
+							<td colspan="3">
+								<span class="min_vAlign" id="clubSctyNm"></span>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="zipcode">주소</label></th>
+							<td colspan="3">
+								<input type="text" id="rvsnRltnrZpcd" name="rvsnRltnrZpcd" value="44959" class="zipcode" maxlength="5" style="width:60px" readonly="readonly">
+								
+								<a href="#findAddress" id="findAddress" class="tbl_btn large addr" onclick="javascript:gfn_adrsSchPopup('fn_adrsSchPopBind');return false;"><span>주소찾기</span></a>
+								
+								<div class="addrBox">
+									<input type="text" id="rvsnBaseAdrs" name="rvsnBaseAdrs" value="울산광역시 울주군 청량읍 율리영해2길 7" maxlength="80" readonly="readonly">
+									<input type="text" id="rvsnDtlAdrs" name="rvsnDtlAdrs" value="201동 1701호(문수데시앙2단지)" maxlength="80">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="tel">연락처</label></th>
+							<td><input type="text" id="rvsnRltnrTpno" name="rvsnRltnrTpno" value="" class="onlyNumDash"></td>
+<!-- 							<th scope="row"><label for="phone">휴대전화</label></th> -->
+
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 							<th scope="row"><label for="mail">전자우편</label></th> -->
+
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 							<th scope="row"><label for="tel">연락처</label></th> -->
+<!-- 							<td> -->
+
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															
+<!-- 								<select name="mbrTpno1" id="mbrTpno1" style="width:70px" title="유선전화 앞 번호"> -->
+<!-- 									<option value="">선택</option> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 								</select> -->
+<!-- 									<span>-</span>			 -->
+
+<!-- 									<span>-</span> -->
+
+
+<!-- 							</td> -->
+							<th scope="row"><label for="phone">휴대전화</label></th>
+							<td>
+								
+								
+								
+								
+								
+								
+								
+									
+									
+									
+								
+								
+								<select name="mbrCpno1" id="mbrCpno1" style="width:70px" title="휴대전화 앞 번호">
+									<option value="">선택</option>
+									<option selected="selected" value="010">010</option>
+									<option value="011">011</option>
+									<option value="016">016</option>
+									<option value="017">017</option>
+									<option value="018">018</option>
+									<option value="019">019</option>
+									<option value="131">131</option>
+								</select>
+									<span>-</span>
+									<input maxlength="4" style="width:70px" type="text" name="mbrCpno2" id="mbrCpno2" value="2360" title="휴대전화 중간 번호" class="onlyNumber">
+									<span>-</span>
+									<input maxlength="4" style="width:70px" type="text" name="mbrCpno3" id="mbrCpno3" value="1222" title="휴대전화 끝 번호" class="onlyNumber">
+									<input type="hidden" name="rvsnRltnrCpno" id="rvsnRltnrCpno" title="휴대전화" value="010-2360-1222">
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="mail">전자우편</label></th>
+							<td colspan="3">
+							
+							
+							
+							<input type="text" style="width:150px" name="email1" id="email1" title="전자우편 계정" value=""> @
+							<input type="text" style="width:150px" name="email2" id="email2" title="전자우편 도메인" value="">
+							<select title="이메일 도메인 입력방법 선택" id="email_Id" style="width:150px" onchange="fn_select_email(this.value);">
+								<option value="">직접입력</option>
+								<option value="naver.com">네이버</option>
+								<option value="gmail.com">지메일</option>
+								<option value="daum.net">다음</option>
+								<option value="nate.com">네이트</option>
+								<option value="hanmail.net">한메일</option>
+								<option value="kakao.com">카카오</option>
+								<option value="hotmail.com">핫메일</option>
+							</select>
+							<input type="hidden" id="rvsnRltnrEmal" name="rvsnRltnrEmal" value="" <="" td="">
+						</td></tr>
+						<tr>
+							<th scope="row"><label for="rltnrInfoChgRsn">수정사유</label></th>
+							<td colspan="3">
+								<textarea name="pttnBaseRltnrVO.rltrnInfoChgRsn" id="rltrnInfoChgRsn"></textarea>
+							</td>
+						</tr>
+					
+					
+					
+					</tbody>
+				</table>
+			</div>
+		
+	
+	
+	
+	
+
+
+
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	
+	});
+
+    /*// 대상자 수정 버튼
+    function fn_lightCrtftCndcrInfoModPopup() {
+        var param = {'issueNo' : ""};
+
+        gfn_openPopupPost("LightCrtftCndcrInfoModPopup", param, "LightCrtftCndcrInfoModPopup", "/biz/pet/lightCrtft/cmmn/LightCrtftCndcrInfoModPopup.paid", 850, 600);
+    }
+
+    // 대상자 수정이력 버튼
+    function fn_lightCrtftCndcrInfoHstrListPopup() {
+        var param = {'issueNo' : ""};
+
+        gfn_openPopupPost("LightCrtftCndcrInfoHstrListPopup", param, "LightCrtftCndcrInfoHstrListPopup", "/biz/pet/lightCrtft/cmmn/LightCrtftCndcrInfoHstrListPopup.paid", 1024, 700);
+    }*/
+
+
+</script>
+	
+	<!-- 피신고자 정보 -->
+	
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	});
+	
+</script>
+
+	
+	
+	
+	
+	<div class="sTogBox">
+		<h4>공통사항</h4>
+		<a href="#" class="s_toggle">닫기▲</a>
+	</div>
+	<div class="sTog">
+		<table class="tbl board">
+			<caption>
+				<strong>공통사항</strong>
+				<details>
+					공통사항의 민원요지, 민원공개여부, 민원공개변경사유, 열람범위, 신고전환, 업무분야, 관리유형 항목에 대한 표입니다.
+				</details>
+			</caption>
+			<colgroup>
+				<col style="width:88px">
+				<col style="width:92px">
+				<col>
+			</colgroup>
+			<tbody>
+
+				<tr>
+					<th scope="row" colspan="2"><label for="pttnOtlnCntn">민원요지</label></th>
+					<td>
+
+
+<!-- 						<span class="ml_5">* 100자 이내로 입력</span> -->
+
+
+						문수데시앙2단지 201동 1701호 일반공급 공가세대의 분양 전 하자점검 및 보수 요청
+
+					</td>
+				</tr>
+				<tr>
+				
+					
+					
+						<th scope="row" colspan="2">
+					
+				
+					
+						민원공개여부
+					</th>
+					
+						
+						<td>비공개</td>
+					
+					
+				</tr>
+				
+				 
+				<tr>
+					<th scope="row" colspan="2">
+						열람범위<span class="warning">*</span><br>
+						<a href="#" class="tbl_btn large mt_5" onclick="fn_scryStupHpcmViewPopup();"><span>도움말</span></a>
+					</th>
+					<td>
+						<div class="labelMarginNone">
+							
+							
+							<!-- 완료된 민원의 경우 열람범위 수정 불가 -->
+							
+							
+								
+								
+									<label for="pttnRdngScpTyCd1"><input type="radio" id="pttnRdngScpTyCd1" name="pttnInstRcptVO.pttnRdngScpTyCd" onchange="javascript:fn_pttnRdngScpTyCd(this.value)" disabled="true" title="열람범위" class="essential" value="0A070002" checked="checked"> 부서(일반)</label>
+<label for="pttnRdngScpTyCd2"><input type="radio" id="pttnRdngScpTyCd2" name="pttnInstRcptVO.pttnRdngScpTyCd" onchange="javascript:fn_pttnRdngScpTyCd(this.value)" disabled="true" title="열람범위" class="essential" value="0A070003"> 부서(보안)</label>
+<label for="pttnRdngScpTyCd3"><input type="radio" id="pttnRdngScpTyCd3" name="pttnInstRcptVO.pttnRdngScpTyCd" onchange="javascript:fn_pttnRdngScpTyCd(this.value)" disabled="true" title="열람범위" class="essential" value="0A070004"> 비공개</label>
+
+								
+							
+							
+						</div>
+						<p class="mt_15">
+							※ 부서(보안), 비공개 설정 시, 부서 내 타 직원 등의 조회가 제한되며, 민원공개여부는 "비공개"로 자동 전환 됩니다.
+						</p>
+					</td>
+				</tr>
+				
+				
+				
+				<tr>
+					<th scope="row" colspan="2">관리유형</th>
+					<td>
+						<div class="labelMarginNone">
+							<label for="emgcPttnYn">
+								<input type="checkbox" id="emgcPttnYn" name="pttnPttnBaseVO.emgcPttnYn" value="Y"> 긴급민원
+							</label>
+							<label for="pttnTrndYn">
+								<input type="checkbox" id="pttnTrndYn" name="pttnPttnBaseVO.pttnTrndYn" value="Y" class="ml10"> 민원동향
+							</label>
+							<label for="sctyPttnYn">
+								<input type="checkbox" id="sctyPttnYn" name="pttnPttnBaseVO.sctyPttnYn" value="Y" class="ml10"> 집단민원
+							</label>
+							<label for="rgmbtNeedYn">
+								<input type="checkbox" id="rgmbtNeedYn" name="pttnPttnBaseVO.rgmbtNeedYn" value="Y" class="ml10"> 제도개선필요
+							</label>
+						</div>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+	
+	
+	
+					
+	
+	
+	
+		 <!-- 완료된 민원이면서 민원부서담당자/민원처리담당자만 보이도록 함. -->
+			<div class="sTogBox">
+				<h4>민원 비활성화</h4>&nbsp;
+				<a href="#" class="s_toggle">닫기▲</a>
+			</div>
+			<div class="sTog">
+				<table class="tbl board">
+					<caption>
+						<strong>민원 비활성화</strong>
+						<details>
+							민원 비활성화의 비활성화 사유, 근거자료(비활성화 요청민원) 항목에 대한 표입니다.
+						</details>
+					</caption>
+					<colgroup>
+						<col style="width:180px">
+						<col>
+						<col style="width:180px">
+						<col>
+					</colgroup>
+					<tbody>
+					<tr>
+						<th scope="row">비활성화 사유</th>
+						<td colspan="3">
+							<input type="text" id="chgCntnCl" name="chgCntnCl" value="">
+							<p class="blue">
+								※ 비활성화란 민원문서를 삭제하는것이 아니며 대국민 누리집(홈페이지)에서 조회가 되지 않도록 하는것입니다.
+								<br>열람범위는 부서(일반)일 경우 부서(보안)으로 변경됩니다.
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">근거자료<br>(비활성화 요청민원)</th>
+						<td colspan="3">
+							<input type="text" name="pttnInstRcptVO.nacvtRltnPttnRqstNo" id="nacvtRltnPttnRqstNo" value="" readonly="readonly">
+							<a href="#" class="tbl_btn large" id="btn_nacvtRltnPttnRqstNo" onclick="javascript:fn_callNacvtRltnPttnRdListPopup();"><span>검색</span></a>
+							<p>※ 동일 민원인이 신청한 처리중인 민원이 검색되며 비활성화 요청 민원을 선택하면 이를 근거로 비활성화 처리됩니다.</p>
+                            <p>※ 부서담당자, 처리담당자 권한이 있는 경우 민원 비활성화 가능</p>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+										
+				<div class="button mt_10 right" id="divPttnrNacvtYn" style="display:none;">
+					<div class="checkbox_style">
+						<label><input type="checkbox" name="pttnInstRcptVO.pbsvNacvtYn" id="pbsvNacvtYn" value="Y"> 공무원단 비활성화</label>
+	
+	<!-- 						<a href="#" class="bbs_btn fill" onclick="javascript:fn_pttnrNacvtYn();"><span>민원비활성화</span></a> -->
+	
+					</div>
+				</div>
+			</div>
+		
+	
+	
+	
+	
+	
+	<h4>처리결과</h4>
+	<table class="tbl board">
+		<caption>
+			<strong>처리결과</strong>
+			<details>
+				처리결과의 처리부서, 담당자, 관리부서, 사후관리담당자, 전화번호, E-MAIL, 관련법령, 민원종류, 처리구분, 처리결과통보방식 항목에 대한 표입니다.
+			</details>
+		</caption>
+		<colgroup>
+			<col style="width:180px">
+			<col>
+			<col style="width:180px">
+			<col>
+		</colgroup>
+		<tbody>
+		<tr>
+			<th scope="row">처리부서</th>
+			<td>울산광역시도시공사 주택사업팀</td>
+			<th scope="row">담당자</th>
+			<td>
+			
+				양지원
+			
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">관리부서</th>
+			<td>울산광역시도시공사 주택사업팀</td>
+			<th scope="row">사후관리담당자</th>
+			<td>
+			
+				양지원
+			
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">전화번호</th>
+			<td>052-219-8458</td>
+			<th scope="row">E-MAIL</th>
+			<td>wldnjs25@umca.co.kr</td>
+		</tr>
+		
+			<tr>
+				<th scope="row">관련법령</th>
+				<td colspan="3">민원 처리에 관한 법률 제27조(처리결과의 통지), </td>
+			</tr>
+			<tr>
+				<th scope="row">민원종류</th>
+				<td scope="row">질의민원</td>
+				<th scope="row">처리구분</th>
+				<td scope="row">별도 민원송부</td>
+			</tr>
+			<tr>
+				<th scope="row">처리결과통보방식</th>
+				<td colspan="3">
+					진행상황통지방식(휴대전화), 민원답변통지방식(서면, 누리집(홈페이지))
+					
+				</td>
+			</tr>
+			
+		
+		</tbody>
+	</table>
+	
+	
+	<!-- 처리결과 탭 및 만족도 정보 -->
+	
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+			bTab("bTab3");
+	});
+	
+</script>
+
+
+	
+		<h4>&nbsp;</h4>
+		<ul class="basic_Tab" id="bTab3" style="height: 724px;">
+			
+			
+			<li>
+				<a href="#" class="ov"><span>처리결과(답변내용)</span></a>
+				<div class="b_tab" style="display: block;">
+					<table class="tbl board" id="tbl_ans0">
+						<caption>
+							<strong>처리결과(답변내용)/n차 답변내용</strong>
+							<details>
+								처리결과(답변내용)의 처리부서, 처리자, 처리결과 통보일, 처리결과, 처리결과 첨부파일, 시행문 항목에 대한 표입니다.
+							</details>
+						</caption>
+						<colgroup>
+							<col style="width:180px">
+							<col>
+							<col style="width:180px">
+							<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">처리부서</th>
+								<td colspan="3">울산광역시도시공사 주택사업팀</td>
+							</tr>
+							<tr>
+								<th scope="row">처리자</th>
+								<td colspan="3">양지원</td>
+							</tr>
+							<tr>
+								<th scope="row">처리결과 통보일</th>
+								<td colspan="3">2026-10-08 14:54</td>
+								
+							</tr>
+							<tr>
+								<th scope="row">처리결과</th>
+								<td colspan="3">1. 안녕하십니까? 귀하께서 국민신문고를 통해 신청하신 민원(2BA-2609-1310894)에 대하여 다음과 같이 회신합니다.<br>2. 귀하께서 제출하신 민원의 내용은 「문수데시앙2단지 201동 1701호 일반공급 공가세대의 분양 전 하자점검 및 보수 요청」에 관한 것으로 판단됩니다.<br>3. 해당 주택은 건축사용 승인일이 2015. 5. 22.인 10년 공공임대주택으로, 2025. 7. 31. 임대기간 종료 후 2026. 7. 31.까지 입주자에게 우선 분양전환이 실시된 주택이며, 분양전환을 하지 않은 주택을 금회 일반공급 입주자 모집 공고한 것입니다.<br>4. 입주자 모집 공고문에“본 아파트는 기존 입주자의 퇴거 후 상태로 인계하여 드리므로 당첨자는 계약 세대 내부를 확인하시고 계약 체결, 시설물(보일러, 도배, 마루 등, 기타 시설물 및 마감재 등)의 미비, 파손, 노후화 등을 사유로 향후 하자보수 등을 요구할 수 없습니다”을 명시하여 안내한 바 있습니다.<br>5. 또한 본 공동주택은 「시설물의 안전 및 유지관리에 관한 특별법」 제11조 및 같은 법 시행령 제8조에 따른 제2종시설물(16층 이상의 공동주택)으로서 정밀안전점검을 정기적으로 실시하여야 하며, 2025년 실시한 정밀안전점검 결과 구조적 안전성에 이상이 없었습니다.<br>6. 발코니 벽체 균열은 콘크리트 건축물에서 발생할 수 있는 일반적인 건조수축에 의한 미세균열로 판단됩니다.<br>7. 따라서 입주자 모집공고 시 사전 안내드린 바와 같이 기존 입주자의 퇴거 후 상태로 인계되므로 세대 내부를 확인하시고 계약여부를 결정하여야 할 것입니다.<br>8. 답변 내용에 대한 추가 설명이 필요한 경우 주택사업팀 양지원 대리(T.052-219-8458)에게 연락주시면 친절히 안내해 드리도록 하겠습니다. 감사합니다.</td>
+							</tr>
+							<tr>
+								<th scope="row">
+									처리결과 첨부파일
+									
+								</th>
+								<td colspan="3">
+									
+										
+										
+										첨부파일이 없습니다.
+										
+									
+								</td>
+							</tr>
+							
+							<!-- 직접서신통보, 서신통보불가 경우 내용 표출  -->
+							
+								<tr>
+									<th scope="row" rowspan="2">서면통보확인</th>
+									<td colspan="3">
+										
+											우편/팩스
+											
+											
+											
+											
+											
+											
+											
+											
+											
+										
+									</td>
+								</tr>
+								
+									<tr>
+										<td colspan="3">
+											발송방법: 우편<br>발송일: 2026. 10. 8.(목)
+										</td>
+									</tr>
+								
+							
+						</tbody>
+					</table>
+					
+					
+						<h4>민원만족도</h4>
+						<table class="tbl board">
+							<caption>
+								<strong>민원만족도</strong>
+								<details>
+									민원만족도의 질문, 답변, 추가답변가능기한, 만족 또는 불만족 사유 항목에 대한 표입니다.
+								</details>
+							</caption>
+							<colgroup>
+								<col style="width:50%">
+								<col style="width:25%">
+								<col style="width:25%">
+							</colgroup>
+							<tbody>
+								
+									
+										<tr>
+											<th scope="col" colspan="3">만족도 조사가 등록되어 있지 않습니다</th>
+										</tr>
+									
+									
+								
+							</tbody>
+						</table>
+						
+					
+				</div>
+			</li>
+				
+				
+				
+			
+		</ul>
+	
+	
+	
+	
+	
+
+
+
+
+ 
+
+<script type="text/javascript">
+
+/* fn_epst_snd_popup_re('신문고업무구분공통코드', '추가답변횟수', '신문고신청번호', '기관접수일련번호', '고충민원문서종류코드 : 00270038 처리결과통보서(신청인)', '고충민원처리일련번호', '첨부파일그룹ID', '재발송여부', '후처리 함수명');  */
+/* 
+ 	시행문용 첨부파일 : "inputEnldAtchFileGrpId": inputEnldAtchFileGrpId,
+*/
+function fn_epst_snd_popup_re(dutyCd, epAddnAnsTcnt, rqstNo, rcptSn, docKndCd, dfptSn, atchGrpId, inputEnldAtchFileGrpId, reSndYn, conKeyV, fn){
+	var param = { "epDutySctnCd":dutyCd,
+			 	  "epAddnAnsTcnt":epAddnAnsTcnt,
+				  "epRqstNo":rqstNo,
+				  "epRcptSn":rcptSn,
+				  "docKndCd":docKndCd,
+				  "dfptRpdocDutyPrcsSn":dfptSn,
+				  "inputAtchFileGrpId": atchGrpId,
+				  "inputEnldAtchFileGrpId": inputEnldAtchFileGrpId,
+				  "reSndYn":reSndYn,
+				  "prvConKeyV":conKeyV,
+				
+					  
+					  "rcvnrList[0].rqstNo":"1BA-2609-1315163",
+					  "rcvnrList[0].rcptSn":"215275716",
+					  "rcvnrList[0].rcptNo":"2BA-2609-1310894",
+					  "rcvnrList[0].rcvnrDtlAdrs":"201동 1701호(문수데시앙2단지)",
+						"rcvnrList[0].rcvnrNm":"민원인 성명",
+						"rcvnrList[0].rcvnrZpcd":"44959",
+						"rcvnrList[0].rcvnrAdrs":"울산광역시 울주군 청량읍 율리영해2길 7",
+						"rcvnrList[0].rcvnrSn":"0",
+						"rcvnrList[0].rvsnrDtlAdrs":"",
+						"rcvnrList[0].rvsnrNm":"",
+						"rcvnrList[0].rvsnrZpcd":"",
+						"rcvnrList[0].rvsnrAdrs":"",
+						"rcvnrList[0].rvsnrSn":"",
+					  					  
+				
+				  "callBackFn":fn
+				};
+	
+	gfn_openPopupPost("", param, "EpstSndInfoInsertPopup", "/biz/cmmn/epst/EpstSndInfoInsertPopup.paid", 1200, 750);
+}
+ 
+</script>
+
+	
+	
+	
+	
+	
+
+
+
+
+
+<script type="text/javascript">
+$(function() {
+	bTab("bTab1");
+});
+</script>
+
+	
+	<script>
+		$(function () {
+			bTab("bTab1");
+			bTab("bTab2");
+			bTab("bTab3");
+                    });
+	</script>
+	
+	
+	
+
+
+
+
+
+
+	
+	
+
+	
+	
+		<div id="workButton" style="bottom: 0px;">
+			
+			<!-- 처리담당자 -->
+<!-- 			<div class="button_group group_1"> -->
+<!-- 				<div class="layout"> -->
+		
+<!-- 					<div class="label">기능</div> -->
+<!-- 					<div class="button" id="divButton"> -->
+
+<!-- 							<span class="grap color_01"> -->
+
+<!-- 							</span> -->
+
+<!-- 						<span class="grap color_02"> -->
+<!-- 							<a href="#" onclick="javascript:fn_callTrnfHstrListPopup();"><span>이송이력보기</span></a> -->
+
+
+<!-- 						</span> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+		
+			
+				<div class="button_group group_2">
+					<div class="layout">
+						<div class="label">처리</div>
+						<div class="button more">
+							
+								
+									<a href="#workflow_1" id="a_workflow_1"><span>답변추가하기</span></a>
+								
+							
+							
+								
+							
+						</div>
+						<a href="#" class="close_sm ab_close">닫기</a>
+					</div>
+				</div>
+
+				<div id="workflow_1" class="workflow">
+					
+
+
+
+
+
+
+
+
+
+<script src="/resource/js/paid/cmmn/common.file.js"></script>
+<script src="/resource/js/paid/biz/pet/pet_elsn.js"></script>
+<script type="text/javascript" src="/resource/js/paid/biz/cmmn/sprrchk/sprrchk.js"></script>
+<script type="text/javascript" src="/resource/js/paid/biz/cmmn/elsnJs/elsn.js"></script>
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		/* 팝업창에서 호출할 함수 바인딩 */
+		$(document).bind("AnsTmplListPopup.fn_callAnsTmplListPopBind", fn_callAnsTmplListPopBind);
+		
+			//서신통보방법 선택
+			
+				
+				
+					$("#sendPostN").click();
+				
+			
+			
+				$("#minwon_10").prop("disabled", true);
+			
+			
+		$("#divAddAns").change(function(){
+			$("#changeFlag").val('Y');
+			$("#tmpSaveYn").val('N');
+		});
+	});
+
+	/**
+	 * 저장전 유효성 체크
+	 */
+	function checkValidSave()
+	{
+		var modTcnt = $("#modTcnt").val();
+		if(Number(modTcnt) >= 3) {
+			jAlert("추가 답변은 3회까지 가능합니다.");
+			return false;
+		}
+		
+		var prcsRsltCntnCl = $("#prcsRsltCntnCl").val();
+		if(prcsRsltCntnCl == null || prcsRsltCntnCl == '') {
+			jAlert("추가답변을 입력하시기 바랍니다.");
+			return false;
+		}
+		
+		return true;
+	}
+	
+/* 임시저장, 처리결과 통보 */
+function fn_Save(gubun) {
+	//추가가능 기한 체크
+	
+
+	$("#atchFileGrpId_01").children().remove();
+	
+	var prcsRsltCntnCl = $("#prcsRsltCntnCl").val();
+	$("#tmpPrcsRsltCntnCl").val(prcsRsltCntnCl);
+	
+	var ltrNtcnCd = $("#ltrNtcnCd").val();
+	var ltrNtcnBnrgRsn = $("#ltrNtcnBnrgRsn").val();
+	
+	var sncnSn = $("#sncnSn").val();
+	
+	var reValid = checkValidSave();
+	if(!reValid) return;
+	
+	if(gubun == "tmpSave") {
+		jConfirm("임시저장하시겠습니까?", function() {
+			$("#viewForm").attr("action", "/biz/pet/prcs/prcs/PttnAnsAddnTempInsert.paid");
+			var options = $.sendAjaxSumit.setOptions(fn_setResultAns, fn_viewErrorMsg);
+			$.sendAjaxSumit.start($("#viewForm"), options);
+		});
+	}else if(gubun == "save") {
+		
+		if($("#addAnsSaveYn").val() == "Y")
+		{
+			fn_reload_page();
+			return;
+		}
+		var confirmMsg = "";
+		var ansEmalFileAtchYn = "N";
+		var acfrMsnfYn = "Y";
+		var acfrDeptYn = "Y";
+		var prcsRsltNm = "서면, 누리집(홈페이지)";
+		var helpYn = "";
+		
+// 		if("00020029" == $("#safeEpPttnRqstPathSctnCd").val())
+// 		{
+// 			if($("input:radio[name='pttnDeptPrcsVO.t01PrcsSctnCd']:checked").val() == null)
+// 			{
+// 				jAlert("처리구분을 선택해주세요.");
+// 				return false;
+// 			}
+// 		}		
+		
+		if(acfrMsnfYn == "Y" && acfrDeptYn == "Y"){
+			confirmMsg = "작성하신 내용으로 민원인에게 추가답변하시겠습니까?";
+		    if(ansEmalFileAtchYn == 'Y'){
+		       confirmMsg = "작성한 추가 답변 내용이 "+prcsRsltNm+"로 통지됩니다. \r\n"+confirmMsg;
+		    }
+		    
+		    if($("#ltrYn").val() == "Y")  // $("#ePost").checked==true
+			{
+				if(typeof($("input:radio[name='pttnDeptPrcsVO.ltrNtcnCd']:checked").val()) == "undefined"){   
+					jAlert("본 민원은 민원인이 서신으로 통보해 주도록 지정한 민원이므로 국민신문고의 처리결과통보와는 별개로 서신으로 별도 통보하신후  [서신통보확인] 항목을 선택해야만 처리결과통보가 가능합니다.");
+					return;
+				}
+			}
+		    
+		}else{
+			confirmMsg = "작성하신 내용으로 추가답변하시겠습니까?\n작성내용은 주관기관 주관부서에서 취합 후 추가답변 시 민원인에게 통보됩니다.";
+		}
+		
+		if(acfrMsnfYn == "Y" && acfrDeptYn == "Y"){
+		//우편통보확인 필수값 체크 S
+			if($("#ltrYn").val() == "Y")  // $("#ePost").checked==true
+			{
+				if(typeof($("input:radio[name='pttnDeptPrcsVO.ltrNtcnCd']:checked").val()) == "undefined"){   
+					jAlert("본 민원은 민원인이 서신으로 통보해 주도록 지정한 민원이므로 국민신문고의 처리결과통보와는 별개로 서신으로 별도 통보하신후  [서신통보확인] 항목을 선택해야만 처리결과통보가 가능합니다.");
+					return;
+				}
+			}
+		//우편통보확인 필수값 체크 E
+		}
+// 		jConfirm("작성한 추가답변 내용이 민원인의 이메일로 직접 발송됩니다.<br/>작성하신 내용으로 민원인에게 추가 답변하시겠습니까?", function() {
+		jConfirm(confirmMsg, function() {
+			
+				var modTcnt = $("#ePostModTcnt").val();			//추가답변 횟수 
+				/* e-그린우편 선택 시  */
+				if($("#ePost").is(":checked")) {
+					$.paidLoading.startFullScreen();
+					if($("#epstRcptSn").val() == "") {
+						var reValid = checkValidSave();
+						if(!reValid) return false;
+						
+						$("#tmpSaveYn").val("Y");
+						exist = ajaxEpstTmpSave();
+						if(exist) {
+							$.paidLoading.startFullScreen();
+							fn_epst_snd_popup('5B050010', modTcnt, '1BA-2609-1315163','215275716', '00270038', '215275716', '', 'N', 'fn_epstSndInfo');
+							return;
+						} else {
+							$.paidLoading.remove();
+							jAlert("임시저장을 하여야 합니다.");
+							return;
+						}
+					}
+				} else {			
+					 if(typeof($("input:radio[name='pttnDeptPrcsVO.ltrNtcnCd']:checked").val()) != "undefined" && $("input:radio[name='pttnDeptPrcsVO.ltrNtcnCd']:checked").val()!="0A230001"){ //협조부서,기관이면서 민원답변통지방식이 서면일 경우 안타도록 
+						if($("#ltrNtcnBnrgRsn").val().length > 400 || $("#ltrNtcnBnrgRsn").val().length < 10){	//서신통보 불가사유 사이즈 체크
+							jAlert("비고 사유는 10자 이상, 200자 이내로 작성하셔야 합니다!");
+				            return;
+				        }
+					} 
+				}
+			
+
+			$("#addAnsSaveYn").val("Y");
+			$("#viewForm").attr("action", "/biz/pet/prcs/prcs/PttnAnsAddnInsert.paid");
+			var options = $.sendAjaxSumit.setOptions(fn_setResultAns, fn_viewErrorMsg);
+			$.sendAjaxSumit.start($("#viewForm"), options);
+			$.paidLoading.startFullScreen();
+		});
+	}
+}
+	
+//ajax 후 처리
+function fn_setResultAns(result) {
+	$.paidLoading.remove();
+	var data = JSON.parse(result);
+	if(data != null) {
+		jAlert(data.resultMsg, function() {
+// 			self.location.reload();
+			fn_reload_page();
+		});
+	}
+}
+
+/**
+ * E-그린 우편 결과 통보 시 Ajax 저장 처리
+ */
+function ajaxEpstTmpSave() {
+	
+	var exist = true;
+	if($("#atchFileGrpId").val().trim() == "") {
+		$("#atchFileGrpId_02").find("[name^='upldMultiFile']").each(function(i) {
+			if($(this).val().trim() != "") {
+				exist= false;
+			}
+		 });		
+	}
+
+	return exist;
+}
+
+/* 2022.02.22 김보훈 서신통보 선택 값 추가 */
+/* 민원답변방법이 서신 일 경우 직접서신통보, 서신통보불가 시 사유항목 */
+function fn_chkLtrRsn(value){
+	/* Parameter value radio값 */
+	if(value != "0A230001" && value != "0A231003"){
+		$("#trlbLtrRsn").show();
+		$("#trlbLtrRsn").focus();
+		$("#ltrNtcnBnrgRsn").val("");
+		if (value == "0A230002") {
+			$("#ltrNtcnBnrgRsn").val("발송방법:\n발송일:");
+		} else if(value == "0A230004"){
+			$("#ltrNtcnBnrgRsn").val("교부일:\n수령인:");
+		} else if(value == "0A230005"){
+
+		} else if(value == "0A231004"){
+			$("#ltrNtcnBnrgRsn").val("동의일:\n동의방법:\n사유:");
+		} else if(value == "0A231005"){
+			$("#ltrNtcnBnrgRsn").attr("placeholder","민원인에게 처리결과를 문서로 직접 통보하지 않은 사유를 작성해주세요.");
+		} else {
+			$("#ltrNtcnBnrgRsn").attr("placeholder","");
+			$("#ltrNtcnBnrgRsn").val("");
+		}
+	} else{
+		$("#trlbLtrRsn").hide();
+		$("#ltrNtcnBnrgRsn").val("");
+	}
+}
+
+/* 2022.02.22 김보훈 서신통보 선택 값 추가 */
+/* 서면 방법이 제공 또는 미제공에 대한 서신 통보 방법 변경*/
+function fn_chkltrNtcnPost(value){
+	if(value == "Y"){
+		$("#selPostY").show();
+		$("#selPostN").hide();
+	}else if(value == "N"){
+		$("#selPostY").hide();
+		$("#selPostN").show();
+	}else{
+		$("#selPostY").hide();
+		$("#selPostN").hide();
+	}
+}
+
+//첨부파일 다운로드
+function doSubmit(FileId, FileGrpId){
+	var param = {
+			atchFileId : FileId,	
+			atchFileGrpId : FileGrpId
+	}
+	gfn_downForm("download", param, "/paid/syscmmn/fileDwld.npaid");
+ }
+ 
+function fn_epstSndInfo(epstRcptSn, prgsYn) {
+	$("#epstRcptSn").val(epstRcptSn);
+	//prgsYn 진행여부(진행 : Y, 보류 : N)
+	if(prgsYn == "Y") {
+		$("#viewForm").attr("action", "/biz/pet/prcs/prcs/PttnAnsAddnInsert.paid");
+		var options = $.sendAjaxSumit.setOptions(fn_setResultAns, fn_viewErrorMsg);
+		$.sendAjaxSumit.start($("#viewForm"), options);
+	} else {
+		$("#viewForm").attr("action", "/biz/pet/prcs/prcs/PttnAnsAddnTempInsert.paid");
+		var options = $.sendAjaxSumit.setOptions(fn_setResultAns, fn_viewErrorMsg);
+		$.sendAjaxSumit.start($("#viewForm"), options);		
+	}
+}
+
+/* e그린 재발송 */
+function fn_reEpstSndInfo(result) {
+// 	self.location.reload();
+	fn_reload_page();
+}
+
+/* fn_epst_snd_popup('신문고업무구분공통코드', '추가답변횟수', '신문고신청번호', '기관접수일련번호', '고충민원문서종류코드 : 00270038 처리결과통보서(신청인)', '고충민원처리일련번호', '첨부파일그룹ID', '재발송여부', '후처리 함수명');  */
+ /* 시행문용 첨부파일 :   "inputEnldAtchFileGrpId": "", */
+function fn_epst_snd_popup(dutyCd, epAddnAnsTcnt, rqstNo, rcptSn, docKndCd, dfptSn, atchGrpId, reSndYn, fn){
+	var param = { "epDutySctnCd":dutyCd,
+			 	  "epAddnAnsTcnt":epAddnAnsTcnt,
+				  "epRqstNo":rqstNo,
+				  "epRcptSn":rcptSn,
+				  "docKndCd":docKndCd,
+				  "dfptRpdocDutyPrcsSn":dfptSn,
+				  "inputAtchFileGrpId": atchGrpId,
+				  "inputEnldAtchFileGrpId": "",
+				  "reSndYn":reSndYn,
+				
+					  
+					  "rcvnrList[0].rcvnrDtlAdrs":"201동 1701호(문수데시앙2단지)",
+						"rcvnrList[0].rcvnrNm":"민원인 성명",
+						"rcvnrList[0].rcvnrZpcd":"44959",
+						"rcvnrList[0].rcvnrAdrs":"울산광역시 울주군 청량읍 율리영해2길 7",
+						"rcvnrList[0].rcvnrSn":"0",
+						"rcvnrList[0].rvsnrDtlAdrs":"",
+						"rcvnrList[0].rvsnrNm":"",
+						"rcvnrList[0].rvsnrZpcd":"",
+						"rcvnrList[0].rvsnrAdrs":"",
+						"rcvnrList[0].rvsnrSn":"",
+					  					  
+				
+				  "callBackFn":fn
+				};
+	
+	gfn_openPopupPost("", param, "EpstSndInfoInsertPopup", "/biz/cmmn/epst/EpstSndInfoInsertPopup.paid", 1200, 750);
+}
+
+/* 자주쓰는 답변 등록 팝업 */
+function fn_openPopFavAnsReg()
+{
+	var param = {
+// 		orgPttnRqstNo : pttnRqstNo, 			//  민원번호key
+			epDutySctnCd : "5B050010"			//retrun 함수정의
+	};
+	pttn_openPopUp("ansTmplInsertPop", param, "/biz/pet/cmmn/pop/AnsTmplInsertPopup.paid", "", 850, 650);
+}
+
+/* 자주쓰는 답변 검색 팝업 */
+function fn_openPopFavAns()
+{
+	var param = {
+ 		rtrnTrg : "AnsTmplListPopup.fn_callAnsTmplListPopBind"			//retrun 함수정의
+ 		, epDutySctnCd : "5B050010"
+ 		, pttnRqstNo : $("#pttnRqstNo").val()
+	};
+	
+	gfn_openPopupPost("ansTmplListPop", param, "ansTmplListPop", "/biz/pet/cmmn/pop/AnsTmplListPopup.paid", 850, 650);
+}
+
+/* 자주쓰는 답변 조회 팝업 콜백함수 */
+function fn_callAnsTmplListPopBind(event, results){
+	
+	//자주쓰는 답변 답변 영역에 세팅
+	/*var contents = convertContents(results[0].stdsAnsCntnCl);
+	$("#prcsRsltCntnCl").val(contents);*/
+	
+	var param = {stdsAnsSn : results[0].stdsAnsSn};
+	var url = "/biz/pet/cmmn/pop/selectStdsAns.paid";
+	var options = $.sendAjaxReq.setOptions(url, "post", param, true, fn_SuccStdsSns, fn_AjaxFailPopup);
+	$.sendAjaxReq.start(options);
+}
+
+function convertContents(string){ 
+	string = string.replace(/&quot;/gi, '"');
+	string = string.replace(/&apos;/gi,"'");
+	string = string.replace(/&gt;/gi,">");
+	string = string.replace(/&lt;/gi,"<");
+	string = string.replace(/&amp;quot;/gi, '"');
+	string = string.replace(/&amp;apos;/gi,"'");
+	string = string.replace(/&amp;gt;/gi,">");
+	string = string.replace(/&amp;lt;/gi,"<");
+	return string;
+}
+
+function fn_SuccStdsSns(result)
+{
+	if(result != null)
+	{
+		var data = result.rsltData;
+		var contents = convertContents(data.finalStdsAnsCntnCl);
+		$("#prcsRsltCntnCl").val(contents);
+	}
+}
+
+//자주쓰는 답변 선택 값 설정
+function fn_setOpenPopFavAns(event, results){
+	fn_setFavAns(results[0].pttnRqstNo, results[0].instRcptSn, results[0].deptPrcsSn);
+}
+
+
+/* 선택된 자주쓰는 답변 조회하여 답변란에 설정 */
+function fn_setFavAns(pttnRqstNo, instRcptSn, deptPrcsSn) {
+	return;
+	$.ajax({
+		type:"get",
+		url:"/biz/pet/prcs/prcs/CmplPttnListPopupView.paid",
+		data:{'pttnRqstNo': pttnRqstNo, 'instRcptSn': instRcptSn, 'deptPrcsSn': deptPrcsSn},
+		beforeSend: function(xhr)
+		{
+			xhr.setRequestHeader("X-XSRF-TOKEN","2e924a50-f356-4aaa-bf38-6fcb4b39b13e");
+		},
+		success:function(data) {
+			if(data != null) {
+				var dataInfo = data.resultInfo;
+			
+				if(dataInfo.prcsRsltCntnCl != null && dataInfo.prcsRsltCntnCl != undefined) {
+					$("#prcsRsltCntnCl").val(dataInfo.prcsRsltCntnCl);
+				}
+			}
+		},fail:function(data){
+			//alert("실패");
+		},error:function(request, status, error){
+			//alert(request.responseText);
+			//alert(error);
+		}
+	});
+}
+
+
+/**
+ * 결재 기안 취소 처리 (공통 모듈 호출)
+ */
+function fn_elsnDrft_cmmn()
+{
+	var pttnRqstNo = $("#pttnRqstNo").val();
+	var instRcptNo = $("#instRcptNo").val();
+	var deptPrcsSn = '';	//$("#deptPrcsSn").val();
+	var dfptDutyPrcsSn = '';
+	var sncnSn = $("#sncnSn").val();
+	var docKndCd = $("#docKndCd").val();
+	var rtrnTrg = 'fn_pttnElsnDrftHist';
+	fn_elsn_drft_cncl(pttnRqstNo, instRcptNo, deptPrcsSn, dfptDutyPrcsSn, sncnSn, docKndCd, rtrnTrg);
+}
+
+/**
+ * 결재 기안 취소 처리
+ */
+function fn_elsnDrft()
+{
+//	fn_elsnDrft_cmmn();
+
+	jConfirm('해당 결재건을 취소 하시겠습니까?',function() {
+		$.paidLoading.startFullScreen();
+		fn_pttnElsnDrftHist('Y'); //공통모듈 호출하지 않고 기안취소 상태로 변경
+	});
+	
+// 	var pttnRqstNo = $("#pttnRqstNo").val();
+// 	var instRcptNo = $("#instRcptNo").val();
+// 	var instRcptSn = $("#instRcptSn").val();
+// 	var deptPrcsSn = $("#deptPrcsSn").val();
+// 	var dfptDutyPrcsSn = '';
+// 	var sncnSn = $("#sncnSn").val();
+// 	var docKndCd = $("#docKndCd").val();
+// 	var trmsrId = 'XK7김성락001';
+	
+// 	var param = {
+// 					"epRqstNo"		: pttnRqstNo,
+// 					"instRcptNo"	: instRcptNo,
+// 					"instRcptSn"	: instRcptSn,
+// 					"deptPrcsSn"	: deptPrcsSn,
+// 					"sncnSn"		: sncnSn,
+// 					"docKndCd" 		: docKndCd,
+// 					"trmsrId" 		: trmsrId,
+// 					"sncnSttsCd"	: "90030020"
+// 				};
+	
+// 	var url = "/biz/pet/cmmn/pttn/updatePttnElsnDrft.paid";
+// 	var options = $.sendAjaxReq.setOptions(url, "post", param, true, fn_pttnElsnDrft_Succ, fn_AjaxFail);
+
+// 	$.sendAjaxReq.start(options);
+} 
+
+
+/**
+ * 기안 취소 후 처리
+ * @param result
+ * @returns
+ */
+function fn_pttnElsnDrft_Succ(data)
+{
+	var rsltYn = data.rsltYn;
+	var msg = data.msg;
+	if(rsltYn == 'Y')
+	{
+		jAlert("기안취소를 성공하였습니다.", function(){
+			fn_pttnElsnHist_Succ(data.paramVO);
+		});
+	}
+	else
+	{
+		jAlert("기안취소를 실패하였습니다.", function(){
+		});
+	}
+	
+}
+
+/**
+ * 검토 확인 관리 화면으로 이동
+ * @returns
+ */
+function fn_chkCmplCntn(chkRqstSn)
+{
+	var param = {"chkRqstSn":chkRqstSn};
+	var url = "/biz/pet/prcs/ans/ChkRqstPrcsListPopup.paid";
+	gfn_openPopupPost("chkCntnPop", param, "chkCntnPop", url, 1000, 700);
+}
+
+
+/**
+ * 검토 확인 요청
+ * @returns
+ */
+function fn_chkReqAddnAns()
+{
+	if($("#tmpSaveYn").val() != "Y")
+	{
+		jAlert("임시저장을 하여야 합니다.");
+		return false;
+	}
+
+	var param = {
+					"pttnRqstNo" : $("#pttnRqstNo").val(),
+					"instRcptSn" : $("#instRcptSn").val(),
+					"deptPrcsSn" : +$("#deptPrcsSn").val(),
+					"pttnRqstTitl" : $("#pttnRqstTitl").val(),
+					"rltnrNm" :  $("#rltnrNm").val(),
+					"prcsRsltCntnCl" :  $("#prcsRsltCntnCl").val(),
+					"chrgrId" : $("#chkRqsterId").val()
+				};
+	fn_sprrchk_rqst_popup('5B050010', param.pttnRqstNo, param.instRcptSn, param.deptPrcsSn, '', param.pttnRqstTitl, param.rltnrNm, param.prcsRsltCntnCl, param.chrgrId, 'fn_chkReqAddnAnsSucc');
+	//fn_sprrchk_rqst_popup('신문고업무구분공통코드','신문고신청번호','기관접수일련번호', '부서처리일련번호', '업무처리일련번호', '신청제목(민원이면 민원신청제목, 제안이면 제안제목)', '신청인(관계인상세의 관계인명)', '처리결과내용', '검토요청자ID', '후처리 함수명', '고충민원검토문서구분공통코드', '검토요청내용');
+}
+
+function fn_chkReqAddnAnsSucc()
+{
+	$("#chkPrcsPrgsYn").val("Y");
+	$("#aChkReq").hide();
+	$("#aChkCncl").show();
+	$("#aChkRtrnCntn").hide();
+	$("#aChkReqCntn").show();
+	$("#aChkCmplCntn").hide();
+	fn_reload_page();
+}
+
+
+/**
+ * 검토 확인 요청 취소
+ * @returns
+ */
+function fn_chkReqCnclAddAns()
+{
+	fn_cancel_sprrchk($("#pttnRqstNo").val(),$("#instRcptSn").val(), $("#deptPrcsSn").val(), '', $("#chrgrId").val(), 'fn_chkReqCnclAddAnsSucc', '5B050010');
+	//fn_cancel_sprrchk('신문고신청번호', '기관접수일련번호', '부서처리일련번호', '업무처리일련번호', '검토요청자ID', '후처리 함수명', '신문고업무구분코드', '고충민원검토문서구분공통코드');
+}
+
+/**
+ * 검토 확인 요청 취소 성공 시 후처리
+ * @returns
+ */
+function fn_chkReqCnclAddAnsSucc()
+{
+	$("#chkPrcsPrgsYn").val("N");
+	$("#aChkReq").show();
+	$("#aChkCncl").hide();
+	$("#aChkRtrnCntn").hide();
+	$("#aChkReqCntn").hide();
+	$("#aChkCmplCntn").hide();
+	fn_reload_page();
+}
+
+</script>
+	<input type="hidden" id="pttnRqstTitl" value="문수데시앙 2단지 201동 1701호 계약 전 확인 하자 점검 및 정석 보수에 관한 서면 이행 요청의 건">
+	<input type="hidden" id="rltnrNm" value="민원인 성명">
+	<input type="hidden" id="chkPrcsPrgsYn" value="">
+	<input type="hidden" id="instRcptNo" value="2BA-2609-1310894"> 
+	<input type="hidden" id="tcnt" value=""> 
+	<input type="hidden" id="chkRqsterId" value="XK7양지원001">
+	<input type="hidden" id="loginId" value="XK7김성락001">
+	<!-- 결재용도 S -->
+	<input type="hidden" id="tmpSaveYn" name="tmpSaveYn" value="N">
+	<input type="hidden" id="sncnPrvwUseYn" value="N">
+	<input type="hidden" id="onnaraUseYn" value="N"> 
+	<input type="hidden" id="elsnUseYn" value="N">
+	<input type="hidden" id="docKndCd" value="00270021">
+	<input type="hidden" id="elsnSynzYn" value="N">
+	<input type="hidden" id="helpAnsYn" value="N">
+	<input type="hidden" id="sncnSn" value="1">
+	<input type="hidden" id="ePostModTcnt" value="1">
+	<input type="hidden" id="modTcnt" value="0">
+	<input type="hidden" id="ltrYn" value="Y">
+	<input type="hidden" id="chrgrId" value="">
+	<!-- 결재용도 E -->
+	<input type="hidden" id="addAnsSaveYn" value="N">
+	<input type="hidden" id="ansAtchFileGrpId" value="">
+	<!-- 안전신문고 처리구분  -->
+	<input type="hidden" id="safeEpPttnRqstPathSctnCd" value="00020001">
+
+    <input type="hidden" id="sncnSttsCd" name="sncnSttsCd" value="">
+<!-- <input type="hidden" id="ltrNtcnCd" value="0A230001" /> -->
+<div class="scl">
+	<div class="layout">
+		<input type="hidden" id="changeFlag" value="N">
+		<h5>답변추가하기</h5>
+
+		<p class="tip">
+			추가 답변은 3회까지 가능합니다.
+		</p>
+<!-- 		<p class="tip"> -->
+<!-- 			추가 답변은 3회까지 가능합니다. 현재  -->
+
+
+
+
+
+<!-- 			회까지 추가답변 하였습니다. -->
+<!-- 		</p> -->
+		
+		<table class="tbl board" id="divAddAns">
+			<caption>
+				<strong></strong>
+				<p></p>
+			</caption>
+
+			<colgroup>
+				<col style="width:180px">
+				<col>
+			</colgroup>
+
+			<tbody>
+				<tr>
+					<th scope="row">제목</th>
+					<td>
+						<input type="text" name="" value="문수데시앙 2단지 201동 1701호 계약 전 확인 하자 점검 및 정석 보수에 관한 서면 이행 요청의 건" style="width: 100%;" readonly="readonly">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">민원요약</th>
+					<td>
+						<input type="text" name="" value="문수데시앙2단지 201동 1701호 일반공급 공가세대의 분양 전 하자점검 및 보수 요청" style="width: 100%;" readonly="readonly">
+					</td>
+				</tr>
+
+<!-- 				<tr> -->
+<!-- 					<th scope="row">처리구분</th> -->
+<!-- 					<td> -->
+
+<!-- 						<input type="hidden" name="pttnDeptPrcsVO.pttnPrcsSctnCd" value="0A184040" /> -->
+
+<!-- 					</td> -->
+<!-- 				</tr> -->
+
+				<tr>
+					<th scope="row">
+						추가답변
+						<br><a href="#" class="tbl_btn large mt_5" onclick="fn_openPopFavAns();"><span>자주쓰는 답변 &gt;</span></a>
+						<br><a href="#" class="tbl_btn large mt_5" onclick="fn_openPopFavAnsReg();"><span>자주쓰는 답변등록 &gt;</span></a>
+					</th>
+					<td>
+						<input type="hidden" id="tmpPrcsRsltCntnCl" name="pttnDeptPrcsVO.prcsRsltCntnCl" value="">
+						<textarea rows="5" id="prcsRsltCntnCl"></textarea>
+					</td>
+				</tr>
+				
+				
+	                <tr>
+	                    <th>서신통보확인</th>
+	                    <td>
+	                   		<label for="sendPostY">
+                           		<input name="sendPost" id="sendPostY" type="radio" value="Y" onclick="fn_chkltrNtcnPost(this.value);">문서통보
+                        	</label>	
+							<label for="sendPostN">
+	                            <input name="sendPost" id="sendPostN" type="radio" value="N" onclick="fn_chkltrNtcnPost(this.value);">문서미통보
+                        	</label>
+	                        <p class="warning">이 민원은 민원인이 처리결과를 '우편'으로 제공받기를 희망하였거나 우편, 팩스 등으로 신청되어 처리결과를 우편 등으로 직접 제공해야 하는 민원입니다.<br>우편, 팩스 등으로 처리결과를 제공하지 않는다면 적합한 유형을 선택하고 사유를 구체적으로 작성하시기 바랍니다.<br>* (관련근거) 민원처리법 제27조(처리결과의 통지)</p>
+								<div id="selPostY" style="display: none;">
+	                        	
+		                        <label for="minwon_07">
+		                            <input name="pttnDeptPrcsVO.ltrNtcnCd" id="minwon_07" type="radio" value="0A230002" onclick="fn_chkLtrRsn(this.value);">
+		                            	우편/팩스
+		                        </label>
+		                        <label for="minwon_09">
+		                            <input name="pttnDeptPrcsVO.ltrNtcnCd" id="minwon_09" type="radio" value="0A230004" onclick="fn_chkLtrRsn(this.value);">
+		                            	직접교부
+		                        </label>
+		                        <label for="minwon_10" style="display:none">
+		                            <input name="pttnDeptPrcsVO.ltrNtcnCd" id="minwon_10" type="radio" value="0A230005" onclick="fn_chkLtrRsn(this.value);" disabled="">
+		                            	시행문제공
+		                        </label>
+		                        </div>
+		                        <div id="selPostN">
+		                        <label for="minwon_11">
+		                            <input name="pttnDeptPrcsVO.ltrNtcnCd" id="minwon_11" type="radio" value="0A231001" onclick="fn_chkLtrRsn(this.value);">
+		                            	주소불명
+		                        </label>
+		                        <label for="minwon_12">
+		                            <input name="pttnDeptPrcsVO.ltrNtcnCd" id="minwon_12" type="radio" value="0A231002" onclick="fn_chkLtrRsn(this.value);">
+		                            	반복종결
+		                        </label>
+		                        <label for="minwon_13">
+		                            <input name="pttnDeptPrcsVO.ltrNtcnCd" id="minwon_13" type="radio" value="0A231004" onclick="fn_chkLtrRsn(this.value);">
+		                            	민원인 동의
+		                        </label>
+		                        <label for="minwon_08">
+		                            <input name="pttnDeptPrcsVO.ltrNtcnCd" id="minwon_08" type="radio" value="0A231005" onclick="fn_chkLtrRsn(this.value);">
+		                            	기타(미제공)
+		                        </label>
+		                        </div>
+							<input type="hidden" id="epstRcptSn" name="epstRcptSn" value="">
+	                    </td>
+	                </tr>
+	               
+	                <tr id="trlbLtrRsn" hidden="hidden;">
+							<th>
+								<label for="ltrNtcnBnrgRsn" id="lbLtrNtcnBnrgRsn">
+									비고
+								</label>
+							</th>
+							<td>
+								<textarea id="ltrNtcnBnrgRsn" name="ltrNtcnBnrgRsn" rows="3" cols="30"></textarea>
+							</td>
+						</tr>
+	            
+				
+				<tr>
+					<th scope="row">첨부파일<br> 전자문서 결재 연계시<br>6MB 초과 불가</th>
+					<!-- 첨부파일 추가 S -->
+					<td id="atchFileGrpId_02">
+						
+							
+							
+							
+							
+							
+						
+
+
+
+
+
+
+<div class="fileItems" style="display:inline-block;width:88%;position:relative;">
+	 
+	 <input type="hidden" id="limitSizeNum" name="limitSizeNum" value="90">
+	 <input type="hidden" id="atchFileGrpId" class="atchFileGrpId" name="atchFileGrpId" value="">
+	 
+	 <div style="position:absolute; top:7px; right:0;"> 
+		<button type="button" class="tbl_btn large addBtn"><span>추가</span></button>
+	 </div>
+	 
+	 
+	 
+	 
+	
+	
+<div class="item_input file small" id="item_input0"><div class="file_name"></div> <label class="file_btn" for="upldMultiFile0"><span>찾기</span></label><input type="hidden" name="atchFileSize" value="0"><input class="hide filebox" name="upldMultiFile" id="upldMultiFile0" type="file"> <button class="tbl_btn large delFileBtn" type="button"><span>삭제</span></button></div></div> 
+					
+	
+<script type="text/javascript">
+
+
+	var limitSizeNum = 90;
+	var limitSize = 94371840;
+	
+
+	console.log("limitSizeNum : " + limitSizeNum);
+	console.log("limitSize : " + limitSize);
+
+	var gAtchFileTotalSize = "";
+	if( gAtchFileTotalSize == "") {
+		gAtchFileTotalSize = 0;
+	}else {
+		gAtchFileTotalSize = parseInt(gAtchFileTotalSize);
+	}
+	console.log("gAtchFileTotalSize :" + gAtchFileTotalSize );
+
+	$(".addBtn").click(function(){
+		
+		
+		var maxFile = 5;
+		
+		
+		var $fileItems = $(this).closest(".fileItems");
+		
+		if($($fileItems).find(".file_name").length >= maxFile){
+			jAlert( "첨부파일은 " + maxFile + "개까지 추가할 수 있습니다.");
+			return;
+		}
+		
+		//file ID
+		var ids = $($fileItems).find(".item_input").map(function(){ return parseInt((this.id).replace(/[^0-9]/g,""), 10); }).get();
+		
+		
+		var id = Math.max.apply(Math, ids) + 1;
+		
+		
+		if(id == "-Infinity"){
+			id=0;
+		}
+		
+		// 첨부파일 크기 확인용 atchFileSize
+		var input = '<input type="hidden" name="atchFileSize" value="0">';
+		//console.log("input :" + input);
+	
+		//file 객체 생성
+		var div =  
+			$('<div />', {class : "item_input file small", id : "item_input"+id})
+				.append([
+					$('<div />', {class : "file_name"}),' ',
+					$('<label /> ', {class : "file_btn",for : "upldMultiFile"+id}).append($('<span />', {text : "찾기"})),
+					input,
+					$('<input />', {class : "hide filebox", name : "upldMultiFile", id : "upldMultiFile"+id, type : "file", change : function(){
+						var filename="";
+						$this=this;
+						if($(this).val() != ""){
+							
+							var ext = $(this).val().split(".").pop().toLowerCase();
+							
+							
+							
+							if($.inArray(ext, ["jpg","jpeg","gif","png","bmp","txt","pdf","hwp","gul","docx","doc","zip","xls","xlsx","ppt","pptx","mp4","avi","wmv","asf","flv","mov","mkv","mpeg","mpg","3gp","wmv","webm","ogm","asx","m2t","m2ts","mts","tif","tiff","wav","mp3","3ga","m4a","amr","mp2","hwpx","odt","csv"]) == -1){
+								$($this).val("");
+								jAlert( "첨부파일은 [jpg, jpeg, gif, png, bmp, txt, pdf, hwp, gul, docx, doc, zip, xls, xlsx, ppt, pptx, mp4, avi, wmv, asf, flv, mov, mkv, mpeg, mpg, 3gp, wmv, webm, ogm, asx, m2t, m2ts, mts, tif, tiff, wav, mp3, 3ga, m4a, amr, mp2, hwpx, odt, csv] 파일만 업로드 할 수 있습니다.");
+								return;
+							}
+						
+							if(window.FileReader){
+						        filename = $(this)[0].files[0].name;
+						    } else { 
+						    	filename = $(this).val().split('/').pop().split('\\').pop();
+						    }
+							
+							var chkAtchFileSize = 0;
+							var itemFileSize = 0 
+							if( $(this)[0].files[0] != undefined ){
+								itemFileSize = $(this)[0].files[0].size
+							}
+							$(this).parent(".item_input").find("[name=atchFileSize]").val(itemFileSize);														
+							chkAtchFileSize = gAtchFileTotalSize + itemFileSize;							
+							console.log("chkAtchFileSize :" + chkAtchFileSize + ", gAtchFileTotalSize :" + gAtchFileTotalSize  + ", itemFileSize :" + itemFileSize);
+							
+							if(chkAtchFileSize > limitSize){
+								$(this).val("");
+								$(this).siblings(".file_name").text("");			
+								jAlert("첨부파일 전체 용량이 "+ limitSizeNum +"MB를 초과하여 등록할 수 없습니다.");
+								return;
+							}													
+							gAtchFileTotalSize = gAtchFileTotalSize + itemFileSize;
+							console.log("1. gAtchFileTotalSize :" + gAtchFileTotalSize );
+						}
+						$(this).siblings('.file_name').text(filename);   
+					}}),' ',					
+					$('<button /> ', {class : "tbl_btn large delFileBtn",type : "button"}).append($('<span />', {text : "삭제"})),
+				]);
+		//file 객체 추가
+		$(this).closest(".fileItems").append(div);	
+	});
+	
+	$(document).on("click",".delFileBtn",  function(){
+		//첨부파일 영역
+		var $fileItems = $(this).closest(".fileItems");
+		//첨부파일 영역에 있는 파일명Label 갯수를 확인하여 1개일겨우 삭제시에는 한개를 유지하기위해 확인함
+		var fileNameCnt = $fileItems.find(".file_name").length;
+		
+		//해당첨부파일 영역
+		var $itemInput = $(this).closest(".item_input");
+		//해당첨부파일 영역에 atchFileId가 있으면 업로드된 파일임
+		var atchFileIdCnt = $itemInput.find("[name=atchFileId]").length;
+		
+		
+		
+		//첨부파일 삭제대상정보
+		var atchFileId = "";
+		$itemInput.find("[name=atchFileId]").each(function(){
+			atchFileId = $(this).val();
+		});
+		
+		var atchFileGrpId = $fileItems.find(".atchFileGrpId").val();
+		
+		var param ={
+				atchFileId : atchFileId,
+				atchFileGrpId : atchFileGrpId
+		}
+		
+		
+		
+		
+		if(atchFileIdCnt > 0){ //업로드된파일이 있는경우
+						
+			
+			
+			
+			
+				var result = confirm("정말삭제하시겠습니까?");	
+				if(result){
+					$(this).closest(".item_input").remove();
+					
+					if(fileNameCnt <= 1){//첨부파일박스 생성
+						$(".addBtn").click();
+					}			
+				}
+				
+			
+						
+		}else{	
+			$(this).closest(".item_input").remove();
+			
+			if(fileNameCnt <= 1){//첨부파일박스 생성
+				$(".addBtn").click();
+			}
+		}
+		
+		//첨부파일 전체 용량 체크 업로드된 파일이 있는 경우
+		var minusAtchFileSize = $itemInput.find("[name=atchFileSize]").val();					
+		if( minusAtchFileSize != undefined || minusAtchFileSize != "" ) {
+			minusAtchFileSize = parseInt(minusAtchFileSize);				
+		}else {
+			minusAtchFileSize = 0;
+		}		
+		console.log("minusAtchFileSize :" + minusAtchFileSize );
+		
+		//전체 용량에서 삭제된 첨부파일 사이즈를 마이너스
+		gAtchFileTotalSize = gAtchFileTotalSize - minusAtchFileSize;
+		if( gAtchFileTotalSize < 0) gAtchFileTotalSize = 0;			
+		console.log("2. gAtchFileTotalSize :" + gAtchFileTotalSize );
+
+	});
+
+
+
+					
+
+$(".addBtn").click();
+
+
+
+</script>
+					
+					
+
+
+
+
+
+					</td>
+				</tr>
+				
+				
+				
+				
+			</tbody>
+		</table>
+
+		<div class="pop_group">
+			<div class="left mt_10" id="divChkView">
+<!-- 				<a id="aChkCmplCntn" class="bbs_btn" href="#"  -->
+
+
+				<a class="bbs_btn fill" href="#" onclick="javascript:fn_Save('save');">
+					<span>처리결과 통보</span>
+				</a>
+			</div>
+
+			<div class="mid mt_10" id="divChk">
+<!-- 				<a id="aChkReq" class="bbs_btn" href="#" -->
+
+<!-- 						onclick="fn_chkReqAddnAns();"><span>검토 확인 요청</span></a>  -->
+<!-- 				<a id="aChkCncl" class="bbs_btn" href="#"  -->
+
+
+<!-- 						onclick="fn_chkReqCnclAddAns();"><span>검토 확인 요청 취소</span></a> -->
+			</div>
+			
+			<div class="right mt_10">
+			
+				<a class="bbs_btn" href="#" onclick="javascript:fn_Save('tmpSave');">
+					<span>임시저장</span>
+				</a>
+				 
+				 <!-- 주관기관,부서일 경우에만 온나라 결재 버튼 보이도록 수정 2022.04.25-->
+					
+				
+				
+			</div>
+		</div>
+		<div class="pop_group" id="divElsnId" hidden="hidden;">
+			<div class="right w500">
+				<div id="divElsn" hidden="hidden;">
+					<label class="w80">전자결재 ID</label>
+					<input type="text" class="w100" id="elsnId" name="elsnId" value="">
+					<a class="bbs_btn" href="#" onclick="fn_cancelElsn();"><span>결재취소</span></a>
+					<a id="aBtnElsn" class="bbs_btn fill" href="#" onclick="elsnPop();" style="display: none;"><span>결재요청</span></a>
+					<a id="aBtnElsnPrv" class="bbs_btn fill" href="#" onclick="sunramPop();" style="display: none;"><span>결재요청</span></a>
+				</div>
+				<div id="divOnnara" hidden="hidden;">
+					<label class="w100">전자문서 결재 ID</label>
+					<input type="text" class="w100" id="onnaraId" name="onnaraId" value="">
+					<a class="bbs_btn" href="#" onclick="fn_cancelElsn();"><span>결재취소</span></a>
+					<a class="bbs_btn fill" href="#" onclick="onnaraPop();"><span>결재요청</span></a>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+				</div>
+			
+		</div>
+
+<!-- 본문 끝 -->
+<div>
+<input type="hidden" name="_csrf" value="2e924a50-f356-4aaa-bf38-6fcb4b39b13e">
+</div><input type="hidden" name="g_menuId" value="A0022"></form>
+<script type="text/javascript">
+var isSavepttnrNacvtYn = false;
+var beforeFormValue; // 이전 폼 내용 저장하기 위한 변수 (수정 여부 체크용)
+
+$(document).ready(function() {
+
+	/* 팝업창에서 호출할 함수 바인딩 */
+	$(document).bind("NacvtRltnPttnRdListPopup.fn_callNacvtRltnPttnRdListPopBind", fn_callNacvtRltnPttnRdListPopBind);
+
+	/* 업무분야 찾기 팝업창에서 호출할 함수 바인딩 */
+	$(document).bind("DutyRelmViewPopup.fn_callDutyRelmViewPopBind", fn_callDutyRelmViewPopBind);
+
+	//연계관리자용 파일 다운로드 숨김처리
+	$('a[name=cntcForFileDown]').hide();
+
+	//상단 이력표시
+	
+		$("#idHstrCnt").show();
+	
+	
+		$("#idRcntHstr").parent().show();
+	
+
+	//민원 비활성화
+	if("" == "Y") { //공무원단 비활성화
+		$("#pbsvNacvtYn").attr("checked", true);
+	}
+	if("N" == "Y") { //민원비활성화일 경우
+		$("#chgCntnCl").attr("disabled", true); //비활성화 사유
+		$("#nacvtRltnPttnRqstNo").attr("disabled", true); //근거자료(비활성화관계민원신청번호)
+		$("#btn_nacvtRltnPttnRqstNo").remove(); //검색 버튼
+		$("#pbsvNacvtYn").attr("disabled", true); //공무원단비활성화 버튼
+	}
+
+	//다수인 민원
+	if("" == "Y") {
+		$("#mlnpPttnYn").attr("checked", true);
+	}
+
+	fn_otnsOppbYn("");
+
+	//민원 종류, 법정처리기간 및 내부처리기간
+	var pttnClsfCd = "09990004";
+	var selPttnClsfCd = document.getElementById("selPttnClsfCd");
+
+	if(selPttnClsfCd != null && selPttnClsfCd != "") {
+		for(var i=0; i<selPttnClsfCd.length; i++) {
+			var tmpVal = selPttnClsfCd.options[i].value;
+			var valArr = tmpVal.split(","); //pttnClsfCd (민원종류코드)
+
+			if(pttnClsfCd != null && pttnClsfCd != "") {
+				if(valArr[0] == pttnClsfCd) {
+					$("#selPttnClsfCd").val(tmpVal);
+				}
+			}
+		}
+	}
+
+	//민원종류에 따른 법정처리기간, 내부처리기간 세팅
+	fn_set_prcsPrd($("#selPttnClsfCd").val());
+
+	$("#selPttnPrcsPrd").val("7");
+	$("#selPttnInrPrcsPrd").val("5");
+
+	//반복민원 일경우 빈발민원 조회
+	if("" == "Y") {
+		fn_search_mrg_list();
+	}
+
+	//빈발민원 일경우 빈발민원 조회
+	if("" == "Y") {
+		fn_search_frcrPttn_list();
+	}
+
+	//관계인정보
+	$("#rltnrZpcd").val($("#rvsnRltnrZpcd").val());
+	$("#baseAdrs").val($("#rvsnBaseAdrs").val());
+	$("#dtlAdrs").val($("#rvsnDtlAdrs").val());
+	$("#rltnrEmal").val($("#rvsnRltnrEmal").val());
+	$("#rltnrCpno").val($("#rvsnRltnrCpno").val());
+	$("#rltnrTpno").val($("#rvsnRltnrTpno").val());
+
+	//민원공유변경사유 화면 제어
+	if('' == '0A130005') {
+		$("#pttnCnrsChgRsn").val($("#pttnCnrsChgRsnOrgl").val());
+		$("#pttnCnrsChgRsn").show();
+	} else {
+		$("#idPttnCnrsChgRsn").hide();
+		$("#pttnCnrsChgRsn").val("");
+		$("#pttnCnrsChgRsn").removeClass("essential");
+	}
+
+	//비공유 설정
+	
+	fn_pttnCnrsChgRsnCd($("#pttnCnrsChgRsnCd").val());
+
+	$("#pttnAplcntInfoBtn").on("click", fn_pttnAplcntInfo); //민원인 정보 열기 버튼 이벤트 추가
+
+	$("#mlnpYn").click(function() { //다수인 민원 체크박스 변경 못함
+		if($(this).prop("checked")) {
+			$(this).prop("checked", false);
+		} else {
+			$(this).prop("checked", true);
+		}
+	});
+
+	//기관원문 공개 여부 N
+	
+		$("#idPttnCnrsChgRsn").hide();
+	
+
+	// 이전 폼 내용 가져오기 (수정 여부 체크용)
+	beforeFormValue = decodeURIComponent($('form#viewForm').serialize());
+});
+
+// 공개/비공개 변경 이벤트
+$("input[name='pttnInstRcptVO.otnsOppbYn']").change(function(){
+	var orgOpenYn = "";	//공무원 공개 여부
+	var orglOppbYn = "";	//기관 원문 공개 사용 여부
+
+	//원문 공개 미사용 기관인 경우 비공개로 디플트 체크 후 리턴(서버에 저장은 되지 않고 화면에서만 제어)
+	if(orglOppbYn != 'Y'){
+		$("#orgOpenYnFlag").val("");
+		$("#otnsOppbYn2").prop("checked", true);
+		return;
+	}
+
+	// 공개/비공개 관련 화면 제어 함수 호출
+	fn_otnsOppbYn($("#otnsOppbYn1").is(":checked") ? "Y" : "N");
+
+	if(orgOpenYn == '' && $("#otnsOppbYn1").is(":checked")){
+		$("#orgOpenYnFlag").val("A"); //공개민원 지정
+	} else if(orgOpenYn =='' && $("#otnsOppbYn2").is(":checked")){
+		$("#orgOpenYnFlag").val("B"); //비공개민원 전환
+	} else if (orgOpenYn=='Y' && $("#otnsOppbYn2").is(":checked")){
+		$("#orgOpenYnFlag").val("B");  //비공개민원 전환
+	} else if (orgOpenYn=='N' && $("#otnsOppbYn1").is(":checked")){
+		$("#orgOpenYnFlag").val("C"); // 공개민원 전환
+	}
+
+});
+
+$('#a_workflow_1').on('click', function(){
+	//추가가능 기한 체크
+	
+	
+});
+
+//체크박스 비활성화
+function fn_clickDisabled(){
+	$("#otnsOppbYn2").prop("checked", true);
+}
+
+
+function fn_update() {
+	//데이터 세팅
+	fn_set_data();
+	//validation 체크
+	if(!fn_validation()) {
+		return;
+	}
+	//공통에서 제공해주는 validation 체크
+	if(!fn_form_validation("viewForm")) {
+		return;
+	}
+	//민원공개여부
+	if(!fn_pttnOpenYn()) {
+		return;
+	}
+	
+	//민원 비활성화 체크 Start
+	var nacvtRltnPttnRqstNo = $("#nacvtRltnPttnRqstNo").val();
+	var chgCntnCl = $("#chgCntnCl").val();
+	var pbsvNacvtYn = "";
+	
+	if($("#pbsvNacvtYn").is(":checked")) { //공무원단 비활성화
+		pbsvNacvtYn = "Y";
+	}else{
+		pbsvNacvtYn = "";
+	}
+	if(nacvtRltnPttnRqstNo != null && nacvtRltnPttnRqstNo != ""
+			|| chgCntnCl != null && chgCntnCl != ""
+			|| pbsvNacvtYn == "Y") {
+		isSavepttnrNacvtYn = true;
+	}
+	
+	if(isSavepttnrNacvtYn) {
+		if(!fn_chkPttnrNacvtYn()) {
+			return;
+		}
+	}
+	
+	// 수정된 내용이 없는 상태에서 수정완료 처리시 다음 단계로 넘어가지 못하게 처리
+	var afterFormValue = decodeURIComponent($('form#viewForm').serialize());
+   	if(beforeFormValue === afterFormValue){
+   		jAlert("수정된 내용이 없습니다");
+   		return;
+   	}
+	
+	//민원 비활성화 체크 End
+	$("#atchFileGrpId_02").children().remove();
+	
+	jConfirm("저장 하시겠습니까?", function() {
+		$.paidLoading.startFullScreen();
+		
+		$("input[name='pttnInstRcptVO.pttnRdngScpTyCd']").attr("disabled",false);
+		var options = $.sendAjaxSumit.setOptions(fn_update_success, fn_update_error);
+		//$("#viewForm").attr("action", "/biz/pet/prcs/prcs/PttnPrcsViewUpdate.paid").submit();
+		$("#viewForm").attr("action", "/biz/pet/prcs/prcs/PttnPrcsViewUpdate.paid");
+		//$("#viewForm").attr("action", "/biz/pet/rcpt/dept/updateRqstPttn.paid");
+		$.sendAjaxSumit.start("#viewForm", options);
+	});
+}
+
+/* 업무분야 찾기 팝업 */
+fn_dutyRelmSchPopup = function() {
+	var param = {
+		instCd : $("#instCd").val(),
+		rtrnTrg : "DutyRelmViewPopup.fn_callDutyRelmViewPopBind"
+	};
+	gfn_openPopupPost("dutyRelmSchPopup", param, "dutyRelmSchPopup", "/biz/pet/cmmn/pop/DutyRelmViewPopup.paid", 500, 350);
+}
+
+/* 업무분야 팝업 콜백함수 */
+function fn_callDutyRelmViewPopBind(event, results){
+	$("#instDutyClsfNm").val(results[0].classNm);
+	$("#instDutyClsfCd").val(results[0].classCd);
+}
+
+//업무분야 초기화
+function fn_reset_clsf() {
+	$("#instDutyClsfNm").val("");
+	$("#instDutyClsfCd").val("");
+}
+
+//저장 후 성공 시 콜백 함수
+function fn_update_success(data) {
+	var result = JSON.parse(data);
+	//민원 비활성화 체크
+	if(isSavepttnrNacvtYn) {
+		//민원 비활성화 체크 Start
+		var nacvtRltnPttnRqstNo = $("#nacvtRltnPttnRqstNo").val();
+		var chgCntnCl = $("#chgCntnCl").val();
+		var pbsvNacvtYn = "";
+		
+		if($("#pbsvNacvtYn").is(":checked")) { //공무원단 비활성화
+			pbsvNacvtYn = "Y";
+		}
+		var url = "/biz/pet/prcs/prcs/PttnrNacvtYnUpdate.paid";
+		var param = {
+				  'pttnRqstNo' : "1BA-2609-1315163", //신청번호
+				  'instRcptNo' : "2BA-2609-1310894", //접수번호
+				  'pttnInstRcptVO.nacvtRltnPttnRqstNo': nacvtRltnPttnRqstNo, //비활성화관계민원신청번호
+				  'pttnInstRcptVO.instRcptSn' : "215275716", //기관접수일련번호
+				  'chgCntnCl': chgCntnCl, //비활성화사유
+				  'pttnInstRcptVO.pbsvNacvtYn' : pbsvNacvtYn //공무원비활성화여부
+			     };
+		
+		var options = $.sendAjaxReq.setOptions(url, "post", param, true, fn_savepttnrNacvtYnSucc, fn_update_error);
+		$.sendAjaxReq.start(options);
+	} else {
+		$.paidLoading.remove();
+		jInfo(result.msg, function() {
+// 			self.location.reload();
+			fn_reload_page();
+// 			var rcntHstrInfo = result.resultMap.rcntHstrInfo;
+// 			if(rcntHstrInfo != null) {
+// 				var hstrCntTxt = $("#idHstrCnt").text();
+// 				if(hstrCntTxt == '') {
+// 					hstrCntTxt = 0;
+// 				}
+// 				var hstrCnt = parseInt(hstrCntTxt) + 1;
+// 				$("#idHstrCnt").text(hstrCnt);
+// 				$("#idRcntHstr").text(rcntHstrInfo.rcntSttsNm);
+// 				$("#idRcntHstrDe").text(rcntHstrInfo.clsfDe);
+// 				$("#idRcntChgRsn").text(rcntHstrInfo.rcntChgRsn);
+// 				if(hstrCnt >= 1) {
+// 					$("#idHstrCnt").show();
+// 				}
+// 				if(hstrCnt >= 0) {
+// 					$("#idRcntHstr").parent().show();
+// 				}
+// 			}
+		});
+	}
+}
+
+//저장 후 성공 시 콜백 함수
+function fn_savepttnrNacvtYnSucc(result) {
+	jInfo(result.msg, function() {
+		fn_reload_page();
+		var rcntHstrInfo = result.resultMap.rcntHstrInfo;
+		if(rcntHstrInfo != null) {
+			var hstrCntTxt = $("#idHstrCnt").text();
+			if(hstrCntTxt == '') {
+				hstrCntTxt = 0;
+			}
+			var hstrCnt = parseInt(hstrCntTxt) + 1;
+			$("#idHstrCnt").text(hstrCnt);
+			$("#idRcntHstr").text(rcntHstrInfo.rcntSttsNm);
+			$("#idRcntHstrDe").text(rcntHstrInfo.clsfDe);
+			$("#idRcntChgRsn").text(rcntHstrInfo.rcntChgRsn);
+			if(hstrCnt >= 1) {
+				$("#idHstrCnt").show();
+			}
+			if(hstrCnt >= 0) {
+				$("#idRcntHstr").parent().show();
+			}
+		}
+	});
+	$.paidLoading.remove();
+}
+
+//저장 후 실패 시 콜백 함수
+function fn_update_error() {
+	jAlert('저장 중 오류가 발생하였습니다.');
+	$.paidLoading.remove();
+}
+
+//화면 reload
+function fn_reload_page() {
+	$.paidLoading.startFullScreen();
+	$("#reloadForm").attr("action", "/biz/pet/mng/sttsns/PttnMngPttnSttsView.paid");
+	$("#reloadForm").submit();
+}
+
+/* 민원종류에 따른 법정처리기간, 내부처리기간 세팅 */
+function fn_set_prcsPrd(allData) {
+	fn_div_allData(allData);
+	
+ 	var pttnPrcsPrd = $("#pttnPrcsPrd").val();
+	var pttnInrPrcsPrd = $("#pttnInrPrcsPrd").val();
+	var inrPrcsPrdUseYn = $("#inrPrcsPrdUseYn").val();
+	
+	fn_set_date("selPttnPrcsPrd", pttnPrcsPrd);
+	
+	if(inrPrcsPrdUseYn == "Y") {
+		fn_set_date("selPttnInrPrcsPrd", pttnInrPrcsPrd);
+	}else if(inrPrcsPrdUseYn == null || inrPrcsPrdUseYn == "" || inrPrcsPrdUseYn == "N"){
+//  		$("#selPttnInrPrcsPrd").parent().parent().remove();
+ 		$("#selPttnClsfCd").parent().parent().children().eq(0).attr("rowspan", "1");
+ 		$("#selPttnClsfCd").parent().parent().children().eq(1).attr("rowspan", "1");
+	}
+}
+
+/* 민원종류 관련 데이터 세팅 */
+function fn_div_allData(allData) {
+	if(allData != null && allData != "") {
+		var strArr = allData.split(",");
+		
+		var pttnClsfCd = strArr[0];
+		var pttnPrcsPrd = strArr[1];
+		var pttnInrPrcsPrd = strArr[2];
+		var inrPrcsPrdUseYn = strArr[3];
+		
+		$("#pttnClsfCd").val(pttnClsfCd);
+	 	$("#pttnPrcsPrd").val(pttnPrcsPrd);
+		$("#pttnInrPrcsPrd").val(pttnInrPrcsPrd);
+		$("#inrPrcsPrdUseYn").val(inrPrcsPrdUseYn);
+	}
+}
+
+/* 처리기간 세팅 */
+function fn_set_date(parentId, maxDay) {
+	var str = "";
+	for(var i=0; i<maxDay; i++) {
+		str += "<option value='"+(maxDay-i)+"'>"+(maxDay-i)+"일</option>";
+	}
+	
+	//document.getElementById(parentId).innerHTML = str;
+}
+
+
+/* validation 체크 */
+function fn_validation() {
+// 	var rvsnRltnrZpcd = $("#rvsnRltnrZpcd").val(); //우편번호
+// 	if(rvsnRltnrZpcd == null || rvsnRltnrZpcd == "") {
+// 		alert("우편번호를 입력해 주세요.");
+// 		$("#rvsnRltnrZpcd").focus();
+// 		return;
+// 	}
+	
+// 	var rvsnBaseAdrs = $("#rvsnBaseAdrs").val(); //기본주소
+// 	if(rvsnBaseAdrs == null || rvsnBaseAdrs == "") {
+// 		alert("기본주소를 입력해 주세요.");
+// 		$("#rvsnBaseAdrs").focus();
+// 		return;
+// 	}
+	
+// 	var rvsnRltnrTpno = $("#rvsnRltnrTpno").val(); //연락처
+// 	if(rvsnRltnrTpno == null || rvsnRltnrTpno == "") {
+// 		alert("연락처를 입력해 주세요.");
+// 		$("#rvsnRltnrTpno").focus();
+// 		return;
+// 	}
+	
+// 	var rvsnRltnrCpno = $("#rvsnRltnrCpno").val(); //휴대전화
+// 	if(rvsnRltnrCpno == null || rvsnRltnrCpno == "") {
+// 		alert("휴대전화번호를 입력해 주세요.");
+// 		$("#rvsnRltnrCpno").focus();
+// 		return;
+// 	}
+	
+// 	var rvsnRltnrEmal = $("#rvsnRltnrEmal").val(); //전자우편
+// 	if(rvsnRltnrEmal == null || rvsnRltnrEmal == "") {
+// 		alert("전자우편 주소를 입력해 주세요.");
+// 		$("#rvsnRltnrEmal").focus();
+// 		return;
+// 	}
+	
+	if($("#pttnrRvsnYn").val() == "Y"){
+		
+		var cpnoLen = $('#mbrCpno1').val().length + $('#mbrCpno2').val().length + $('#mbrCpno3').val().length;
+		var emailLen = $('#email1').val().length + $('#email2').val().length;
+		var isChg = true;
+		
+		// cpno validation & data set
+		if(cpnoLen == 0){
+			$('#rltnrCpno').val("");
+		}else{
+			if($('#mbrCpno1').val().length == 0){
+				jAlert("휴대전화 형식이 맞지 않습니다. ex) XXX-XXX(X)-XXXX", function(){
+					$('#mbrCpno1').focus();
+				});
+				return false;
+			}else if($('#mbrCpno2').val().length < 3){
+				jAlert("휴대전화 형식이 맞지 않습니다. ex) XXX-XXX(X)-XXXX", function(){
+					$('#mbrCpno2').focus();
+				});
+				return false;
+			}else if($('#mbrCpno3').val().length < 4){
+				jAlert("휴대전화 형식이 맞지 않습니다. ex) XXX-XXX(X)-XXXX", function(){
+					$('#mbrCpno3').focus();
+				});
+				return false;
+			}
+			$('#rltnrCpno').val($('#mbrCpno1').val() + "-" + $('#mbrCpno2').val() + "-" + $('#mbrCpno3').val());
+		}
+		
+		// email validation & data set
+		if(emailLen == 0){
+			$('#rltnrEmal').val("");
+			$('#email1').removeClass('essential');
+			$('#email1').removeClass('onlyFEmail');
+			$('#email2').removeClass('essential');
+			$('#email2').removeClass('onlyBEmail');
+			
+			$('#rltnrEmal').val("");
+		}else{
+			$('#email1').addClass('essential');
+			$('#email1').addClass('onlyFEmail');
+			$('#email2').addClass('essential');
+			$('#email2').addClass('onlyBEmail');
+			
+			$('#rltnrEmal').val($('#email1').val() + "@" + $('#email2').val());	
+		}
+		
+		//공통에서 제공해주는 validation 체크
+		if(!fn_form_validation("viewForm")) {
+			return;
+		}
+		
+		var rltnrZpcd = "44959";		//기존 우편번호
+		var baseAdrs = "울산광역시 울주군 청량읍 율리영해2길 7";			//기존 기본주소
+		if(baseAdrs != ""){
+			baseAdrs = baseAdrs.replace("&#x28;", "(").replace("&#x29;", ")");
+		}
+		var dtlAdrs = "201동 1701호(문수데시앙2단지)";			//기존 상세주소
+		if(dtlAdrs != ""){
+			dtlAdrs = dtlAdrs.replace("&#x28;", "(").replace("&#x29;", ")");
+		}
+		
+		var rltnrCpno = "010-2360-1222";		//기존 휴대전화번호(연계 휴대전화정보가 '-'이 미포함되어 들어옴 -> 데이터 비교를 위해 -'-'제거)
+		if(rltnrCpno != ""){
+			rltnrCpno = rltnrCpno.replaceAll("-", "");
+		}
+		var newRltnrCpno = $('#rltnrCpno').val();						//입력한 휴대전화번호(연계 휴대전화정보가 '-'이 미포함되어 들어옴 -> 데이터 비교를 위해 -'-'제거)
+		if(newRltnrCpno != ""){
+			newRltnrCpno = newRltnrCpno.replaceAll("-", "");
+		}
+		
+		var rltnrEmal = "";		//기존 전자우편주소
+		
+		//기존 주소정보와 다른경우
+		if(rltnrZpcd != $('#rvsnRltnrZpcd').val() || baseAdrs != $('#rvsnBaseAdrs').val() || dtlAdrs != $('#rvsnDtlAdrs').val()){
+			isChg = false;
+		}
+		
+		//기존 이메일주소와 다른경우 or 기존 휴대전화와 다른경우
+		if(rltnrCpno != newRltnrCpno || rltnrEmal != $('#rltnrEmal').val()){
+			isChg = false;
+		}
+		
+		//기존 정보랑 다른경우에만 수정사유 체크
+		if(!isChg){
+			var rltrnInfoChgRsn = $("#rltrnInfoChgRsn").val(); //수정사유
+			if(rltrnInfoChgRsn == null || rltrnInfoChgRsn == "") {
+				jAlert("수정사유를 입력해 주세요.", function() {
+					$("#rltrnInfoChgRsn").focus();
+				});
+				return bValid = false;
+			}
+		}
+	}
+	
+	/* 다수인 인원수 */
+	var mltdNmrp = $("#mltdNmrp").val();
+	if($("#mlnpPttnYn").is(":checked")) { //다수인민원 여부
+		if(mltdNmrp == null || mltdNmrp == "") {
+			alert("인원수를 입력해 주세요.");	
+			return;
+		}else if(mlnpPttnYn < 5) {
+			alert("다수인 민원은 5명 이상부터 가능합니다.");
+			return;
+		}
+	}
+	return true;
+}
+
+function fn_set_data(){
+	var email1 = $('#email1').val();
+	var email2 = $('#email2').val();
+	var cpno1 = $('#mbrCpno1').val().trim();
+	var cpno2 = $('#mbrCpno2').val().trim();
+	var cpno3 = $('#mbrCpno3').val().trim();
+	
+	if($("#rltnrZpcd").val() != $("#rvsnRltnrZpcd").val()) {
+		$("#rltnrZpcd").val($("#rvsnRltnrZpcd").val());
+		$("#pttnrRvsnYn").val("Y");
+	}
+	if($("#baseAdrs").val() != $("#rvsnBaseAdrs").val()) {
+		$("#baseAdrs").val($("#rvsnBaseAdrs").val());
+		$("#pttnrRvsnYn").val("Y");
+	}
+	if($("#dtlAdrs").val() != $("#rvsnDtlAdrs").val()) {
+		$("#dtlAdrs").val($("#rvsnDtlAdrs").val());
+		$("#pttnrRvsnYn").val("Y");
+	}
+		
+	//이메일 값세팅
+	if(email1 + email2 != ""){
+		$("#rvsnRltnrEmal").val(email1+"@"+email2);
+	} else {
+		$("#rvsnRltnrEmal").val("");
+	}
+	
+	if($("#rltnrEmal").val() != $("#rvsnRltnrEmal").val()) {
+		$("#rltnrEmal").val($("#rvsnRltnrEmal").val());
+		$("#pttnrRvsnYn").val("Y");
+	}
+	
+	//연락처 값세팅
+	if($("#rltnrTpno").val() != $("#rvsnRltnrTpno").val()) {
+		$("#rltnrTpno").val($("#rvsnRltnrTpno").val());
+		$("#pttnrRvsnYn").val("Y");
+	}
+	
+	//휴대전화 값세팅
+	if(cpno1 + cpno2 + cpno3 != "") {
+		var mbrCpno = cpno1 + '-' + cpno2 + '-' + cpno3;
+		$("#rvsnRltnrCpno").val(mbrCpno);
+	} else {
+		$("#rvsnRltnrCpno").val("");
+	}	
+	
+	var validCpno = cpno1 + cpno2 + cpno3;
+	if($("#rltnrCpno").val().replace(/[-]/g,"") != validCpno) {
+		$("#rltnrCpno").val($("#rvsnRltnrCpno").val());
+		$("#pttnrRvsnYn").val("Y");
+	}
+}
+//다수인민원 변경
+function fn_dis_mltdNmrp() {
+	if($("#mlnpPttnYn").is(":checked")) { //다수인 민원 여부 
+		$("#mltdNmrp").attr("disabled", false);
+		$("#mlnpPttnFileNm").attr("disabled", false);
+		$("#mltdNmrpDiv").show();
+		$("#mlnpPttnFileDiv").show();
+	}else{
+		$("#mltdNmrp").val("");
+		$("#mltdNmrp").attr("disabled", true);
+		$("#mlnpPttnFileNm").attr("disabled", true);
+		$("#mltdNmrpDiv").hide();
+		$("#mlnpPttnFileDiv").hide();
+	}
+}
+
+function fn_pttnCnrsChgRsnCd(val) {
+	if(val == '0A130005') { //기타 선택 시 사유 입력창 표시
+		$("#pttnCnrsChgRsn").val($("#pttnCnrsChgRsnOrgl").val());
+		$("#pttnCnrsChgRsn").show();
+		$("#pttnCnrsChgRsn").addClass("essential");
+	} else {
+		$("#pttnCnrsChgRsn").hide();
+		//$("#pttnCnrsChgRsn").val($("#pttnCnrsChgRsnCd option:selected").text());
+		$("#pttnCnrsChgRsn").val("");
+		$("#pttnCnrsChgRsn").removeClass("essential");
+	}
+}
+
+//공유 비공유 변경 (민원인이 공유로 신청한 경우에만 호출됨)
+function fn_otnsOppbYn(str) {
+	if(bfrOtnsOppbYn == '') { //기관에서 공유여부를 최초 저장 시
+		$("#pttnCnrsChgRsnCd option").prop("disabled", false);
+		if(str == 'Y') { //공유 클릭 시
+			$("#idPttnCnrsChgRsn").hide();
+			$("#pttnCnrsChgRsnCd").val('');
+			$("#pttnCnrsChgRsnCd").removeClass("essential");
+			$("#pttnCnrsChgRsn").hide();
+			$("#pttnCnrsChgRsn").val('');
+			$("#pttnCnrsChgRsn").removeClass("essential");
+		} else { //비공유 클릭 시
+			$("#idPttnCnrsChgRsn").show();
+// 			$("#pttnCnrsChgRsnCd").addClass("essential");
+		}
+		$("#pttnCnrsChgRsn").prop("readonly", false);
+	} else if(bfrOtnsOppbYn == 'Y') { //기관에서 공유여부를 공유 상태에서 변경 시
+		if(str == 'Y') { //공유 클릭 시
+			if($("#pttnCnrsChgRsnCdOrgl").val() != '') { //공유변경사유가 저장되어 있는 경우
+				$("#idPttnCnrsChgRsn").show();
+				$("#pttnCnrsChgRsnCd").hide(); //기타를 제외한 코드 값은 비공유에 대한 내용이므로 기타 내용만 입력 할 수 있도록 조치
+				fn_pttnCnrsChgRsnCd($("#pttnCnrsChgRsnCdOrgl").val());
+			} else { //공유변경사유가 없는 경우
+				$("#idPttnCnrsChgRsn").hide();
+				$("#pttnCnrsChgRsnCd").val('');
+				$("#pttnCnrsChgRsnCd").removeClass("essential");
+				$("#pttnCnrsChgRsn").hide();
+				$("#pttnCnrsChgRsn").val('');
+				$("#pttnCnrsChgRsn").removeClass("essential");
+			}
+			$("#pttnCnrsChgRsnCd option").not(":selected").prop("disabled", true);
+// 			$("#pttnCnrsChgRsn").prop("readonly", true);
+		} else { //비공유 클릭 시
+			$("#idPttnCnrsChgRsn").show();
+			$("#pttnCnrsChgRsnCd option").prop("disabled", false);
+// 			$("#pttnCnrsChgRsnCd").addClass("essential");
+			$("#pttnCnrsChgRsnCd").val('');
+			$("#pttnCnrsChgRsnCd").show();
+			$("#pttnCnrsChgRsn").val('');
+			$("#pttnCnrsChgRsn").hide();
+// 			$("#pttnCnrsChgRsn").prop("readonly", false);
+		}
+	} else if(bfrOtnsOppbYn == 'N') { //기관에서 공유여부를 비공유 상태에서 변경 시
+		if(str == 'Y') { //공유 클릭 시
+			$("#idPttnCnrsChgRsn").show();
+			$("#pttnCnrsChgRsnCd option").prop("disabled", false);
+			$("#pttnCnrsChgRsnCd").hide(); //기타를 제외한 코드 값은 비공유에 대한 내용이므로 기타 내용만 입력 할 수 있도록 조치
+			$("#pttnCnrsChgRsnCd").val("0A130005");
+			$("#pttnCnrsChgRsn").val('');
+			$("#pttnCnrsChgRsn").show();
+// 			$("#pttnCnrsChgRsn").prop("readonly", false);
+		} else { //비공유 클릭 시
+			$("#idPttnCnrsChgRsn").show();
+			$("#pttnCnrsChgRsnCd").show();
+// 			$("#pttnCnrsChgRsnCd").addClass("essential");
+			fn_pttnCnrsChgRsnCd($("#pttnCnrsChgRsnCdOrgl").val());
+			$("#pttnCnrsChgRsnCd option").not(":selected").prop("disabled", false);
+// 			$("#pttnCnrsChgRsn").prop("readonly", true);
+		}
+	}
+}
+
+var bfrOtnsOppbYn = ""; 
+var bfrPttnRdngScpTyCd = "0A070002"; 
+
+
+//열람범위 변경
+// function fn_pttnRdngScpTyCd(code) {
+// 	if(code == "0A070003" || code == "0A070004") {
+// 		$("#otnsOppbYn2").attr("checked", true);
+		
+// 		/* $("#pttnCnrsChgRsn").show();
+// 		$("#pttnCnrsChgRsn").addClass("essential"); */
+// 		$("#idPttnCnrsChgRsn").show();
+// 	}
+// }
+function fn_pttnRdngScpTyCd(code) {
+	if(code == "0A070003" || code == "0A070004") {
+		if($("input:radio[name='pttnInstRcptVO.otnsOppbYn']:checked").val() == "Y")
+		{
+			$("#otnsOppbYn2").prop("checked", true);
+			
+			$("#pttnCnrsChgRsnCd").val('0A130005');
+			$("#pttnCnrsChgRsn").val('공개 → 비공개 (열람범위 설정에 의한 전환)');
+			
+			$("#pttnCnrsChgRsn").show();
+			$("#pttnCnrsChgRsn").addClass("essential");
+	// 		$("#idPttnCnrsChgRsn").show();
+	
+			fn_otnsOppbYn("N");
+		}
+	}
+// 	else
+// 	{
+// 		fn_otnsOppbYn("Y");
+// 	}
+}
+
+//민원공개여부변경
+function fn_pttnOpenYn(){
+	var bValid = true;
+	
+	var openYn = "";
+	var orgOpenYn = "";
+	
+	var mainSub =  "";
+	var pcdMainSub = "Y";
+	var re_status_c = "0A190024";
+	
+	var pttnOfwkCd = "질의민원"; 				//민원종류
+	var pttnRqstPathSctnCd = "00020001"; 			//신청경로
+	var mrgYn = ""; 									//병합여부
+	var mpttnYn = ""; 								//모민원여부
+	var frcrPttnYn = ""; 							//빈발여부
+	var rpsnPttnYn = ""; 							//대표민원여부
+	var pttnPrcsSctnCd = "별도 민원송부"; 		//처리구분
+	var prcsRsltnDt = $("#prcsRsltnDt").val();     											//처리결과통보일시
+	var instPrcsSttsCd = $("#instPrcsSttsCd").val();										//기관처리상태코드
+	var today = new Date();
+	var timeString = (today.getFullYear()-2)+"-"+(today.getMonth()+1)+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+	
+	if(openYn=='Y'){
+		var str_line = $("#pttnCnrsChgRsn").val();
+		var line = str_line.split("\r\n");
+		var ln = line.length;
+		
+		
+		if(ln > 2){
+			alert("민원공개변경사유는 2줄 까지만 입력가능합니다.");
+			$("#pttnCnrsChgRsn").focus();
+			return false;
+		}
+		
+		//하위분류일 경우에 대해 부서주부여부를 세팅
+		if(re_status_c == '00620014' && pcdMainSub == ''){
+			pcdMainSub = 'Y'
+		}
+		
+		if(mainSub=='N' || pcdMainSub=='N'){
+			alert("민원공개여부는 주관기관(부서)이 최종판단합니다. \n협조기관(부서)는 변경 할 수 없습니다.");
+			return bValid = false;
+		}
+		if(!$("#otnsOppbYn1").is(":checked") && !$("#otnsOppbYn2").is(":checked")){
+		 	alert("민원공개여부를 선택 하셔야 합니다!");
+		 	$("#otnsOppbYn1").focus();
+		 	return bValid = false;
+		}
+		 
+		if(orgOpenYn =='' && $("#otnsOppbYn2").is(":checked")){
+			if($("#pttnCnrsChgRsnCd").val() == '0A130005'){
+			 	if(bytelength(str_line) > 100 || bytelength(str_line) < 20){	//민원공개변경사유
+		            alert("민원공개변경사유는 10자 이상, 50자 이내로 작성하셔야 합니다!");
+		            $("#pttnCnrsChgRsn").focus();
+		            return bValid = false;
+		        }
+			}
+		} else if (orgOpenYn=='Y' && $("#otnsOppbYn2").is(":checked")){
+			if($("#pttnCnrsChgRsnCd").val() == '0A130005'){
+				if(bytelength(str_line) > 100 || bytelength(str_line) < 20){	//민원공개변경사유
+		            alert("민원공개변경사유는 10자 이상, 50자 이내로 작성하셔야 합니다!");
+		            $("#pttnCnrsChgRsn").focus();          
+		            return bValid = false;
+		        }
+			}
+		} else if (orgOpenYn=='N' && $("#otnsOppbYn1").is(":checked")){
+			if($("#pttnCnrsChgRsnCd").val() == '0A130005'){
+			 	if(bytelength(str_line) > 100 || bytelength(str_line) < 20){	//민원공개변경사유
+		            alert("민원공개변경사유는 10자 이상, 50자 이내로 작성하셔야 합니다!");
+		            $("#pttnCnrsChgRsn").focus();            
+		            return bValid = false;
+		        }
+			}	
+			if(instPrcsSttsCd != '00620090'){
+				alert("민원이 처리완료인 경우에만 공개가 가능합니다.");
+				return bValid = false;
+			}
+			if(pttnOfwkCd != '질의민원' && pttnOfwkCd != '건의민원' && pttnOfwkCd != '기타민원'){
+				alert("민원종류가 질의민원, 건의민원, 기타민원만 공개가 가능합니다.");
+				return bValid = false;
+			}			
+			if(pttnRqstPathSctnCd != '00020011' && pttnRqstPathSctnCd != '00020012' && pttnRqstPathSctnCd != '00020013' && pttnRqstPathSctnCd != '00020014' && pttnRqstPathSctnCd != '00020015'){
+				alert("신청경로가 국민신문고 Web, 국민신문고 APP, 국민신문고 기관프레임 Web, 국민신문고 모바일 Web, 국민신문고 기관프레임 모바일 Web 만 공개가 가능합니다.");
+				return bValid = false;
+			}
+			if(mrgYn == 'Y' && mpttnYn == 'N'){
+				alert("반복민원일 경우 모민원만 공개가 가능합니다.");
+				return bValid = false;
+			}
+			if(frcrPttnYn == 'Y' && rpsnPttnYn == 'N'){
+				alert("빈발민원일 경우 대표민원만 공개가 가능합니다.");
+				return bValid = false;
+			}
+			if(pttnPrcsSctnCd != '해결(수용)' && pttnPrcsSctnCd != '일부해결(일부 수용)' && pttnPrcsSctnCd != '미해결(불수용)' && pttnPrcsSctnCd != '단순참고·상담안내(수용·기완료)'){
+				alert("처리구분이 해결, 일부해결, 미해결, 단순참고·상담안내인 경우에만 공개가 가능합니다.");
+				return bValid = false;
+			}
+			if(timeString > prcsRsltnDt) {
+				alert("민원 처리 완료일로부터 2년간만 공개가 가능합니다.");
+				return bValid = false;
+			}
+		}
+	}
+	return bValid;
+}
+
+//목록이동
+function fn_moveList() {
+	$.paidLoading.startFullScreen();
+	$("#viewForm").attr("action", "/biz/pet/mng/sttsns/PttnMngPttnSttsList.paid");
+	$("#viewForm").submit();
+}
+
+// Popup 처리기간수정
+function fn_callPttnPrcsPrdPopup() {
+	
+	var pttnRqstNo = $("#pttnRqstNo").val();
+	var instCd = $("#instCd").val();
+	
+	var param = {
+	    	srchPttnRqstNo : pttnRqstNo,
+	    	srchinstCd : instCd
+		};
+	
+	gfn_openPopupPost("PttnPrcsPrdPopup", param, "PttnPrcsPrdPopup", "/biz/pet/rcpt/dept/updatePttnPrcsPrdPopup.paid", 1024, 820);
+}
+
+/* 업무분야 팝업 호출 */
+/* function fn_callDutyRelmViewPopup() {
+	var param = {
+		rtrnTrg : "DutyRelmViewPopup.fn_callDutyRelmViewPopBind" //return 함수 정의
+	};
+
+	gfn_openPopupPost("DutyRelmViewPopup", param, "DutyRelmViewPopup", "/biz/pet/cmmn/pop/DutyRelmViewPopup.paid", 1024, 820);
+} */
+
+/* 업무분야 팝업 콜백함수 */
+/* function fn_callDutyRelmViewPopBind(event, results){
+	$("#dutyRelmCd").val(results[0].classLarCd + "-" + results[0].classMidCd + "-" + results[0].classSmaCd);
+} */
+
+/* 비활성화 관련민원 팝업 호출함수 */
+function fn_callNacvtRltnPttnRdListPopup() {
+	var instRcptSn = "215275716";
+	var rltnrNm = "민원인 성명";
+	
+	var param = {
+		instRcptSn : instRcptSn, //접수일련번호
+		rltnrNm : rltnrNm, //민원인명
+		rtrnTrg : "NacvtRltnPttnRdListPopup.fn_callNacvtRltnPttnRdListPopBind"	//return 함수정의
+	};
+    
+    gfn_openPopupPost("NacvtRltnPttnRdListPopup", param, "NacvtRltnPttnRdListPopup", "/biz/pet/prcs/prcs/NacvtRltnPttnRdListPopup.paid", 750, 800);
+}
+
+/* 비활성화 관련민원 팝업 콜백함수 */
+function fn_callNacvtRltnPttnRdListPopBind(event, results){
+	$("#nacvtRltnPttnRqstNo").val(results[0].pttnRqstNo);
+	
+	$("input[name='pttnInstRcptVO.pttnRdngScpTyCd']").val(["0A070003"]);
+	fn_pttnRdngScpTyCd("0A070003");
+}
+
+function fn_chkPttnrNacvtYn() {
+	var bValid = true;
+	
+	var nacvtRltnPttnRqstNo = $("#nacvtRltnPttnRqstNo").val();
+	var chgCntnCl = $("#chgCntnCl").val();
+	var pbsvNacvtYn = "";
+	if($("#pbsvNacvtYn").is(":checked")) { //공무원단 비활성화
+		pbsvNacvtYn = "Y";
+	}else{
+		pbsvNacvtYn = "";
+	}
+	if(nacvtRltnPttnRqstNo != null && nacvtRltnPttnRqstNo != ""
+			|| chgCntnCl != null && chgCntnCl != ""
+			|| pbsvNacvtYn == "Y") {
+		if(nacvtRltnPttnRqstNo == null || nacvtRltnPttnRqstNo == '') {
+			alert("민원 비활성화 근거자료(비활성화 요청민원)를 선택해 주세요.");
+			return bValid = false;
+		}
+
+		if(chgCntnCl == null || chgCntnCl == '') {
+			alert("비활성화 사유를 입력해 주세요.");
+			return bValid = false;
+		}
+	}
+	
+	return bValid;
+}
+
+/* 민원비활성화 버튼 처리함수 */
+/* function fn_pttnrNacvtYn() {
+	var nacvtRltnPttnRqstNo = $("#nacvtRltnPttnRqstNo").val();
+	if(nacvtRltnPttnRqstNo == null || nacvtRltnPttnRqstNo == '') {
+		alert("민원 비활성화 근거자료(비활성화 요청민원)를 선택해 주세요.");
+		return;
+	}
+
+	var chgCntnCl = $("#chgCntnCl").val();
+	if(chgCntnCl == null || chgCntnCl == '') {
+		alert("비활성화 사유를 입력해 주세요.");
+		return;
+	}
+	
+	var pbsvNacvtYn = "";
+	if($("#pbsvNacvtYn").is(":checked")) { //공무원단 비활성화
+		pbsvNacvtYn = "Y";
+	}
+	
+	$.ajax({
+		type:"post",
+		url:"/biz/pet/prcs/prcs/PttnrNacvtYnUpdate.paid",
+		data:{
+			  'pttnRqstNo' : "1BA-2609-1315163", //신청번호
+			  'pttnInstRcptVO.nacvtRltnPttnRqstNo': nacvtRltnPttnRqstNo, //비활성화관계민원신청번호
+			  'pttnInstRcptVO.instRcptSn' : "215275716", //기관접수일련번호
+			  'chgCntnCl': chgCntnCl, //비활성화사유
+			  'pttnInstRcptVO.pbsvNacvtYn' : pbsvNacvtYn //공무원비활성화여부
+		     },
+		beforeSend: function(xhr)
+		{
+			xhr.setRequestHeader("X-XSRF-TOKEN","2e924a50-f356-4aaa-bf38-6fcb4b39b13e");
+		},
+		success:function(data) {
+			if(data != null) {
+				var dataVal = data.resultVal;
+				alert(dataVal);
+				if(dataVal == 1) {
+					alert("민원 비활성화 처리되었습니다.");
+				}
+			}
+		},fail:function(data){
+			//alert("실패");
+		},error:function(request, status, error){
+			//alert(request.responseText);
+			//alert(error);
+		}
+	});
+} */
+
+/* 민원인정보 수정이력 팝업 */
+function fn_callPttnrInfoHstrListPopup() {
+	var param = {'pttnRqstNo' : "1BA-2609-1315163"};
+	
+    gfn_openPopupPost("PttnrInfoHstrListPopup", param, "PttnrInfoHstrListPopup", "/biz/pet/cmmn/pop/PttnrInfoHstrListPopup.paid", 750, 350);
+}
+
+/* 이송이력보기 팝업 */
+function fn_callTrnfHstrListPopup() {
+	var param = {'pttnRqstNo' : "1BA-2609-1315163",
+				 'instRcptSn' : "215275716"};
+	
+    gfn_openPopupPost("TrnfHstrListPopup", param, "TrnfHstrListPopup", "/biz/pet/cmmn/pop/TrnfHstrListPopup.paid", 750, 630);
+}
+
+/* 만족도 확인 등록 */
+fn_stsfdCnfmReg = function() {
+	$("#atchFileGrpId_02").children().remove();
+	
+	
+	
+	
+		jConfirm("'만족도 확인'을 등록하시면 '오늘의 할일' 만족도 미확인 목록에서 제외됩니다.<br> 필요 시 민원처리 화면의 답변추가하기 로 추가답변을 하실 수 있습니다.<br> '만족도 확인'을 등록 하시겠습니까?", function() {
+			$.paidLoading.startFullScreen();
+			
+			var url = "/biz/pet/prcs/prcs/StsfdCnfmRegUpdate.paid";
+			var param = {
+					  'instRcptSn' : "215275716",
+				      'pttnRqstNo' : "1BA-2609-1315163"
+				     };
+			
+			var options = $.sendAjaxReq.setOptions(url, "post", param, true, fn_stsfdCnfmRegSucc, fn_update_error);
+			$.sendAjaxReq.start(options);
+		});
+	
+}
+
+//만족도 확인 등록 후 성공 시 콜백 함수
+function fn_stsfdCnfmRegSucc(result) {
+	jInfo(result.msg, function() {
+		fn_reload_page();
+	});
+	$.paidLoading.remove();
+}
+
+/**
+ * 반복민원 목록 조회
+ * @returns
+ */
+function fn_search_mrg_list() {
+	var param = {
+			instRcptSn : "215275716", //기관접수일련번호
+			deptPrcsSn : "1" //비활성화사유
+		     };
+	var url = "/biz/pet/prcs/prcs/RptnPttnMrgList.paid";
+	
+	var options = $.sendAjaxReq.setOptions(url, "post", param, true, fn_srchMrgSucc, fn_srchDetailFail);
+	$.sendAjaxReq.start(options);
+}
+
+
+/**
+ * 반복민원 목록 조회 결과 처리
+ * @param data
+ * @returns
+ */
+function fn_srchMrgSucc(data) {
+	if(data != null) {
+		dataTgtList = data.resultList;  //controller에서 map으로 리턴받은 조회 목록
+		if("Y" == data.isSuccess) {
+			var chrgrId = "";	//담당자ID
+			var str = "";  //목록 HTML
+			$('#mrgListCnt').text(data.rsltCnt);  //전체 건수 셋
+			$('#tbo_mrg_list').empty();  //목록 초기화
+			
+			if (data.rsltCnt > 0) {
+				var list = dataTgtList;
+				
+				$.each(list, function(idx) {
+					str += "<tr>";
+					str += "<td>"+list[idx].pttnRqstNo+"</td>";
+					str += "<td class=\"left\"><a href=\"#\" onclick=\"fn_callPttnViewPopup('"+list[idx].pttnRqstNo+"', '"+list[idx].instRcptSn+"', '');\"><span>"+list[idx].pttnRqstTitl+"</span></a></td>";
+					str += "<td>"+list[idx].mpttnYnNm+"</td>";
+//					str += "<td>"+list[idx].deptPrcsSttsNm+"</td>";
+					str += "<td>"+list[idx].pttnRqstDt+"</td>";
+					str += "<td>"+list[idx].instPrcsSttsNm+"</td>";
+					str += "</tr>";
+					
+					chrgrId = list[idx].chrgrId;
+				});
+				
+				$("#tbo_mrg_list").append(str); //tbody 안에 목록 추가
+			} else {		
+				$('#tbo_mrg_list').append(noResultHtm(5));
+			}
+		} else {
+			jAlert("실패1 : "+data.resultMsg);
+		}
+	}
+}
+
+/**
+ * 빈발민원 목록 조회
+ * @returns
+ */
+function fn_search_frcrPttn_list() {
+	var pttnRqstNo = $("#pttnRqstNo").val();
+	//pttnRqstNo = '1AA-1903-139192';
+	var param = {
+			pttnRqstNo : pttnRqstNo,
+			instRcptSn : "215275716" //기관접수일련번호
+	};
+	var url = "/biz/pet/prcs/prcs/FrcrPttnSttsList.paid";
+	
+	var options = $.sendAjaxReq.setOptions(url, "post", param, true, fn_srchFrcrPttnSucc, fn_srchDetailFail);
+	$.sendAjaxReq.start(options);
+}
+
+
+/**
+ * 빈발민원 목록 조회 결과 처리
+ * @param data
+ * @returns
+ */
+function fn_srchFrcrPttnSucc(data) {
+	if(data != null) {
+		dataTgtList = data.resultList;  //controller에서 map으로 리턴받은 조회 목록
+		if("Y" == data.isSuccess) {
+			var chrgrId = "";	//담당자ID
+			var str = "";  //목록 HTML
+			$('#frcrPttnListCnt').text(data.rsltCnt);  //전체 건수 셋
+			$('#tbo_frcrPttn_list').empty();  //목록 초기화
+			
+			if (data.rsltCnt > 0) {
+				var list = dataTgtList;
+				
+				$.each(list, function(idx) {
+					str += "<tr>";
+					str += "<td>"+list[idx].pttnRqstNo+"</td>";
+					str += "<td class=\"left\"><a href=\"#\" onclick=\"fn_callPttnViewPopup('"+list[idx].pttnRqstNo+"', '"+list[idx].instRcptSn+"', '');\"><span>"+list[idx].pttnRqstTitl+"</span></a></td>";
+					str += "<td>"+list[idx].rpsnPttnNm+"</td>";
+					str += "<td>"+list[idx].pttnRqstDt+"</td>";
+					str += "<td>"+list[idx].instPrcsSttsNm+"</td>";
+					str += "</tr>";
+					
+					chrgrId = list[idx].chrgrId;
+				});
+				
+				$("#tbo_frcrPttn_list").append(str); //tbody 안에 목록 추가
+			} else {		
+				$('#tbo_frcrPttn_list').append(noResultHtm(5));
+			}
+		} else {
+			jAlert("실패1 : "+data.resultMsg);
+		}
+	}
+}
+
+/**
+ * 반복민원, 빈발민원 목록보기 에러 처리
+ * @param error
+ * @returns
+ */
+function fn_srchDetailFail(error) {
+	if ( error.resultCode == 500 ) {		
+		jAlert("시스템오류입니다. 관리자에게 문의하세요","시스템오류");		
+	} else if (error.resultCode == 400 ) {		
+		jAlert("세션이 끊어졌습니다. 로그인페이지로 이동합니다.","로그인정보없음", function(){	
+			location.href="/login/loginUsr.paid";
+			});	
+	}
+}
+
+//자료전달일 수정
+function fn_updateOfprTfctL() {
+	jConfirm("수정 하시겠습니까?", function() {
+		var tfctDe = $("#tfctDe").val();
+		
+		if(tfctDe == null || tfctDe == "") {
+			jAlert("자료전달일을 입력하시기 바랍니다.");
+			return;
+		}else{
+			var url = "/biz/pet/mng/sttsns/updateOfprTfctL.paid";
+			var param = {
+						 "pttnDeptPrcsVO.tfctDe":$("#tfctDe").val(),
+						 "pttnRqstNo":$("#pttnRqstNo").val()
+						};
+			var options = $.sendAjaxReq.setOptions(url, "post", param, true, fn_setResult, fn_viewErrorMsg);
+		
+			$.ajaxSettings.traditional = true;
+			$.sendAjaxReq.start(options);
+		}
+		
+	});
+	
+}
+
+//ajax 후 처리
+function fn_setResult(result) {
+	var data = JSON.parse(result);
+	
+	if(data != null) {
+		jAlert(data.resultMsg, function() {
+			//self.location.reload();
+			fn_reload_page();
+		});
+	}
+}
+
+//인쇄
+function fn_print(pttnRqstNo, instRcptSn, deptPrcsSn) {
+	jAlert("개인정보 노출 위험 최소화를 위하여<br/>민원인·신고자 개인정보는 인쇄되지 않습니다.<br/><br/>민원내용 등에 개인정보가 포함되어 있을 수 있으니,<br>개인정보 보호에 각별히 유의하여 주시기 바랍니다.", function() {
+		var chgRdngId = "BIZ_PET_P00002"; //변경열람ID - 민원현황 상세의 인쇄화면을 열람하였습니다.(기관)
+		fn_callPttnScrnPrntPopViewPopup(pttnRqstNo, instRcptSn, deptPrcsSn, chgRdngId);
+	});
+}
+
+/* 내용보완 상세보기 */
+function fn_callCntnSplmImrqPttnrAnsUpdatePopup(splmImrqSn, dataSplmSttsCd, splmImrqDfno) {
+ 	var param = {
+ 		"readOnlyChk": "Y",
+ 		"pttnRqstNo": "1BA-2609-1315163",
+		"instRcptSn": "215275716",
+		"instRcptNo": "2BA-2609-1310894",
+		"deptPrcsSn": "1",
+		"pttnCntnSplmVO.splmImrqSn": splmImrqSn,
+		"pttnCntnSplmVO.splmImrqDfno": splmImrqDfno,
+    	"rtrnTrg": null //return 함수 정의
+	};
+	
+	if(dataSplmSttsCd == "5B370001") { //자료보완상태코드가 "임시저장"이면
+		//"내용보완 요청[내용보완 요청 등록]" 화면으로 이동
+		gfn_openPopupPost("CntnSplmImrqInsertPopup", param, "CntnSplmImrqInsertPopup", "/biz/pet/prcs/splm/CntnSplmImrqInsertPopup.paid", 900, 690);
+	}else if(dataSplmSttsCd == "5B370002") { //자료보완상태코드가 "내용보완요청"이면
+		//"내용보완 요청[민원인 답변 등록]" 화면으로 이동
+	    gfn_openPopupPost("CntnSplmImrqPttnrAnsUpdatePopup", param, "CntnSplmImrqPttnrAnsUpdatePopup", "/biz/pet/prcs/splm/CntnSplmImrqPttnrAnsUpdatePopup.paid", 900, 650);
+	}else {		// if(dataSplmSttsCd == "5B370003") { //자료보완상태코드가 "내용보완완료"이면
+		//"내용보완 요청[민원인 답변 보기]" 화면으로 이동
+		gfn_openPopupPost("CntnSplmImrqPttnrAnsViewPopup", param, "CntnSplmImrqPttnrAnsViewPopup", "/biz/pet/prcs/splm/CntnSplmImrqPttnrAnsViewPopup.paid", 900, 635);
+	}
+	
+}
+	
+//외국어민원 AI 번역 팝업
+function fn_frlgPttnAiTrsltPopup() {
+	
+}
+
+//주소검색 콜백
+var fn_adrsSchPopBind = function(data) {
+    //console.log(data);
+    $("#rvsnRltnrZpcd").val(data.zipNo); //우편번호
+
+    //주소 형식 표준화 적용. 20210706. 신동열. from.곽수민
+    $("#rvsnBaseAdrs").val(data.roadAddrPart1);
+    if (data.roadAddrPart2 != ''){
+        $("#rvsnDtlAdrs").val(data.dtlAdrs+data.roadAddrPart2);
+    } else {
+        $("#rvsnDtlAdrs").val(data.dtlAdrs);
+    }
+
+    $("#roadNmCd").val(data.rnMgtSn); //도로명코드
+}
+
+</script>
+
+<form id="reloadForm" action="/biz/pet/mng/sttsns/PttnMngPttnSttsView.paid" method="POST">
+	<input type="hidden" name="_csrf" value="2e924a50-f356-4aaa-bf38-6fcb4b39b13e">
+	
+	<input id="pageIndex" name="pageIndex" type="hidden" value="1">
+	<input id="pageUnit" name="pageUnit" type="hidden" value="10">
+	<input id="pageSize" name="pageSize" type="hidden" value="10">
+	<input id="firstIndex" name="firstIndex" type="hidden" value="0">
+	<input id="lastIndex" name="lastIndex" type="hidden" value="1">
+	<input id="recordCountPerPage" name="recordCountPerPage" type="hidden" value="10">
+	<input id="searchKeywordFrom" name="searchKeywordFrom" type="hidden" value="">
+	<input id="searchKeywordTo" name="searchKeywordTo" type="hidden" value="">
+	<input id="srchPrdSch" name="srchPrdSch" type="hidden" value="3">
+	<input id="srchPrdChce" name="srchPrdChce" type="hidden" value="14d">
+	<input id="srchClsDeptYn" name="srchClsDeptYn" type="hidden" value="N">
+	<input id="srchInstSch" name="srchInstSch" type="hidden" value="2">
+	<input id="srchDeptNm" name="srchDeptNm" type="hidden" value="">
+	<input id="srchDeptCd" name="srchDeptCd" type="hidden" value="">
+	<input id="srchAcfrMsnf" name="srchAcfrMsnf" type="hidden" value="">
+	<input id="srchMpttnYn" name="srchMpttnYn" type="hidden" value="">
+	<input id="beginDt" name="beginDt" type="hidden" value="2026-10-01">
+	<input id="endDt" name="endDt" type="hidden" value="2026-10-15">
+	<input id="srchTitlOtln" name="srchTitlOtln" type="hidden" value="">
+	<input id="srchPttnNo" name="srchPttnNo" type="hidden" value="">
+	<input id="srchRltnrNm" name="srchRltnrNm" type="hidden" value="">
+	<input id="srchPttnRqstPathGrpCd" name="srchPttnRqstPathGrpCd" type="hidden" value="">
+	<input id="srchPttnRqstPathSctnCd" name="srchPttnRqstPathSctnCd" type="hidden" value="">
+	<input id="srchMenuClsfNm" name="srchMenuClsfNm" type="hidden" value="">
+	<input id="srchMenuClsfCd" name="srchMenuClsfCd" type="hidden" value="">
+	<input id="srchStatusCode" name="srchStatusCode" type="hidden" value="00620090">
+	<input id="srchLowerPcdGubun" name="srchLowerPcdGubun" type="hidden" value="">
+	<input id="srchPttnPrcsSttsCd" name="srchPttnPrcsSttsCd" type="hidden" value="">
+	<input id="srchMngrSctn" name="srchMngrSctn" type="hidden" value="1">
+	<input id="srchMngrNm" name="srchMngrNm" type="hidden" value="">
+	<input id="srchAdrsArea" name="srchAdrsArea" type="hidden" value="1">
+	<input id="srchSiGnNm" name="srchSiGnNm" type="hidden" value="">
+	<input id="srchGuNm" name="srchGuNm" type="hidden" value="">
+	<input id="srchRltnrCpno" name="srchRltnrCpno" type="hidden" value="선택">
+	<input id="srchRltnrMdlCpno" name="srchRltnrMdlCpno" type="hidden" value="">
+	<input id="srchRltnrLastCpno" name="srchRltnrLastCpno" type="hidden" value="">
+	<input id="srchInstMenu" name="srchInstMenu" type="hidden" value="">
+	<input id="srchPrdSctn" name="srchPrdSctn" type="hidden" value="1">
+	<input id="srchprcsExtnTcnt" name="srchprcsExtnTcnt" type="hidden" value="">
+	<input id="srchPrcsDtOver" name="srchPrcsDtOver" type="hidden" value="">
+	<input id="srchBgnRmndNumd" name="srchBgnRmndNumd" type="hidden" value="">
+	<input id="srchFnshRmndNumd" name="srchFnshRmndNumd" type="hidden" value="">
+	<input id="srchSafeReportYn" name="srchSafeReportYn" type="hidden" value="">
+	<input id="srchPubicReportYn" name="srchPubicReportYn" type="hidden" value="">
+	<input id="srchPttnDutySctnCdArr" name="srchPttnDutySctnCdArr" type="hidden" value="">
+	<input id="srchFrlgPttnYn" name="srchFrlgPttnYn" type="hidden" value="">
+	<input id="srchAvdnYn" name="srchAvdnYn" type="hidden" value="">
+	<input id="srchGapjilYn" name="srchGapjilYn" type="hidden" value="">
+	<input id="srchPrcsTransEmalYn" name="srchPrcsTransEmalYn" type="hidden" value="">
+	<input id="srchTransSmsYn" name="srchTransSmsYn" type="hidden" value="">
+	<input id="srchReplyTransEmalYn" name="srchReplyTransEmalYn" type="hidden" value="">
+	<input id="srchTransLtrYn" name="srchTransLtrYn" type="hidden" value="">
+	<input id="srchMlnpPttnYn" name="srchMlnpPttnYn" type="hidden" value="">
+	<input id="srchSctyEntrPttnYnN" name="srchSctyEntrPttnYnN" type="hidden" value="">
+	<input id="srchSctyEntrPttnYnY" name="srchSctyEntrPttnYnY" type="hidden" value="">
+	<input id="rsltInrSchYn" name="rsltInrSchYn" type="hidden" value="">
+	<input id="srchTitlOtlnRe" name="srchTitlOtlnRe" type="hidden" value="">
+	<input id="srchRMrgYn" name="srchRMrgYn" type="hidden" value="">
+	<input id="srchFrcrPttnYn" name="srchFrcrPttnYn" type="hidden" value="">
+	<input id="srchWdrwYn" name="srchWdrwYn" type="hidden" value="">
+	<input id="srchHelpPrcsYn" name="srchHelpPrcsYn" type="hidden" value="">
+	<input id="srchMmsnfYn" name="srchMmsnfYn" type="hidden" value="">
+	<input id="srchAcfrMsnfYn" name="srchAcfrMsnfYn" type="hidden" value="">
+	<input id="srchLwrdNm" name="srchLwrdNm" type="hidden" value="">
+	<input id="srchLwrdCd" name="srchLwrdCd" type="hidden" value="">
+	<input id="srchStsfdReg" name="srchStsfdReg" type="hidden" value="">
+	<input id="srchStsfdCnfmYn" name="srchStsfdCnfmYn" type="hidden" value="">
+	<input id="srchStsfdAddAnswYn" name="srchStsfdAddAnswYn" type="hidden" value="">
+	<input id="srchFrstStsfdCd" name="srchFrstStsfdCd" type="hidden" value="">
+	<input id="srchFrstMrwdCntnCl" name="srchFrstMrwdCntnCl" type="hidden" value="">
+	<input id="srchFrstSltnYnCd" name="srchFrstSltnYnCd" type="hidden" value="">
+	<input id="srchLastStsfdCd" name="srchLastStsfdCd" type="hidden" value="">
+	<input id="srchLastMrwdCntnCl" name="srchLastMrwdCntnCl" type="hidden" value="">
+	<input id="srchLastSltnYnCd" name="srchLastSltnYnCd" type="hidden" value="">
+	
+	<input type="hidden" id="schYn" name="schYn" value="Y">
+	<input type="hidden" id="sortItm" name="sortItm" value="prcs_rsltn_dt">
+	<input type="hidden" id="sortSeq" name="sortSeq" value="">
+	<input type="hidden" id="srchDtlYn" name="srchDtlYn" value="">
+	
+	
+	<input type="hidden" id="pttnRqstNo" name="pttnPttnBaseVO.pttnRqstNo" value="1BA-2609-1315163">
+	<input type="hidden" id="instRcptSn" name="pttnInstRcptVO.instRcptSn" value="215275716">
+	<input type="hidden" name="deptPrcsSn" value="1">
+	<input type="hidden" id="deptPrcsSn" name="pttnDeptPrcsVO.deptPrcsSn" value="1">
+	<input type="hidden" id="instCd" name="pttnInstRcptVO.instCd" value="XK70000">
+	<input type="hidden" id="modTcnt" name="pttnDeptPrcsVO.modTcnt" value="0">
+	<!-- <input type="hidden" name="pttnInstRcptVO.pttnCnrsChgRsnCd"" /> -->
+	
+	<input type="hidden" id="otnsOppbYn" value="">
+	
+	<input type="hidden" id="srcRltnrZpcd" value="">
+	<input type="hidden" id="srcBaseAdrs" value="">
+	<input type="hidden" id="srcDtlAdrs" value="">
+	<input type="hidden" id="srcRoadNmCd" value="">
+	<input type="hidden" id="srcRltnrEmal" value="">
+	<input type="hidden" id="srcrltnrCpno" value="">
+	<input type="hidden" id="srcRltnrTpno" value="">
+	
+	<input type="hidden" name="pttnRqstNo" value="1BA-2609-1315163">
+	<input type="hidden" name="instRcptSn" value="215275716">
+<div>
+<input type="hidden" name="_csrf" value="2e924a50-f356-4aaa-bf38-6fcb4b39b13e">
+</div><input type="hidden" name="g_menuId" value="A0022"></form>
+
+<form id="paramsForm">
+	<input type="hidden" id="width" name="width" value="">
+	<input type="hidden" id="height" name="height" value="">
+	<input type="hidden" id="posX" name="posX" value="">
+	<input type="hidden" id="posY" name="posY" value="">
+<input type="hidden" name="g_menuId" value="A0022"></form>
+					<!-- 본문 끝 -->
+				</article>
+			</section>
+		</div>
+	</main>
+
+	<!-- 	<footer id="footer">
+			<div class="layout">
+				<address class="f_addr">
+					<p>339-012세종특별자치시 도움5로 209(정부세종청사7동) 이용안내 <a href="tel:1600-8172">1600-8172</a></p>
+					<p>Copyright 2019~ ePeople. All  Rights Reserved. </p>
+				</address>
+
+				<ul class="f_util">
+					<li><a href="#"><img src="/resource/images/paid/biz/layout/footer_help.png" alt="">도움말</a></li>
+					<li><a href="#">공지사항</a></li>
+					<li><a href="#">질의응답</a></li>
+					<li><a href="#">기관담당자 검색</a></li>
+				</ul>
+			</div>
+
+		</footer> -->
+</div>
+
+
+
+
+
+
+
+
+<!-- 1 : 개인정보 스크립트 -->
+<script type="text/javascript" src="/resource/app/applex_wdigm_html5/applex_local.js"></script><script src="/resource/app/applex_wdigm_html5/policy.js"></script><script src="/resource/app/applex_wdigm_html5/b_word.js"></script><script src="/resource/app/applex_wdigm_html5/b_word2.js"></script><script src="/resource/app/applex_wdigm_html5/applet/wdigm_constain.js"></script><script src="/resource/app/applex_wdigm_html5/applet/wdigm_lib.js"></script><script src="/resource/app/applex_wdigm_html5/applet/wdigm_expr.js"></script><script src="/resource/app/applex_wdigm_html5/applet/wdigm_api.js"></script><script src="/resource/app/applex_wdigm_html5/applet/ui/js/jquery.ui.draggable.js" type="text/javascript"></script><script src="/resource/app/applex_wdigm_html5/applet/ui/js/jquery.alerts.js" type="text/javascript"></script><link href="/resource/app/applex_wdigm_html5/applet/ui/css/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen"><link href="/resource/app/applex_wdigm_html5/applet/ui/css/ui.alert.css" rel="stylesheet" type="text/css">
+
+<!-- 2 : 첨부파일 변환 스크립트 -->
+<iframe id="uploadIFrame1" name="uploadIFrame1" class="uploadIFrame1" style="display: none; visibility: hidden;" title="첨부파일 변환"></iframe>
+
+<!-- 3 : 개인정보 차단 스크립트 -->
+
+<!-- 4 : onchang 함수 -->
+
+<!-- 5 : 첨부파일 변환 알림 문구 -->
+<!-- <div id="applex_wdigm_html5_waiting"></div> -->
+
+<!-- 2026-10-01 19:54:22 -->
+<!-- egov41 -->
+
+
+</body>
