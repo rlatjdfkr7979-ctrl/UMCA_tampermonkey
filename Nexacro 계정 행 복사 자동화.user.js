@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexacro 계정 행 복사 자동화
 // @namespace    http://tampermonkey.net/
-// @version      1.78
+// @version      1.81
 // @description  ds_acct 행 복사 + 초과근무 기안 자동화
 // @match        http://10.10.1.20:8080/umca/*
 // @grant        none
@@ -15,6 +15,7 @@
     const FRAME_KEYWORD  = 'index.html';
     const WIN_ACCT       = 'WIN10120101';
     const WIN_OT         = 'WIN10110105';
+    const WIN_TRIPS      = ['WIN10110107', 'WIN10010408']; // 출장복명서 관리, 관내근무상황부
     const ADD_DELAY      = 300;
     const DB_DELAY       = 800;
     const CLICK_DELAY_MS = 1500;
@@ -457,9 +458,96 @@
         try { runDelete(); } catch (e) { console.error(e); alert('오류: ' + e.message); }
     });
 
+    const btnTrip = document.createElement('button');
+    btnTrip.textContent = '초기화 대상';
+    btnTrip.style.cssText = `
+        position: fixed; bottom: 30px; right: 30px; z-index: 99999;
+        padding: 10px 18px; background: #2e7d32; color: white;
+        border: none; border-radius: 6px; font-size: 14px;
+        cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        display: none;
+    `;
+    btnTrip.addEventListener('click', () => {
+        try { runTripReset(); } catch (e) { console.error(e); alert('오류: ' + e.message); }
+    });
+
+    document.body.appendChild(btnTrip);
     document.body.appendChild(btnAcct);
     document.body.appendChild(btnDel);
     document.body.appendChild(btnOT);
+
+    // ── 출장복명서 초기화 대상 조회 (WIN10110107) ─────────
+
+    const tripFiltered = new Set(); // 필터가 적용된 WIN ID
+
+    function getTripGrid(winId) {
+        const nx = getNexacro();
+        if (!nx) throw new Error('nexacro 객체를 찾을 수 없습니다.');
+        const grid = nx.getApplication()
+            .mainframe.vframeset.hframeset
+            .bodyframe.workframe[winId]
+            .form.div_base.form.div_work.form.grd_master;
+        if (!grid) throw new Error('grd_master를 찾을 수 없습니다.');
+        return grid;
+    }
+
+    function findGridColumn(grid, headText) {
+        const n = grid.getCellCount('head');
+        for (let i = 0; i < n; i++) {
+            const t = String(grid.getCellProperty('head', i, 'text') ?? '').replace(/\s+/g, '');
+            if (t === headText.replace(/\s+/g, '')) {
+                const bind = String(grid.getCellProperty('body', i, 'text') ?? '');
+                const m = bind.match(/^bind:(.+)$/);
+                return { cell: i, col: m ? m[1] : null };
+            }
+        }
+        return null;
+    }
+
+    function runTripReset() {
+        const winId = getActiveWinId();
+        if (!WIN_TRIPS.includes(winId)) throw new Error('지원하지 않는 화면입니다.');
+        const grid = getTripGrid(winId);
+        const ds   = grid.getBindDataset();
+        if (!ds) throw new Error('조회 데이터셋을 찾을 수 없습니다.');
+
+        if (tripFiltered.has(winId)) {
+            ds.filter('');
+            tripFiltered.delete(winId);
+            btnTrip.textContent = '초기화 대상';
+            return;
+        }
+
+        const send = findGridColumn(grid, '결재 전송여부');
+        const step = findGridColumn(grid, '결재단계');
+        if (!send?.col || !step?.col) throw new Error('결재 전송여부/결재단계 컬럼을 찾을 수 없습니다.');
+
+        ds.filter('');
+        const pairs = new Set();
+        for (let r = 0; r < ds.getRowCount(); r++) {
+            const sendRaw  = String(ds.getColumn(r, send.col) ?? '');
+            const stepRaw  = String(ds.getColumn(r, step.col) ?? '');
+            const sendText = String(grid.getCellText(r, send.cell) ?? '');
+            const stepText = String(grid.getCellText(r, step.cell) ?? '');
+            const sendOk = sendRaw === 'Y' || sendText === 'Y';
+            const stepOk = stepRaw === '작성중' || stepText === '작성중';
+            if (sendOk && stepOk) pairs.add(JSON.stringify([stepRaw, sendRaw]));
+        }
+
+        if (pairs.size === 0) {
+            alert('초기화 대상이 없습니다. (결재단계 작성중 + 결재 전송여부 Y)');
+            return;
+        }
+
+        const q = v => "'" + v.replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'";
+        const expr = Array.from(pairs).map(p => {
+            const [st, sd] = JSON.parse(p);
+            return `(${step.col}==${q(st)} && ${send.col}==${q(sd)})`;
+        }).join(' || ');
+        ds.filter(expr);
+        tripFiltered.add(winId);
+        btnTrip.textContent = '전체 보기';
+    }
 
     // ── 마이메뉴 첫 번째 폴더 자동 펼침 ───────────────────
 
@@ -490,6 +578,10 @@
         btnAcct.style.display = winId === WIN_ACCT ? 'block' : 'none';
         btnDel.style.display  = winId === WIN_ACCT ? 'block' : 'none';
         btnOT.style.display   = winId === WIN_OT   ? 'block' : 'none';
+        btnTrip.style.display = WIN_TRIPS.includes(winId) ? 'block' : 'none';
+        if (WIN_TRIPS.includes(winId)) {
+            btnTrip.textContent = tripFiltered.has(winId) ? '전체 보기' : '초기화 대상';
+        }
     }, POLL_INTERVAL);
 
 })();
