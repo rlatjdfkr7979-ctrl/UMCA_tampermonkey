@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexacro 계정 행 복사 자동화
 // @namespace    http://tampermonkey.net/
-// @version      1.77
+// @version      1.78
 // @description  ds_acct 행 복사 + 초과근무 기안 자동화
 // @match        http://10.10.1.20:8080/umca/*
 // @grant        none
@@ -151,7 +151,7 @@
         alert(`완료! ${repeat}세트 × ${srcCount}행 = ${repeat * srcCount}행 추가됨`);
     }
 
-    // ── 결의서 삭제 (WIN10120101) ─────────────────────────
+    // ── 결의서 취소 (WIN10120101) ─────────────────────────
 
     function findBtnEtc1(root) {
         const stack = [root];
@@ -177,7 +177,7 @@
             .bodyframe.workframe[WIN_ACCT].form;
         const b = findBtnEtc1(winForm);
         if (!b) throw new Error('btn_etc1 버튼을 찾을 수 없습니다.');
-        if (!confirm('결의서를 삭제하시겠습니까?')) return;
+        if (!confirm('결의서를 취소하시겠습니까?')) return;
         b.on_fire_onclick(b, new nx.ClickEventInfo(b, 'onclick'));
     }
 
@@ -445,7 +445,7 @@
     });
 
     const btnDel = document.createElement('button');
-    btnDel.textContent = '결의서 삭제';
+    btnDel.textContent = '결의서 취소';
     btnDel.style.cssText = `
         position: fixed; bottom: 30px; right: 160px; z-index: 99999;
         padding: 10px 18px; background: #c0392b; color: white;
@@ -461,9 +461,31 @@
     document.body.appendChild(btnDel);
     document.body.appendChild(btnOT);
 
+    // ── 마이메뉴 첫 번째 폴더 자동 펼침 ───────────────────
+
+    let myMenuExpanded = false;
+
+    function expandFirstMyMenu() {
+        if (myMenuExpanded) return;
+        try {
+            const nx = getNexacro();
+            const grid = nx?.getApplication()
+                .mainframe?.vframeset?.hframeset?.leftframe?.form
+                ?.tab_menu?.tpg_mymenu?.form?.grd_myMenu;
+            if (!grid || !(grid.getTreeRowCount?.() > 0 || grid.rowcount > 0)) return;
+            if (grid.getTreeStatus(0) === 1 || grid.getTreeStatus(0) === true) {
+                myMenuExpanded = true;
+                return;
+            }
+            grid.setTreeStatus(0, true);
+            myMenuExpanded = true;
+        } catch (e) {}
+    }
+
     // ── WIN ID 폴링 → 버튼 표시/숨김 ─────────────────────
 
     setInterval(() => {
+        expandFirstMyMenu();
         const winId = getActiveWinId();
         btnAcct.style.display = winId === WIN_ACCT ? 'block' : 'none';
         btnDel.style.display  = winId === WIN_ACCT ? 'block' : 'none';
