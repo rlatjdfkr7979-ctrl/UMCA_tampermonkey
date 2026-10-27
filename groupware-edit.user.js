@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.11
+// @version      4.15
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -820,7 +820,75 @@
             return createCopyButton(url, '🔗', 'umca-link-copy');
         }
 
+        // 버튼은 제목 칸 오른쪽에 줄어들지 않는 묶음으로 두고, 제목은 칸 너비에 맞춰 말줄임 처리해서
+        // 칼럼이 좁아도 버튼이 잘리지 않게 한다.
+        function getButtonHost(container) {
+            let host = container.querySelector(':scope > .umca-actions');
+            if (host) return host;
+            container.style.cssText += ';display:flex;align-items:center;min-width:0;';
+            const subject = container.querySelector('a.subject');
+            if (subject) subject.style.cssText += ';flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            host = document.createElement('span');
+            host.className = 'umca-actions';
+            host.style.cssText = 'display:inline-flex;flex:none;align-items:center;white-space:nowrap;';
+            container.appendChild(host);
+            return host;
+        }
+
+        // 행별 PDF 다운로드: 해당 행만 체크한 상태로 페이지의 파일 저장 모듈을 호출한 뒤 체크 상태를 복원
+        function downloadRowPdf(tr) {
+            const boxes = Array.from(document.querySelectorAll('tbody#tbody input[name="docinfo"]'));
+            const target = tr.querySelector('input[name="docinfo"]');
+            if (!target) return;
+            if (typeof win.randomPassword !== 'function') {
+                win.randomPassword = function (len) {
+                    len = len || 16;
+                    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+                    const buf = new Uint32Array(len);
+                    win.crypto.getRandomValues(buf);
+                    let out = '';
+                    for (let i = 0; i < len; i++) out += chars[buf[i] % chars.length];
+                    return out;
+                };
+            }
+            const saved = boxes.map(b => b.checked);
+            boxes.forEach(b => { b.checked = (b === target); });
+            try {
+                win.apprCommon_bms.doCallFileManager(
+                    'lstArea_bms', win.HCLTAPP_FILESAVE,
+                    false, false, false, false, true, // PDF
+                    'doc'
+                );
+            } catch (err) {
+                console.error('PDF 다운로드 실패', err);
+                alert('PDF 다운로드 호출에 실패했습니다. 콘솔을 확인하세요.');
+            }
+            setTimeout(() => boxes.forEach((b, i) => { b.checked = saved[i]; }), 1500);
+        }
+
+        function addPdfButtons() {
+            if (!win.apprCommon_bms || typeof win.apprCommon_bms.doCallFileManager !== 'function') return;
+            document.querySelectorAll('tbody#tbody tr').forEach(tr => {
+                if (tr.querySelector('.umca-pdf-download') || !tr.querySelector('input[name="docinfo"]')) return;
+                const container = tr.querySelector('td .title');
+                if (!container) return;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'umca-pdf-download';
+                btn.textContent = 'PDF';
+                btn.title = 'PDF 다운로드';
+                btn.style.cssText = 'margin-left:4px;padding:0 5px;border:1px solid #c62828;border-radius:3px;background:#c62828;color:#fff;cursor:pointer;font:bold 10px/16px Arial,sans-serif;letter-spacing:.3px;';
+                btn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    downloadRowPdf(tr);
+                });
+                getButtonHost(container).appendChild(btn);
+            });
+        }
+
         function addButtons() {
+            addPdfButtons();
             document.querySelectorAll('table').forEach(table => {
                 const docIdx = headerIndex(table, '문서번호');
                 const dateIdx = headerIndex(table, '등록일');
@@ -837,7 +905,8 @@
                     const text = `${docNo}(${m[1]}. ${+m[2]}. ${+m[3]}.)호`;
 
                     if (!tr.querySelector('.umca-ref-copy')) {
-                        (tr.querySelector('td .title') || docCell).appendChild(createCopyButton(text));
+                        const titleDiv = tr.querySelector('td .title');
+                        (titleDiv ? getButtonHost(titleDiv) : docCell).appendChild(createCopyButton(text));
                     }
                 });
             });
@@ -861,11 +930,11 @@
                 const table = tr && tr.closest('table');
                 const hasRefColumns = table && headerIndex(table, '문서번호') >= 0 && headerIndex(table, '등록일') >= 0;
                 if (info.ref && !hasRefColumns && !container.querySelector('.umca-ref-copy')) {
-                    container.appendChild(createCopyButton(info.ref));
+                    getButtonHost(container).appendChild(createCopyButton(info.ref));
                 }
-                container.appendChild(createLinkButton(apprId));
+                getButtonHost(container).appendChild(createLinkButton(apprId));
                 const previewBtn = createPreviewButton(subject.title || subject.textContent.trim(), info.preview);
-                if (previewBtn) container.appendChild(previewBtn);
+                if (previewBtn) getButtonHost(container).appendChild(previewBtn);
             });
         }
 

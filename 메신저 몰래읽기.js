@@ -59,20 +59,64 @@
     state.pending.clear(); state.blocked = 0; render();
   }
 
-  // 작은 상태 표시 버튼
-  const btn = document.createElement('div');
-  btn.style.cssText = 'position:fixed;right:70px;bottom:20px;z-index:2147483647;padding:7px 12px;border-radius:16px;font:600 12px/1 sans-serif;color:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)';
-  document.body.appendChild(btn);
+  // 화면 전체 테두리로 상태 표시 (ON: 주황 테두리, OFF: 없음). 클릭을 가리지 않음
+  const frame = document.createElement('div');
+  frame.style.cssText = 'position:fixed;inset:0;z-index:2147483647;pointer-events:none;transition:box-shadow .15s';
+  document.body.appendChild(frame);
   function render() {
-    btn.style.background = state.on ? '#f59e0b' : '#6b7280';
-    btn.textContent = `안읽음 유지 ${state.on?'ON':'OFF'}` + (state.blocked?` · ${state.blocked}`:'');
+    frame.style.boxShadow = state.on ? 'inset 0 0 0 4px #f59e0b' : 'none';
+    document.title = document.title.replace(/^\[안읽음 유지\] /, '');
+    if (state.on) document.title = '[안읽음 유지] ' + document.title;
   }
-  btn.onclick = () => { state.on = !state.on; render(); };
+  const MY_CHAT = '나와의 대화방';
+  const items = () => [...document.querySelectorAll('.js-gnb-list-item')];
+  // 아바타([size])를 제외한 텍스트 말단 요소들: 첫 번째는 방 이름, 이후 숫자는 안읽음 배지
+  const textLeaves = item => [...item.querySelectorAll('*')]
+    .filter(el => !el.firstElementChild && el.textContent.trim() && !el.closest('[size]'));
+  const nameOf = item => (textLeaves(item)[0] || {}).textContent?.trim() || '';
+  const unreadOf = item => {
+    const badge = textLeaves(item).slice(1).find(el => /^\d+\+?$/.test(el.textContent.trim()));
+    return badge ? parseInt(badge.textContent, 10) : 0;
+  };
+  // 현재 열린 방: 대부분과 클래스가 다른 유일한 항목 (선택 상태 스타일)
+  const currentItem = () => {
+    const all = items(), cnt = new Map();
+    all.forEach(el => cnt.set(el.className, (cnt.get(el.className) || 0) + 1));
+    const odd = all.filter(el => cnt.get(el.className) === 1);
+    return odd.length === 1 ? odd[0] : null;
+  };
+  // 안읽은 방을 순차 방문: 몰래읽기 ON이면 배지가 안 사라지므로 방문 기록으로 중복을 막음
+  const cycle = { visited: new Set(), last: null };
+  function nextRoom() {
+    const cur = currentItem(), curName = cur ? nameOf(cur) : '';
+    const unread = () => items().filter(el => unreadOf(el) > 0 && !cycle.visited.has(nameOf(el)) && nameOf(el) !== curName);
+    if (curName === MY_CHAT) {
+      cycle.visited.clear(); cycle.last = null;
+      const n = unread()[0];
+      if (!n) return console.log('읽지 않은 방 없음');
+      return openRoom(n);
+    }
+    if (cycle.last && curName === cycle.last) {
+      const n = unread()[0];
+      if (n) return openRoom(n);
+      cycle.visited.clear(); cycle.last = null; // 한 바퀴 끝 → 나와의 대화방으로 복귀
+    }
+    openMyChat();
+  }
+  function openRoom(item) {
+    const name = nameOf(item);
+    cycle.visited.add(name); cycle.last = name;
+    // 방에 들어가며 읽음 처리되지 않도록 먼저 몰래읽기를 켬
+    state.on = true; render();
+    clickItem(item);
+  }
   // 좌측 채널 목록의 "나와의 대화방" 열기
   function openMyChat() {
-    const item = [...document.querySelectorAll('.js-gnb-list-item')]
-      .find(el => el.textContent.trim() === '나와의 대화방');
+    const item = items().find(el => nameOf(el) === MY_CHAT);
     if (!item) return console.log('나와의 대화방 항목을 찾을 수 없음');
+    clickItem(item);
+  }
+  function clickItem(item) {
     // 가장 안쪽 텍스트 요소에 실제 클릭과 같은 이벤트 순서로 전달
     let target = item;
     while (target.firstElementChild && target.textContent.trim() === target.firstElementChild.textContent.trim()) {
@@ -86,10 +130,14 @@
     }
   }
   const onKey = e => {
-    if (e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey && e.key.toLowerCase()==='e') {
+    if (!e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return;
+    const k = e.key.toLowerCase();
+    if (k === 'e') {
+      e.preventDefault(); e.stopPropagation();
+      nextRoom();
+    } else if (k === 'd') {
       e.preventDefault(); e.stopPropagation();
       state.on = !state.on; render();
-      openMyChat();
     }
   };
   // 포커스가 iframe 안에 있어도 동작하도록 window와 동일 출처 iframe 모두에 등록
@@ -113,5 +161,5 @@
   render();
 
   W.__keepUnread = { state, on:()=>{state.on=true;render();}, off:()=>{state.on=false;render();}, flush };
-  console.log('안읽음 유지 ON. 토글: Ctrl+E, 해제: __keepUnread.off(),일괄 읽음 처리: __keepUnread.flush()');
+  console.log('안읽음 유지 ON. 토글: Ctrl+D, 나와의 대화방/다음 안읽은 방: Ctrl+E, 해제: __keepUnread.off(),일괄 읽음 처리: __keepUnread.flush()');
 })();
