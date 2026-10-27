@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.8
+// @version      4.11
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -174,154 +174,154 @@
         container.appendChild(p);
     }
 
-    function renderApprovalRoute(container, hox) {
-        const participants = hox.querySelectorAll('participant');
-        if (!participants.length) {
+    const FLOW_STATUS = { partapprstatus_cancel: '회수/취소', partapprstatus_now: '진행중', partapprstatus_done: '완료' };
+    const FLOW_VALID = { valid: '유효', revoked: '무효(회수됨)' };
+    const FLOW_COMMENT_TYPE = { comment_type_recall: '회수의견' };
+
+    function readFlow(hox) {
+        if (!hox?.querySelectorAll) return [];
+        const text = (node, selector) => node?.querySelector(selector)?.textContent.trim() ?? '';
+        return Array.from(hox.querySelectorAll('approvalFlow > participant'), (p, index) => {
+            const opinions = Array.from(p.querySelectorAll('*'))
+                .filter(node => /comment|opinion/i.test(node.tagName) && node.querySelector('text'))
+                .map(node => {
+                    const type = node.getAttribute('type');
+                    return {
+                        type: FLOW_COMMENT_TYPE[type] ?? type ?? '',
+                        text: text(node, 'text'),
+                        date: text(node, 'date').replace('T', ' ')
+                    };
+                });
+            const delegator = p.querySelector('delegator');
+            const status = text(p, 'approvalStatus');
+            const valid = text(p, 'validStatus');
+            return {
+                order: index + 1,
+                type: text(p, 'displayApprovalType'),
+                name: text(p, ':scope > name'),
+                position: text(p, ':scope > position'),
+                department: text(p, ':scope > department > name'),
+                statusKey: status,
+                status: FLOW_STATUS[status] ?? status,
+                valid: FLOW_VALID[valid] ?? valid,
+                revoked: valid === 'revoked',
+                date: text(p, ':scope > date').replace('T', ' ').replace(/^1970.*/, ''),
+                delegate: p.getAttribute('absent') === 'true'
+                    ? (delegator?.textContent.trim().replace(/\s+/g, ' ') || '대결') : '',
+                opinions
+            };
+        });
+    }
+
+    function flowToTsv(rows) {
+        const header = ['순번', '구분', '이름', '직위', '부서', '상태', '유효', '일시', '대결', '의견'];
+        const lines = rows.map(row => [row.order, row.type, row.name, row.position, row.department,
+            row.status, row.valid, row.date, row.delegate,
+            row.opinions.map(o => `[${o.type}] ${o.text} (${o.date})`).join(' / ')]
+            .map(value => String(value).replace(/[\t\r\n]+/g, ' ')).join('\t'));
+        return [header.join('\t'), ...lines].join('\n');
+    }
+
+    function renderFlow(container, rows) {
+        if (!rows.length) {
             appendInfoMessage(container, '등록된 결재경로가 없습니다.');
             return;
         }
 
-        const table = document.createElement('table');
-        const header = table.createTHead().insertRow();
-        for (const label of ['순서', '구분', '이름', '직위', '일시', '상태']) {
-            const th = document.createElement('th');
-            th.scope = 'col';
-            th.textContent = label;
-            header.appendChild(th);
-        }
-        const body = table.createTBody();
-        participants.forEach((participant, index) => {
-            const get = name => participant.querySelector(`:scope > ${name}`)?.textContent.trim() ?? '';
-            const row = body.insertRow();
-            const values = [index + 1, get('displayApprovalType'), get('name'),
-                get('dutyName') || get('position'), get('date').replace('T', ' '),
-                get('approvalStatus').replace('partapprstatus_', '')];
-            values.forEach(value => row.insertCell().textContent = value || '—');
-        });
-        container.appendChild(table);
-    }
+        const list = document.createElement('ol');
+        list.className = 'flow';
+        for (const row of rows) {
+            const item = document.createElement('li');
+            item.className = 'flow-item';
+            const tone = row.statusKey === 'partapprstatus_done' ? 'done'
+                : row.statusKey === 'partapprstatus_now' ? 'now'
+                : row.statusKey === 'partapprstatus_cancel' ? 'cancel' : 'wait';
+            item.classList.add(`flow-${tone}`);
+            if (row.revoked) item.classList.add('flow-revoked');
 
-    function parseOriginalRoute(parsed) {
-        // 원결재경로는 표가 아닌 목록으로 내려오므로 블록 경계를 유지해 읽는다.
-        const blocks = new Set(['DIV', 'P', 'LI', 'TR', 'TD', 'TH', 'DT', 'DD',
-            'SECTION', 'HEADER', 'H1', 'H2', 'H3', 'H4', 'UL', 'OL']);
-        function readText(node) {
-            if (node.nodeType === Node.TEXT_NODE) return node.textContent.replace(/\s+/g, ' ');
-            if (node.nodeType !== Node.ELEMENT_NODE) return '';
-            if (node.tagName === 'BR') return '\n';
-            const text = Array.from(node.childNodes, readText).join(' ');
-            return blocks.has(node.tagName) ? `\n${text}\n` : text;
-        }
-        const text = readText(parsed.body).split('\n')
-            .map(line => line.replace(/\s+/g, ' ').trim()).filter(Boolean).join('\n');
-        const heading = /(?:^|\n)(완료|진행|대기|미결|예정|회수|반려|보류|취소|승인|반송|후결|-)\s+(?:(의견\s*있음)\s+)?(기안|전결|대결|결재|검토|협조|합의|병렬합의|순차합의|병렬협조|순차협조|확인|공람|통보|보고|접수|시행)(?=\s|$)/g;
-        const matches = Array.from(text.matchAll(heading));
-        if (!matches.length) return [];
+            const step = document.createElement('span');
+            step.className = 'flow-step';
+            step.textContent = row.order;
 
-        const rows = [];
-        for (let index = 0; index < matches.length; index++) {
-            const match = matches[index];
-            const content = text.slice(match.index + match[0].length,
-                matches[index + 1]?.index ?? text.length).trim();
-            const date = /\d{4}[.\/-]\d{1,2}[.\/-]\d{1,2}\.?\s+\d{1,2}:\d{2}(?::\d{2})?|(?:^|\n)-(?:\n|$)/.exec(content);
-            // 형식이 다르면 일부 경로만 표시하지 않고 기존 원문 표시로 돌아간다.
-            if (!date) return [];
-            const identity = content.slice(0, date.index).replace(/의견\s*펼치기/g, '').trim()
-                .split(/\s+/).filter(Boolean);
-            if (!identity.length) return [];
-            const remainder = content.slice(date.index + date[0].length).trim();
-            const status = /^(완료|진행|대기|미결|예정|회수|반려|보류|취소|승인|반송|후결|-)(?=\s|$)/.exec(remainder);
-            const opinion = (status ? remainder.slice(status[0].length) : remainder)
-                .replace(/의견\s*펼치기/g, '').trim();
-            rows.push({
-                type: match[3], name: identity[0], position: identity.slice(1).join(' '),
-                date: date[0].trim(), status: status?.[1] || match[1],
-                opinion: opinion || (match[2] ? '의견 있음' : '')
-            });
-        }
-        return rows;
-    }
+            const body = document.createElement('div');
+            body.className = 'flow-body';
 
-    function renderOriginalRouteTable(container, rows) {
-        const table = document.createElement('table');
-        const header = table.createTHead().insertRow();
-        const showOpinion = rows.some(row => row.opinion);
-        const labels = ['순서', '구분', '이름', '직위', '일시', '상태'];
-        if (showOpinion) labels.push('의견');
-        labels.forEach(label => {
-            const th = document.createElement('th');
-            th.scope = 'col';
-            th.textContent = label;
-            header.appendChild(th);
-        });
-        const body = table.createTBody();
-        rows.forEach((entry, index) => {
-            const row = body.insertRow();
-            const values = [index + 1, entry.type, entry.name, entry.position, entry.date, entry.status];
-            if (showOpinion) values.push(entry.opinion);
-            values.forEach((value, column) => {
-                const cell = row.insertCell();
-                cell.textContent = value || '—';
-                if (column === 4) cell.className = 'route-date';
-                if (column === 5) {
-                    const badge = document.createElement('span');
-                    badge.className = 'route-status';
-                    if (['완료', '승인'].includes(value)) badge.classList.add('route-status-done');
-                    if (['회수', '반려', '취소', '반송'].includes(value)) badge.classList.add('route-status-returned');
-                    badge.textContent = value || '—';
-                    cell.replaceChildren(badge);
-                }
-            });
-        });
-        container.appendChild(table);
-    }
-
-    function renderOriginalRoute(container, html) {
-        const parsed = new DOMParser().parseFromString(html, 'text/html');
-        parsed.querySelectorAll('script, style, noscript, iframe, object, embed, template, input, button, select, textarea')
-            .forEach(element => element.remove());
-
-        const rows = parseOriginalRoute(parsed);
-        let originalContainer = container;
-        if (rows.length) {
-            renderOriginalRouteTable(container, rows);
-            const details = document.createElement('details');
-            const summary = document.createElement('summary');
-            summary.textContent = '원문 보기';
-            originalContainer = document.createElement('div');
-            details.append(summary, originalContainer);
-            container.appendChild(details);
-        }
-
-        // 서버의 표시 내용과 표 구조만 복사하고 이벤트, 링크, 외부 리소스는 가져오지 않는다.
-        const allowed = new Set(['TABLE', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'TD', 'TH',
-            'P', 'DIV', 'SPAN', 'BR', 'STRONG', 'B', 'UL', 'OL', 'LI', 'H1', 'H2', 'H3', 'CAPTION']);
-        function copyContent(source, target) {
-            for (const node of source.childNodes) {
-                if (node.nodeType === Node.TEXT_NODE) {
-                    target.appendChild(document.createTextNode(node.textContent));
-                } else if (node.nodeType === Node.ELEMENT_NODE) {
-                    const element = allowed.has(node.tagName) ? document.createElement(node.tagName) : null;
-                    if (element && ['TD', 'TH'].includes(node.tagName)) {
-                        for (const attr of ['colspan', 'rowspan']) {
-                            const value = Number(node.getAttribute(attr));
-                            if (Number.isInteger(value) && value > 0 && value <= 100) {
-                                element.setAttribute(attr, String(value));
-                            }
-                        }
-                    }
-                    copyContent(node, element || target);
-                    if (element) target.appendChild(element);
-                }
+            const head = document.createElement('div');
+            head.className = 'flow-head';
+            const type = document.createElement('span');
+            type.className = 'flow-type';
+            type.textContent = row.type || '—';
+            const name = document.createElement('strong');
+            name.textContent = row.name || '—';
+            const sub = document.createElement('span');
+            sub.className = 'flow-sub';
+            sub.textContent = [row.position, row.department].filter(Boolean).join(' · ');
+            head.append(type, name, sub);
+            if (row.delegate) {
+                const tag = document.createElement('span');
+                tag.className = 'flow-tag';
+                tag.textContent = `대결 ${row.delegate === '대결' ? '' : row.delegate}`.trim();
+                head.appendChild(tag);
             }
+
+            const meta = document.createElement('div');
+            meta.className = 'flow-meta';
+            const badge = document.createElement('span');
+            badge.className = `flow-badge flow-badge-${tone}`;
+            badge.textContent = row.status || '대기';
+            meta.appendChild(badge);
+            if (row.valid && row.revoked) {
+                const valid = document.createElement('span');
+                valid.className = 'flow-tag';
+                valid.textContent = row.valid;
+                meta.appendChild(valid);
+            }
+            const date = document.createElement('time');
+            date.textContent = row.date || '—';
+            meta.appendChild(date);
+
+            body.append(head, meta);
+            for (const opinion of row.opinions) {
+                const quote = document.createElement('blockquote');
+                quote.className = 'flow-opinion';
+                if (opinion.type) {
+                    const label = document.createElement('b');
+                    label.textContent = opinion.type;
+                    quote.appendChild(label);
+                }
+                quote.appendChild(document.createTextNode(opinion.text));
+                if (opinion.date) {
+                    const when = document.createElement('small');
+                    when.textContent = opinion.date;
+                    quote.appendChild(when);
+                }
+                body.appendChild(quote);
+            }
+            item.append(step, body);
+            list.appendChild(item);
         }
-        copyContent(parsed.body, originalContainer);
-        if (!container.textContent.trim()) {
-            appendInfoMessage(container, '표시할 원결재경로가 없습니다.');
-        }
+        container.appendChild(list);
     }
 
-    async function showDocumentInfo() {
+    function renderReceiptInfo(container, node) {
+        // 구조가 문서마다 달라 말단 항목의 태그명과 값을 그대로 나열한다.
+        const leaves = Array.from(node.querySelectorAll('*'))
+            .filter(el => !el.children.length && el.textContent.trim());
+        if (!leaves.length) return false;
+        const dl = document.createElement('dl');
+        dl.className = 'receipt';
+        for (const leaf of leaves) {
+            const dt = document.createElement('dt');
+            dt.textContent = leaf.tagName;
+            const dd = document.createElement('dd');
+            dd.textContent = leaf.textContent.trim();
+            dl.append(dt, dd);
+        }
+        container.appendChild(dl);
+        return true;
+    }
+
+    function showDocumentInfo() {
         const existing = document.getElementById('umca-document-info');
         if (existing) {
             existing.focus();
@@ -333,112 +333,133 @@
         dialog.setAttribute('aria-labelledby', 'umca-document-info-title');
         const style = document.createElement('style');
         style.textContent = `
-            #umca-document-info { box-sizing:border-box; width:min(960px,94vw); max-height:85vh;
-                padding:24px; border:0; border-radius:12px; color:#243247; background:#fff;
+            #umca-document-info { box-sizing:border-box; width:min(820px,94vw); max-height:85vh;
+                padding:0; border:0; border-radius:12px; color:#243247; background:#fff;
                 box-shadow:0 12px 48px #0004; font:14px/1.6 sans-serif; overflow:auto; }
             #umca-document-info::backdrop { background:#0006; }
-            #umca-document-info header { display:flex; align-items:center; justify-content:space-between; gap:16px; }
-            #umca-document-info h2 { margin:0; font-size:21px; }
-            #umca-document-info h3 { margin:24px 0 10px; font-size:16px; }
+            #umca-document-info header { position:sticky; top:0; z-index:1; display:flex; align-items:center;
+                justify-content:space-between; gap:16px; padding:16px 24px; background:#fff; border-bottom:1px solid #e2e8f0; }
+            #umca-document-info h2 { margin:0; font-size:20px; }
+            #umca-document-info .actions { display:flex; gap:8px; }
             #umca-document-info button { padding:6px 14px; border:1px solid #cbd5e1;
                 border-radius:6px; background:#f8fafc; color:#243247; cursor:pointer; font:inherit; }
-            #umca-document-info .route-content { overflow-x:auto; }
-            #umca-document-info table { width:100%; border-collapse:collapse; font:inherit; margin:8px 0; }
-            #umca-document-info th, #umca-document-info td { padding:10px 12px; border:1px solid #dbe2ea;
-                text-align:left; vertical-align:top; min-width:55px; overflow-wrap:anywhere; }
-            #umca-document-info th { background:#edf3fa; font-weight:600; }
-            #umca-document-info tbody tr:nth-child(even) { background:#f8fafc; }
-            #umca-document-info .route-date { white-space:nowrap; }
-            #umca-document-info .route-status { display:inline-block; padding:2px 8px; border-radius:12px;
-                background:#edf1f5; color:#475569; white-space:nowrap; font-size:12px; }
-            #umca-document-info .route-status-done { background:#e5f5eb; color:#22663e; }
-            #umca-document-info .route-status-returned { background:#fff0e5; color:#9a4515; }
-            #umca-document-info details { margin-top:12px; padding:10px 12px; border:1px solid #dbe2ea; border-radius:6px; }
+            #umca-document-info button:hover { background:#edf3fa; }
+            #umca-document-info .body { padding:8px 24px 24px; }
+            #umca-document-info h3 { display:flex; align-items:center; gap:8px; margin:20px 0 10px; font-size:15px; }
+            #umca-document-info h3 small { font-weight:400; color:#64748b; }
+            #umca-document-info .flow { list-style:none; margin:0; padding:0; }
+            #umca-document-info .flow-item { position:relative; display:flex; gap:14px; padding:0 0 14px; }
+            #umca-document-info .flow-item:not(:last-child)::before { content:''; position:absolute; left:13px;
+                top:28px; bottom:0; width:2px; background:#dbe2ea; }
+            #umca-document-info .flow-step { flex:none; width:28px; height:28px; border-radius:50%; background:#94a3b8;
+                color:#fff; font-size:13px; font-weight:600; text-align:center; line-height:28px; z-index:1; }
+            #umca-document-info .flow-done .flow-step { background:#2e8b57; }
+            #umca-document-info .flow-now .flow-step { background:#1a6fd4; box-shadow:0 0 0 4px #1a6fd433; }
+            #umca-document-info .flow-cancel .flow-step { background:#d9792b; }
+            #umca-document-info .flow-body { flex:1; min-width:0; padding:8px 12px; border:1px solid #dbe2ea;
+                border-radius:8px; background:#fff; }
+            #umca-document-info .flow-now .flow-body { border-color:#1a6fd4; background:#f3f8ff; }
+            #umca-document-info .flow-revoked .flow-body { background:#f8fafc; }
+            #umca-document-info .flow-revoked .flow-head strong { text-decoration:line-through; color:#94a3b8; }
+            #umca-document-info .flow-head { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 8px; }
+            #umca-document-info .flow-type { padding:0 8px; border-radius:4px; background:#edf3fa; color:#3b5170; font-size:12px; }
+            #umca-document-info .flow-sub { color:#64748b; font-size:13px; }
+            #umca-document-info .flow-meta { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:4px;
+                color:#64748b; font-size:12px; }
+            #umca-document-info .flow-badge { padding:1px 9px; border-radius:12px; background:#edf1f5; color:#475569; font-size:12px; }
+            #umca-document-info .flow-badge-done { background:#e5f5eb; color:#22663e; }
+            #umca-document-info .flow-badge-now { background:#dbeafe; color:#1d4ed8; }
+            #umca-document-info .flow-badge-cancel { background:#fff0e5; color:#9a4515; }
+            #umca-document-info .flow-tag { padding:0 8px; border-radius:4px; background:#fef3c7; color:#92400e; font-size:12px; }
+            #umca-document-info .flow-opinion { margin:8px 0 0; padding:6px 10px; border-left:3px solid #94a3b8;
+                background:#f1f5f9; border-radius:0 6px 6px 0; white-space:pre-wrap; overflow-wrap:anywhere; }
+            #umca-document-info .flow-opinion b { margin-right:8px; color:#9a4515; }
+            #umca-document-info .flow-opinion small { display:block; margin-top:2px; color:#64748b; }
+            #umca-document-info details { margin-top:16px; padding:8px 12px; border:1px solid #dbe2ea; border-radius:6px; }
             #umca-document-info summary { cursor:pointer; color:#52657c; }
+            #umca-document-info .receipt { display:grid; grid-template-columns:max-content 1fr; gap:2px 14px; margin:8px 0 0; }
+            #umca-document-info .receipt dt { color:#64748b; font-size:12px; }
+            #umca-document-info .receipt dd { margin:0; overflow-wrap:anywhere; }
         `;
         dialog.appendChild(style);
+
         const header = document.createElement('header');
         const title = document.createElement('h2');
         title.id = 'umca-document-info-title';
         title.textContent = '문서정보';
+        const actions = document.createElement('div');
+        actions.className = 'actions';
+        const copy = document.createElement('button');
+        copy.type = 'button';
+        copy.textContent = '표 복사';
+        copy.title = '엑셀에 붙여넣을 수 있는 형식으로 복사';
         const close = document.createElement('button');
         close.type = 'button';
         close.textContent = '닫기';
         close.addEventListener('click', () => dialog.close());
-        header.append(title, close);
-        dialog.appendChild(header);
+        actions.append(copy, close);
+        header.append(title, actions);
+        const body = document.createElement('div');
+        body.className = 'body';
+        dialog.append(header, body);
 
-        function addSection(label) {
-            const heading = document.createElement('h3');
-            heading.textContent = label;
-            const content = document.createElement('div');
-            content.className = 'route-content';
-            content.setAttribute('aria-live', 'polite');
-            dialog.append(heading, content);
-            return content;
-        }
-        const route = addSection('결재경로');
-        const original = addSection('원결재경로');
-        const controller = new AbortController();
-        let timeout;
-        dialog.addEventListener('close', () => {
-            controller.abort();
-            clearTimeout(timeout);
-            dialog.remove();
-        }, { once: true });
+        dialog.addEventListener('close', () => dialog.remove(), { once: true });
         dialog.addEventListener('click', event => {
             if (event.target !== dialog) return;
             const rect = dialog.getBoundingClientRect();
             if (event.clientX < rect.left || event.clientX > rect.right ||
                 event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
         });
+
+        const feMain = win.feMain;
+        const orgRows = readFlow(feMain?.orgHox);
+        const rows = readFlow(feMain?.hox);
+        const hasOrg = !!feMain?.orgHox;
+
+        function addSection(label, count) {
+            const heading = document.createElement('h3');
+            heading.textContent = label;
+            if (count !== undefined) {
+                const small = document.createElement('small');
+                small.textContent = `${count}명`;
+                heading.appendChild(small);
+            }
+            const content = document.createElement('div');
+            body.append(heading, content);
+            return content;
+        }
+
+        if (!feMain?.hox && !feMain?.orgHox) {
+            appendInfoMessage(addSection('결재경로'), '문서정보를 아직 불러오지 못했습니다. 문서 로딩 후 다시 열어 주세요.');
+        } else {
+            if (hasOrg) renderFlow(addSection('원결재경로', orgRows.length), orgRows);
+            renderFlow(addSection(hasOrg ? '수신부서 결재경로' : '결재경로', rows.length), rows);
+
+            const receipt = feMain.orgHox?.querySelector('docInfo > content > receiptInfo');
+            if (receipt) {
+                const details = document.createElement('details');
+                const summary = document.createElement('summary');
+                summary.textContent = '수신처 정보';
+                details.appendChild(summary);
+                if (renderReceiptInfo(details, receipt)) body.appendChild(details);
+            }
+        }
+
+        copy.addEventListener('click', () => {
+            const parts = [];
+            if (orgRows.length) parts.push(`[원결재경로]\n${flowToTsv(orgRows)}`);
+            if (rows.length) parts.push(`[${hasOrg ? '수신부서 결재경로' : '결재경로'}]\n${flowToTsv(rows)}`);
+            if (!parts.length) {
+                copy.textContent = '복사할 내용 없음';
+            } else {
+                GM_setClipboard(parts.join('\n\n'));
+                copy.textContent = '✅ 복사됨';
+            }
+            setTimeout(() => copy.textContent = '표 복사', 2000);
+        });
+
         document.body.appendChild(dialog);
         dialog.showModal();
-
-        try {
-            const hox = win.feMain?.hox;
-            if (!hox?.querySelectorAll) {
-                appendInfoMessage(route, '문서정보를 아직 불러오지 못했습니다. 문서 로딩 후 다시 열어 주세요.');
-                appendInfoMessage(original, '결재경로 정보가 준비되지 않았습니다.');
-                return;
-            }
-            renderApprovalRoute(route, hox);
-            const orgId = hox.querySelector('orgApprID')?.textContent.trim();
-            if (!orgId) {
-                appendInfoMessage(original, '원결재경로가 없습니다.');
-                return;
-            }
-
-            const info = win.rInfo;
-            if (!info?.apprId || !info.applID || !info.user?.ID) {
-                appendInfoMessage(original, '조회에 필요한 문서정보가 없습니다. 문서 로딩 후 다시 열어 주세요.');
-                return;
-            }
-            appendInfoMessage(original, '원결재경로를 불러오는 중입니다…');
-            const params = new URLSearchParams({
-                DOCID: info.apprId, APPRID: info.apprId,
-                ORGAPPRID: orgId, ORGDOCID: orgId,
-                APPLID: info.applID, USERID: info.user.ID, DEPTID: '000010000',
-                APPRTYPE: '3', APPLTYPE: '3', FORMTYPE: '5', WORDTYPE: '5', APPRSTATUS: '256',
-                GWTIMEZONE: '540', _: Date.now()
-            });
-            timeout = setTimeout(() => controller.abort(), 20000);
-            const response = await fetch(`/bms/com/hs/gwweb/appr/retrieveOrgReportCours.act?${params}`, {
-                credentials: 'same-origin', signal: controller.signal
-            });
-            if (!response.ok) throw new Error(`서버 응답 오류 (${response.status})`);
-            const html = await response.text();
-            original.replaceChildren();
-            renderOriginalRoute(original, html);
-        } catch (error) {
-            if (!dialog.open) return;
-            original.replaceChildren();
-            appendInfoMessage(original, error.name === 'AbortError'
-                ? '조회 시간이 초과되었습니다. 닫은 후 다시 시도해 주세요.'
-                : `원결재경로를 불러오지 못했습니다. ${error.message}`);
-        } finally {
-            clearTimeout(timeout);
-        }
     }
 
     function createBBSButton() {
@@ -708,7 +729,8 @@
                     if (!r.apprID) return;
                     draftDocs.set(r.apprID, {
                         ref: r.docRegNo && m ? `${r.docRegNo}(${m[1]}. ${+m[2]}. ${+m[3]}.)호` : '',
-                        draftSrc: String(r.draftSrc ?? '')
+                        draftSrc: String(r.draftSrc ?? ''),
+                        preview: String(r.previewData ?? '')
                     });
                 });
             } catch (e) { /* 다른 형식의 응답은 무시 */ }
@@ -740,6 +762,51 @@
                 GM_setClipboard(text);
                 btn.textContent = '✅';
                 setTimeout(() => btn.textContent = icon, 1500);
+            });
+            return btn;
+        }
+
+        // 목록 응답의 previewData(본문 앞부분)를 말풍선으로 보여준다. 서식 문서 등은 값이 비어 있어 버튼을 붙이지 않는다.
+        let openFor = null;
+        function closePreview() {
+            document.getElementById('umca-preview-pop')?.remove();
+        }
+        document.addEventListener('click', closePreview);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePreview(); });
+
+        function createPreviewButton(title, previewHtml) {
+            const text = new DOMParser()
+                .parseFromString(previewHtml.replace(/<br\s*\/?>/gi, '\n'), 'text/html')
+                .body.textContent.replace(/[ \t]+\n/g, '\n').trim();
+            if (!text) return null;
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'umca-preview';
+            btn.textContent = '👁';
+            btn.title = '내용 미리보기';
+            btn.style.cssText = 'margin-left:4px;padding:0 4px;border:1px solid #6a1b9a;border-radius:4px;background:#fff;cursor:pointer;font-size:12px;';
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                e.preventDefault();
+                const wasOpen = openFor === btn && !!document.getElementById('umca-preview-pop');
+                closePreview();
+                if (wasOpen) return;
+                openFor = btn;
+
+                const pop = document.createElement('div');
+                pop.id = 'umca-preview-pop';
+                pop.style.cssText = 'position:fixed;z-index:99999;box-sizing:border-box;max-width:480px;max-height:60vh;overflow:auto;padding:12px 14px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#243247;box-shadow:0 6px 24px #0003;font:13px/1.6 sans-serif;white-space:pre-wrap;';
+                pop.addEventListener('click', ev => ev.stopPropagation());
+                const heading = document.createElement('strong');
+                heading.textContent = title;
+                pop.append(heading, document.createTextNode(`\n\n${text}`));
+                document.body.appendChild(pop);
+
+                const rect = btn.getBoundingClientRect();
+                pop.style.left = `${Math.max(8, Math.min(rect.left, window.innerWidth - pop.offsetWidth - 8))}px`;
+                const below = rect.bottom + 6;
+                pop.style.top = `${below + pop.offsetHeight > window.innerHeight ? Math.max(8, rect.top - pop.offsetHeight - 6) : below}px`;
             });
             return btn;
         }
@@ -797,6 +864,8 @@
                     container.appendChild(createCopyButton(info.ref));
                 }
                 container.appendChild(createLinkButton(apprId));
+                const previewBtn = createPreviewButton(subject.title || subject.textContent.trim(), info.preview);
+                if (previewBtn) container.appendChild(previewBtn);
             });
         }
 
