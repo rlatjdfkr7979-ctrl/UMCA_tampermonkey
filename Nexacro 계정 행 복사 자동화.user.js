@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Nexacro 계정 행 복사 자동화
 // @namespace    http://tampermonkey.net/
-// @version      1.81
+// @version      1.83
 // @description  ds_acct 행 복사 + 초과근무 기안 자동화
 // @match        http://10.10.1.20:8080/umca/*
 // @grant        none
@@ -468,7 +468,7 @@
         display: none;
     `;
     btnTrip.addEventListener('click', () => {
-        try { runTripReset(); } catch (e) { console.error(e); alert('오류: ' + e.message); }
+        runTripReset().catch(e => { console.error(e); alert('오류: ' + e.message); });
     });
 
     document.body.appendChild(btnTrip);
@@ -479,6 +479,10 @@
     // ── 출장복명서 초기화 대상 조회 (WIN10110107) ─────────
 
     const tripFiltered = new Set(); // 필터가 적용된 WIN ID
+    let tripBusy = false;
+    const TRIP_SEARCH_MIN_WAIT  = 800;
+    const TRIP_SEARCH_POLL_MS   = 500;
+    const TRIP_SEARCH_MAX_POLLS = 20;
 
     function getTripGrid(winId) {
         const nx = getNexacro();
@@ -504,7 +508,54 @@
         return null;
     }
 
-    function runTripReset() {
+    function findSearchButton(root) {
+        const stack = [root];
+        const seen = new Set();
+        while (stack.length) {
+            const f = stack.pop();
+            if (!f || seen.has(f)) continue;
+            seen.add(f);
+            for (const c of toArray(f.components)) {
+                if (!c) continue;
+                if (c._type_name === 'Button' &&
+                    (/^btn_(query|search|sel|inq|srch)/i.test(c.id ?? '') || String(c.text ?? '').trim() === '조회')) {
+                    return c;
+                }
+                if (c.form) stack.push(c.form);
+            }
+        }
+        return null;
+    }
+
+    // 부서 조회 조건을 비우고 조회 후 데이터셋이 안정될 때까지 대기
+    async function searchWithoutDept(winId, ds) {
+        const workForm = getNexacro().getApplication()
+            .mainframe.vframeset.hframeset
+            .bodyframe.workframe[winId]
+            .form.div_base.form.div_work.form;
+        const edt = workForm.div_head?.form?.edt_dept_cd;
+        if (!edt) return;
+
+        if (String(edt.value ?? '') !== '') edt.set_value('');
+
+        const winForm = getNexacro().getApplication()
+            .mainframe.vframeset.hframeset
+            .bodyframe.workframe[winId].form;
+        const btn = winForm.div_btnList?.form?.btn_query ?? findSearchButton(winForm);
+        if (!btn) throw new Error('조회 버튼을 찾을 수 없습니다.');
+        btn.click();
+
+        await wait(TRIP_SEARCH_MIN_WAIT);
+        let last = -1;
+        for (let i = 0; i < TRIP_SEARCH_MAX_POLLS; i++) {
+            const cnt = ds.getRowCount();
+            if (cnt === last) break;
+            last = cnt;
+            await wait(TRIP_SEARCH_POLL_MS);
+        }
+    }
+
+    async function runTripReset() {
         const winId = getActiveWinId();
         if (!WIN_TRIPS.includes(winId)) throw new Error('지원하지 않는 화면입니다.');
         const grid = getTripGrid(winId);
@@ -516,6 +567,15 @@
             tripFiltered.delete(winId);
             btnTrip.textContent = '초기화 대상';
             return;
+        }
+
+        if (tripBusy) return;
+        tripBusy = true;
+        try {
+            ds.filter('');
+            await searchWithoutDept(winId, ds);
+        } finally {
+            tripBusy = false;
         }
 
         const send = findGridColumn(grid, '결재 전송여부');

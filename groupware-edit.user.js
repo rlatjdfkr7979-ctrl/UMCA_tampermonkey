@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.1
+// @version      4.8
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -698,6 +698,61 @@
             return -1;
         }
 
+        // 기안/결재완료 목록(문서번호 열 없음): 목록 조회 응답(JSON)에서 apprID별 문서번호를 보관
+        const draftDocs = new Map();
+        function captureDraftList(text) {
+            try {
+                const rows = JSON.parse(text).paginationInfo.rows;
+                rows.forEach(r => {
+                    const m = String(r.approvalDate || '').match(/(\d{4})-(\d{2})-(\d{2})/);
+                    if (!r.apprID) return;
+                    draftDocs.set(r.apprID, {
+                        ref: r.docRegNo && m ? `${r.docRegNo}(${m[1]}. ${+m[2]}. ${+m[3]}.)호` : '',
+                        draftSrc: String(r.draftSrc ?? '')
+                    });
+                });
+            } catch (e) { /* 다른 형식의 응답은 무시 */ }
+        }
+        // 목록 화면마다 주소가 달라도 paginationInfo.rows 형식의 응답이면 모두 수집
+        const xhrProto = win.XMLHttpRequest.prototype;
+        const origOpen = xhrProto.open;
+        xhrProto.open = function () {
+            this.addEventListener('load', () => {
+                if (this.responseType && this.responseType !== 'text') return;
+                const text = this.responseText;
+                if (typeof text !== 'string' || !text.includes('"paginationInfo"')) return;
+                captureDraftList(text);
+                addButtons();
+            });
+            return origOpen.apply(this, arguments);
+        };
+
+        function createCopyButton(text, icon = '📋', className = 'umca-ref-copy') {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = className;
+            btn.textContent = icon;
+            btn.title = `${text} 복사`;
+            btn.style.cssText = 'margin-left:4px;padding:0 4px;border:1px solid #2e7d32;border-radius:4px;background:#fff;cursor:pointer;font-size:12px;';
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                e.preventDefault();
+                GM_setClipboard(text);
+                btn.textContent = '✅';
+                setTimeout(() => btn.textContent = icon, 1500);
+            });
+            return btn;
+        }
+
+        // 외부 접수문서(draftSrc 2)는 문서 화면의 getExternalReceiveShareURL과 같은 형식의 링크를 사용
+        function createLinkButton(apprId) {
+            const id = encodeURIComponent(apprId);
+            const url = draftDocs.get(apprId)?.draftSrc === '2'
+                ? `${BASE}/bms/fe/retrieveDoccrdInqire.act?APPRIDLIST=${id}&APPRIDXID=${id}&DRAFTSRCLIST=2`
+                : `${BASE}/jsp/call/docu_view.jsp?docid=${id}`;
+            return createCopyButton(url, '🔗', 'umca-link-copy');
+        }
+
         function addButtons() {
             document.querySelectorAll('table').forEach(table => {
                 const docIdx = headerIndex(table, '문서번호');
@@ -705,7 +760,6 @@
                 if (docIdx < 0 || dateIdx < 0) return;
 
                 table.querySelectorAll('tbody tr').forEach(tr => {
-                    if (tr.querySelector('.umca-ref-copy')) return;
                     const docCell = tr.children[docIdx];
                     const dateCell = tr.children[dateIdx];
                     if (!docCell || !dateCell) return;
@@ -715,23 +769,34 @@
                     if (!docNo || !m) return;
                     const text = `${docNo}(${m[1]}. ${+m[2]}. ${+m[3]}.)호`;
 
-                    const btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = 'umca-ref-copy';
-                    btn.textContent = '📋';
-                    btn.title = `${text} 복사`;
-                    btn.style.cssText = 'margin-left:4px;padding:0 4px;border:1px solid #2e7d32;border-radius:4px;background:#fff;cursor:pointer;font-size:12px;';
-                    btn.addEventListener('click', e => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        GM_setClipboard(text);
-                        btn.textContent = '✅';
-                        setTimeout(() => btn.textContent = '📋', 1500);
-                    });
-
-                    const titleDiv = tr.querySelector('td .title');
-                    (titleDiv || docCell).appendChild(btn);
+                    if (!tr.querySelector('.umca-ref-copy')) {
+                        (tr.querySelector('td .title') || docCell).appendChild(createCopyButton(text));
+                    }
                 });
+            });
+
+            // 표 종류와 상관없이 제목 링크(a.subject)마다 링크 버튼을 붙인다.
+            // 문서 ID는 제목 링크, 없으면 같은 행의 체크박스 id(chkBms_<apprID>)나 문서정보 링크 onclick에서 얻고,
+            // 문서 종류는 목록 응답에서 얻는다.
+            if (!draftDocs.size) return;
+            document.querySelectorAll('a.subject').forEach(subject => {
+                const row = subject.closest('tr');
+                const apprId = (subject.id.match(/^titleBms_(\w+)/) ||
+                    (subject.getAttribute('onclick') || '').match(/'(JHOMS\w+)'/) ||
+                    (row?.querySelector('input.chkBms')?.id || '').match(/^chkBms_(\w+)/) ||
+                    (row?.querySelector('a.ico_preview')?.getAttribute('onclick') || '').match(/'(JHOMS\w+)'/) || [])[1];
+                const info = apprId && draftDocs.get(apprId);
+                const container = subject.closest('.title') || subject.parentElement;
+                if (!info || !container || container.querySelector('.umca-link-copy')) return;
+
+                // 문서번호 열이 있는 표는 위에서 처리하므로, 없는 표에서만 응답의 문서번호를 사용
+                const tr = subject.closest('tr');
+                const table = tr && tr.closest('table');
+                const hasRefColumns = table && headerIndex(table, '문서번호') >= 0 && headerIndex(table, '등록일') >= 0;
+                if (info.ref && !hasRefColumns && !container.querySelector('.umca-ref-copy')) {
+                    container.appendChild(createCopyButton(info.ref));
+                }
+                container.appendChild(createLinkButton(apprId));
             });
         }
 

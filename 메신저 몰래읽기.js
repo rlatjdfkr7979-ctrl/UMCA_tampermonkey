@@ -68,9 +68,50 @@
     btn.textContent = `안읽음 유지 ${state.on?'ON':'OFF'}` + (state.blocked?` · ${state.blocked}`:'');
   }
   btn.onclick = () => { state.on = !state.on; render(); };
-  document.addEventListener('keydown', e => { if (e.altKey && e.key.toLowerCase()==='u') { state.on = !state.on; render(); } });
+  // 좌측 채널 목록의 "나와의 대화방" 열기
+  function openMyChat() {
+    const item = [...document.querySelectorAll('.js-gnb-list-item')]
+      .find(el => el.textContent.trim() === '나와의 대화방');
+    if (!item) return console.log('나와의 대화방 항목을 찾을 수 없음');
+    // 가장 안쪽 텍스트 요소에 실제 클릭과 같은 이벤트 순서로 전달
+    let target = item;
+    while (target.firstElementChild && target.textContent.trim() === target.firstElementChild.textContent.trim()) {
+      target = target.firstElementChild;
+    }
+    const r = target.getBoundingClientRect();
+    const opt = { bubbles:true, cancelable:true, view:W, button:0, clientX:r.left + r.width/2, clientY:r.top + r.height/2 };
+    for (const type of ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click']) {
+      const Ev = type.startsWith('pointer') ? PointerEvent : MouseEvent;
+      target.dispatchEvent(new Ev(type, opt));
+    }
+  }
+  const onKey = e => {
+    if (e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey && e.key.toLowerCase()==='e') {
+      e.preventDefault(); e.stopPropagation();
+      state.on = !state.on; render();
+      openMyChat();
+    }
+  };
+  // 포커스가 iframe 안에 있어도 동작하도록 window와 동일 출처 iframe 모두에 등록
+  const hooked = new WeakSet();
+  const hookKeys = win => {
+    let doc; try { doc = win.document; } catch (e) { return; }
+    if (hooked.has(doc)) return; // iframe이 다시 로드되면 document가 바뀌므로 재등록됨
+    hooked.add(doc);
+    win.addEventListener('keydown', onKey, true);
+  };
+  const hookFrames = () => {
+    hookKeys(W);
+    document.querySelectorAll('iframe').forEach(f => {
+      try { if (f.contentWindow && f.contentDocument) hookKeys(f.contentWindow); } catch (e) {}
+    });
+  };
+  hookFrames();
+  new MutationObserver(hookFrames).observe(document.documentElement, { childList:true, subtree:true });
+  setInterval(hookFrames, 2000); // iframe이 새로 로드되며 리스너가 사라지는 경우 대비
+  W.addEventListener('focus', hookFrames);
   render();
 
   W.__keepUnread = { state, on:()=>{state.on=true;render();}, off:()=>{state.on=false;render();}, flush };
-  console.log('안읽음 유지 ON. 해제: __keepUnread.off(), 일괄 읽음 처리: __keepUnread.flush()');
+  console.log('안읽음 유지 ON. 토글: Ctrl+E, 해제: __keepUnread.off(),일괄 읽음 처리: __keepUnread.flush()');
 })();
