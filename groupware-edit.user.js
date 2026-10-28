@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.19
+// @version      4.20
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -943,7 +943,8 @@
             });
         }
 
-        // 제목 열 너비를 가장 긴 제목(+버튼)이 잘리지 않도록 넓힌다. 줄이지는 않고, 최대 TITLE_MAX_WIDTH까지만 넓힌다.
+        // 제목 열 너비를 가장 긴 제목(+버튼)에 딱 맞춘다. TITLE_MIN_WIDTH~TITLE_MAX_WIDTH 범위 안에서 늘거나 줄어든다.
+        const TITLE_MIN_WIDTH = 200;
         const TITLE_MAX_WIDTH = 1100;
         function widenTitleColumns() {
             let changed = false;
@@ -968,10 +969,12 @@
                     });
                     needed = Math.max(needed, w);
                 });
-                needed = Math.min(Math.ceil(needed), TITLE_MAX_WIDTH);
+                if (!needed) return;
+                needed = Math.max(TITLE_MIN_WIDTH, Math.min(Math.ceil(needed), TITLE_MAX_WIDTH));
 
+                // 페이지를 넘겨 제목이 짧아지면 다시 줄어들도록 늘리기/줄이기 모두 맞춘다.
                 const current = th.getBoundingClientRect().width;
-                if (!needed || needed <= current + 1) return;
+                if (Math.abs(needed - current) <= 1) return;
                 const delta = needed - current;
                 col.style.width = th.style.width = `${needed}px`;
                 const tableWidth = table.getBoundingClientRect().width + delta;
