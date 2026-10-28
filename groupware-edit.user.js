@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.20
+// @version      4.22
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -652,6 +652,110 @@
         attachBar.appendChild(btn);
     }
 
+    // 첨부 행마다 위/아래 이동 버튼을 붙인다. 이동은 페이지 자체의 순서 버튼(#upBtn/#downBtn)을 그대로 쓰되,
+    // 그 버튼이 "체크된 첨부"를 옮기므로 이 행만 체크한 상태로 클릭한 뒤 체크 상태를 복원한다.
+    // 페이지 쪽에서 hox 순서 반영과 다운로드 방지 처리가 함께 수행된다.
+    function moveAttachRow(shadow, li, dir) {
+        const items = Array.from(shadow.querySelectorAll('fe-attach')).map(fe => ({
+            fe,
+            cb: fe.shadowRoot?.querySelector('input[type="checkbox"]')
+        }));
+        const target = li.querySelector('fe-attach');
+        const moveBtn = shadow.querySelector(dir === 'up' ? '#upBtn' : '#downBtn');
+        if (!moveBtn || items.some(item => !item.cb)) {
+            alert('첨부파일 체크박스 또는 순서 버튼을 찾을 수 없습니다.');
+            return;
+        }
+
+        // 이동 애니메이션(FLIP): 이동 전 위치를 기록해 두고, 이동 후 이전 위치에서 제자리로 미끄러지게 한다.
+        const rows = Array.from(shadow.querySelectorAll('.attach-list li'));
+        const before = new Map(rows.map(row => [row, row.getBoundingClientRect().top]));
+
+        const saved = items.map(item => item.cb.checked);
+        const setChecked = (item, checked) => {
+            if (item.cb.checked !== checked) item.cb.click();
+        };
+        items.forEach(item => setChecked(item, item.fe === target));
+        moveBtn.click();
+        items.forEach((item, i) => setChecked(item, saved[i]));
+
+        rows.forEach(row => {
+            const dy = before.get(row) - row.getBoundingClientRect().top;
+            if (!dy || !row.animate) return;
+            row.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }],
+                { duration: 280, easing: 'cubic-bezier(.2,.8,.2,1)' });
+        });
+        li.animate([{ backgroundColor: '#dbeafe' }, { backgroundColor: 'transparent' }],
+            { duration: 900, easing: 'ease-out' });
+    }
+
+    const MOVE_ICONS = {
+        up: '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 8 5.5l5 5"/></svg>',
+        down: '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5l5 5 5-5"/></svg>'
+    };
+    const MOVE_CSS = `
+        .umca-move { display:inline-flex; align-items:center; gap:2px; margin:0 6px 0 2px; vertical-align:middle; }
+        .umca-move button { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px;
+            padding:0; border:0; border-radius:50%; background:transparent; color:#94a3b8; cursor:pointer;
+            transition:background .15s, color .15s, transform .1s; }
+        .umca-move button:hover { background:#e0eaff; color:#1d4ed8; }
+        .umca-move button:active { transform:scale(.85); }
+    `;
+
+    // 위/아래 버튼은 각 첨부 행(fe-attach)의 shadow DOM 안, 체크박스 바로 옆에 둔다.
+    // fe-attach가 나중에 렌더링되거나 다시 그려질 수 있어 자체 shadow root도 감시한다.
+    const moveObserved = new WeakSet();
+    function placeMoveButtons(shadow, li, fe) {
+        const root = fe.shadowRoot;
+        if (!root) return false;
+        if (!moveObserved.has(root)) {
+            moveObserved.add(root);
+            new MutationObserver(() => placeMoveButtons(shadow, li, fe)).observe(root, { childList: true, subtree: true });
+        }
+        if (root.querySelector('.umca-move')) return true;
+        const cb = root.querySelector('input[type="checkbox"]');
+        if (!cb) return false;
+
+        if (!root.querySelector('style.umca-move-style')) {
+            const style = document.createElement('style');
+            style.className = 'umca-move-style';
+            style.textContent = MOVE_CSS;
+            root.appendChild(style);
+        }
+        const box = document.createElement('span');
+        box.className = 'umca-move';
+        [['up', '위로'], ['down', '아래로']].forEach(([dir, title]) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.title = title;
+            btn.innerHTML = MOVE_ICONS[dir];
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                e.preventDefault();
+                moveAttachRow(shadow, fe.closest('li') || li, dir);
+            });
+            box.appendChild(btn);
+        });
+        (cb.closest('.form, label') || cb).after(box);
+        return true;
+    }
+
+    function addRowMoveButtons(shadow) {
+        shadow.querySelectorAll('.attach-list li').forEach(li => {
+            const fe = li.querySelector('fe-attach');
+            if (fe) placeMoveButtons(shadow, li, fe);
+        });
+    }
+
+    function initRowMoveButtons(shadow) {
+        let timer = null;
+        new MutationObserver(() => {
+            clearTimeout(timer);
+            timer = setTimeout(() => addRowMoveButtons(shadow), 100);
+        }).observe(shadow, { childList: true, subtree: true });
+        addRowMoveButtons(shadow);
+    }
+
     function initPrefixButton() {
         let attempts = 0;
 
@@ -661,6 +765,7 @@
             const attachShadow = document.querySelector('fe-attachbox')?.shadowRoot;
             if (attachShadow?.querySelector('.attach-bar.top')) {
                 insertPrefixButton();
+                initRowMoveButtons(attachShadow);
                 clearInterval(timer);
                 return;
             }
