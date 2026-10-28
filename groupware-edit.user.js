@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.15
+// @version      4.17
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -835,11 +835,16 @@
             return host;
         }
 
+        const ROW_CHECKBOX = 'input[name="docinfo"], input.chkBms';
+
         // 행별 PDF 다운로드: 해당 행만 체크한 상태로 페이지의 파일 저장 모듈을 호출한 뒤 체크 상태를 복원
         function downloadRowPdf(tr) {
-            const boxes = Array.from(document.querySelectorAll('tbody#tbody input[name="docinfo"]'));
-            const target = tr.querySelector('input[name="docinfo"]');
+            const target = tr.querySelector(ROW_CHECKBOX);
             if (!target) return;
+            const boxes = Array.from(document.querySelectorAll(ROW_CHECKBOX));
+            // 목록 영역 ID는 행의 제목/문서정보 링크 onclick('lstArea_xxx')에서 얻는다. 화면마다 다를 수 있음
+            const areaSrc = tr.querySelector('a.subject, a.ico_preview');
+            const areaId = ((areaSrc?.getAttribute('onclick') || '').match(/\(\s*'(\w+)'/) || [])[1] || 'lstArea_bms';
             if (typeof win.randomPassword !== 'function') {
                 win.randomPassword = function (len) {
                     len = len || 16;
@@ -855,7 +860,7 @@
             boxes.forEach(b => { b.checked = (b === target); });
             try {
                 win.apprCommon_bms.doCallFileManager(
-                    'lstArea_bms', win.HCLTAPP_FILESAVE,
+                    areaId, win.HCLTAPP_FILESAVE,
                     false, false, false, false, true, // PDF
                     'doc'
                 );
@@ -868,8 +873,8 @@
 
         function addPdfButtons() {
             if (!win.apprCommon_bms || typeof win.apprCommon_bms.doCallFileManager !== 'function') return;
-            document.querySelectorAll('tbody#tbody tr').forEach(tr => {
-                if (tr.querySelector('.umca-pdf-download') || !tr.querySelector('input[name="docinfo"]')) return;
+            document.querySelectorAll('tbody tr').forEach(tr => {
+                if (tr.querySelector('.umca-pdf-download') || !tr.querySelector(ROW_CHECKBOX)) return;
                 const container = tr.querySelector('td .title');
                 if (!container) return;
                 const btn = document.createElement('button');
@@ -877,7 +882,7 @@
                 btn.className = 'umca-pdf-download';
                 btn.textContent = 'PDF';
                 btn.title = 'PDF 다운로드';
-                btn.style.cssText = 'margin-left:4px;padding:0 5px;border:1px solid #c62828;border-radius:3px;background:#c62828;color:#fff;cursor:pointer;font:bold 10px/16px Arial,sans-serif;letter-spacing:.3px;';
+                btn.style.cssText = 'margin-left:4px;padding:0 5px;border:1px solid #90a4ae;border-radius:3px;background:#eceff1;color:#455a64;cursor:pointer;font:bold 10px/16px Arial,sans-serif;letter-spacing:.3px;';
                 btn.addEventListener('click', e => {
                     e.stopPropagation();
                     e.preventDefault();
