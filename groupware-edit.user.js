@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.17
+// @version      4.18
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -943,13 +943,49 @@
             });
         }
 
+        // 제목 열 너비를 가장 긴 제목(+버튼)이 잘리지 않도록 넓힌다. 줄이지는 않고, 최대 TITLE_MAX_WIDTH까지만 넓힌다.
+        const TITLE_MAX_WIDTH = 1100;
+        function widenTitleColumns() {
+            let changed = false;
+            document.querySelectorAll('table').forEach(table => {
+                const idx = headerIndex(table, '제목');
+                if (idx < 0) return;
+                const th = table.querySelectorAll('thead th')[idx];
+                const col = table.querySelectorAll('colgroup col')[idx];
+                if (!th || !col) return;
+
+                let needed = 0;
+                table.querySelectorAll('tbody tr').forEach(tr => {
+                    const box = tr.children[idx]?.querySelector('.title');
+                    if (!box) return;
+                    let w = 24;
+                    Array.from(box.children).forEach(el => {
+                        w += el.classList.contains('subject') ? el.scrollWidth : el.offsetWidth + 4;
+                    });
+                    needed = Math.max(needed, w);
+                });
+                needed = Math.min(Math.ceil(needed), TITLE_MAX_WIDTH);
+
+                const current = th.getBoundingClientRect().width;
+                if (!needed || needed <= current + 1) return;
+                const delta = needed - current;
+                col.style.width = th.style.width = `${needed}px`;
+                const tableWidth = table.getBoundingClientRect().width + delta;
+                table.style.width = table.style.minWidth = `${tableWidth}px`;
+                changed = true;
+            });
+            // 열 크기 조절 핸들(JColResizer) 위치를 다시 맞추도록 리사이즈 이벤트를 알린다.
+            if (changed) win.dispatchEvent(new Event('resize'));
+        }
+
         let timer = null;
         const observer = new MutationObserver(() => {
             clearTimeout(timer);
-            timer = setTimeout(addButtons, 200);
+            timer = setTimeout(() => { addButtons(); widenTitleColumns(); }, 200);
         });
         observer.observe(document.body, { childList: true, subtree: true });
         addButtons();
+        widenTitleColumns();
     }
 
     function main() {
