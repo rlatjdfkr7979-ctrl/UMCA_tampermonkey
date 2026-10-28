@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.18
+// @version      4.19
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -958,9 +958,13 @@
                 table.querySelectorAll('tbody tr').forEach(tr => {
                     const box = tr.children[idx]?.querySelector('.title');
                     if (!box) return;
-                    let w = 24;
+                    // 셀 안쪽 여백 = 셀 너비 - 내용 상자 너비, 자식은 마진까지 포함해서 정확히 합산
+                    const cell = tr.children[idx];
+                    let w = cell.getBoundingClientRect().width - box.getBoundingClientRect().width + 2;
                     Array.from(box.children).forEach(el => {
-                        w += el.classList.contains('subject') ? el.scrollWidth : el.offsetWidth + 4;
+                        const cs = getComputedStyle(el);
+                        const width = el.classList.contains('subject') ? el.scrollWidth : el.getBoundingClientRect().width;
+                        w += width + (parseFloat(cs.marginLeft) || 0) + (parseFloat(cs.marginRight) || 0);
                     });
                     needed = Math.max(needed, w);
                 });
