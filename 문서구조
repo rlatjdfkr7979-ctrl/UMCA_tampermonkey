@@ -1,0 +1,366 @@
+<main class="" style="grid-template-rows: 48px minmax(60px, auto) 1fr 4px 200px;">
+  <header class="doc_title">
+    <div class="section left">
+      <span class="form flag">
+        <input type="checkbox" id="flag-doc">
+        <label class="blind">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 14.5012V1.50123C1 1.36862 1.05268 1.24144 1.14645 1.14767C1.24021 1.05391 1.36739 1.00123 1.5 1.00123C1.63261 1.00123 1.75979 1.05391 1.85355 1.14767C1.94732 1.24144 2 1.36862 2 1.50123V1.63823C3.772 0.229229 5.573 1.42723 7.415 2.62423C9.55 4.01223 11.738 5.40123 14 2.73123V11.4832C11.738 14.1522 9.55 12.7642 7.416 11.3762C5.574 10.1762 3.773 8.97623 2.001 10.3892V14.5012C2.001 14.6338 1.94832 14.761 1.85455 14.8548C1.76079 14.9486 1.63361 15.0012 1.501 15.0012C1.36839 15.0012 1.24121 14.9486 1.14745 14.8548C1.05368 14.761 1.001 14.6338 1.001 14.5012H1Z" fill="current" class="icon_bg"></path>
+            <path d="M11.2198 12.0002C11.6221 12.0002 12.2292 11.9006 12.9996 11.1V4.82134C12.4331 5.10493 11.8386 5.24766 11.2198 5.24766C9.61553 5.24766 8.15689 4.29902 6.87005 3.4621L6.81426 3.42584C5.68684 2.69258 4.62195 2 3.72187 2C3.33203 2 2.98263 2.13345 2.62229 2.41997L2 2.91483V9.19328C2.54092 8.90038 3.11753 8.75247 3.72184 8.75247C5.21505 8.75247 6.58247 9.64179 7.90487 10.5018L7.9604 10.5379C9.06574 11.2568 10.2087 12.0002 11.2198 12.0002ZM1.4995 15.0006C1.22319 15.0006 1 14.7765 1 14.5011V1.50058C1 1.22426 1.22319 1.00108 1.4995 1.00108C1.77579 1.00108 1.9999 1.22426 1.9999 1.50058V1.63729C3.77171 0.228311 5.5731 1.426 7.41518 2.62376C9.5491 4.01158 11.7379 5.40026 13.9996 2.73087V11.4834C11.7379 14.1528 9.5491 12.7641 7.41518 11.3763C5.57311 10.1785 3.7717 8.98077 1.9999 10.3897V14.5011C1.9999 14.7765 1.77579 15.0006 1.4995 15.0006Z" fill="current" class="icon_stroke"></path>
+          </svg>
+          선택
+        </label>
+      </span>
+      <span class="badge small hide bg_ruby" id="flag-express">긴급</span>
+      <span class="badge small hide bg_rblue" id="flag-importantdoc">중요</span>
+      <span class="badge small hide bg_bgray" id="flag-password">암호</span>
+      <h1 class="title">출 장 신 청 서(관외)_AX 전문가 과정 수강</h1>
+    </div>
+    <div class="section right"><div class="btn_bundle"><btn-doc-prev role="button" class="btn_txt with_icon medium arrow_prev hide" id="btn-doc-prev" data-role="prev" disabled="" title="1 / 1">
+      <span class="icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 12L10 4L5.5 8L10 12Z" fill="currentColor"></path>
+        </svg>
+      </span>
+      <span class="txt">이전</span>
+    </btn-doc-prev><span class="line_divide"></span><btn-doc-next role="button" class="btn_txt with_icon medium arrow_next hide" id="btn-doc-next" data-role="next" disabled="" title="1 / 1">
+      <span class="txt">다음</span>
+      <span class="icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 12L6 4L10.5 8L6 12Z" fill="currentColor"></path>
+        </svg>
+      </span>
+    </btn-doc-next></div><fe-config><div class="fe-config">
+      <div class="btn_bundle">
+        <button type="button" class="btn_icon setup_view" id="btnConfig" title="화면설정">
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18.1816 0C19.1858 0 20 0.814207 20 1.81836V18.1816C20 19.1231 19.2841 19.8973 18.3672 19.9902L18.1816 20H1.81836L1.63281 19.9902C0.77686 19.9035 0.096545 19.2231 0.00976562 18.3672L0 18.1816V1.81836C0 0.814207 0.814207 2.92843e-08 1.81836 0H18.1816ZM1.81836 0.90918C1.31628 0.90918 0.90918 1.31629 0.90918 1.81836V18.1816C0.90918 18.6837 1.31629 19.0908 1.81836 19.0908H18.1816C18.6837 19.0908 19.0908 18.6837 19.0908 18.1816V1.81836C19.0908 1.31628 18.6837 0.90918 18.1816 0.90918H1.81836ZM6.49707 12.8604C6.67459 12.683 6.96219 12.6829 7.13965 12.8604C7.31705 13.0379 7.31696 13.3254 7.13965 13.5029L4.2793 16.3633H5.90918C6.16018 16.3633 6.36328 16.5673 6.36328 16.8184C6.36316 17.0693 6.1601 17.2724 5.90918 17.2725H3.18164C3.15166 17.2724 3.12131 17.2697 3.0918 17.2637C3.04553 17.2545 3.00291 17.2361 2.96289 17.2139C2.92664 17.1938 2.89112 17.1703 2.86035 17.1396C2.8293 17.1086 2.80534 17.0727 2.78516 17.0361C2.7631 16.9961 2.74454 16.9534 2.73535 16.9072C2.72958 16.878 2.72756 16.848 2.72754 16.8184V14.0908C2.72758 13.8399 2.93071 13.6368 3.18164 13.6367C3.43265 13.6367 3.63667 13.8399 3.63672 14.0908V15.7207L6.49707 12.8604ZM10.9092 8.18164C11.4112 8.18168 11.8183 8.58881 11.8184 9.09082V10.9092C11.8183 11.4112 11.4112 11.8183 10.9092 11.8184H9.09082C8.58881 11.8183 8.18168 11.4112 8.18164 10.9092V9.09082C8.18169 8.58881 8.58881 8.18169 9.09082 8.18164H10.9092ZM16.9072 2.73535C16.9534 2.74454 16.9961 2.7631 17.0361 2.78516C17.0727 2.80534 17.1086 2.8293 17.1396 2.86035C17.1703 2.89112 17.1938 2.92664 17.2139 2.96289C17.2361 3.00291 17.2545 3.04553 17.2637 3.0918C17.2697 3.12131 17.2724 3.15166 17.2725 3.18164V5.90918C17.2724 6.1601 17.0692 6.36315 16.8184 6.36328C16.5673 6.36328 16.3633 6.16018 16.3633 5.90918V4.2793L13.5029 7.13965C13.3254 7.31696 13.0379 7.31704 12.8604 7.13965C12.6829 6.96219 12.683 6.67459 12.8604 6.49707L15.7207 3.63672H14.0908C13.8399 3.63668 13.6367 3.43266 13.6367 3.18164C13.6368 2.9307 13.8399 2.72758 14.0908 2.72754H16.8184C16.848 2.72756 16.878 2.72958 16.9072 2.73535Z" fill="currentColor"></path>
+            </svg>
+          </span>
+        </button>
+        <div class="popup_layer">
+          <div class="header">
+            <div class="section left">
+              <strong class="title_txt">화면설정</strong>
+            </div>
+          </div>
+          <div class="body">
+            <div class="form_table">
+              <table>
+                <colgroup>
+                  <col style="width:128px;">
+                  <col style="width:auto;">
+                </colgroup>
+                <tbody>
+                  <tr>
+                    <th>화면 배율</th>
+                    <td>
+                      <div class="cell_data">
+                        <div class="flex_group gap_col_medium">
+                          <div class="input_group">
+                            <input type="number" class="basic_input" id="zoomSize" min="50" max="200" step="10" value="100">
+                          </div>
+                          <span class="txt">%</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>창 크기 및 위치</th>
+                    <td>
+                      <div class="cell_data">
+                        <span class="form"><input type="checkbox" id="popupSizeRemember"><label for="popupSizeRemember">기억하기</label></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>에디터 배율</th>
+                    <td>
+                      <div class="cell_data">
+                        <span class="form"><input type="checkbox" id="editorViewRemember"><label for="editorViewRemember">기억하기</label></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>첨부파일 : 조회</th>
+                    <td>
+                      <div class="cell_data">
+                        <span class="form"><input type="radio" name="attachOpen" id="attachOpen0" value="0"><label for="attachOpen0" title="항상 닫힘">닫힘</label></span>
+                        <span class="form"><input type="radio" name="attachOpen" id="attachOpen1" value="1"><label for="attachOpen1" title="항상 열림">열림</label></span>
+                        <span class="form"><input type="radio" name="attachOpen" id="attachOpen2" value="2"><label for="attachOpen2" title="첨부가 있을때만 열림">자동</label></span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div></fe-config></div>
+  </header>
+  <div class="menu-wrap">
+    <div class="section left"><pubshow-button role="button" class="btn" id="btn-pubshow" title="">공람</pubshow-button><attachment-button role="button" class="btn" id="btn-attachment" title="">붙임문서</attachment-button><copybody-button role="button" class="btn" id="btn-copy-body" title="">본문복사</copybody-button><send-mail-button role="button" class="btn" id="btn-send-mail" title="">메일쓰기</send-mail-button><send-bbs-button role="button" class="btn" id="btn-send-bbs" title="">게시하기</send-bbs-button><send-dcs-button role="button" class="btn" id="btn-send-dcs" title="">업무넷</send-dcs-button><send-square-button role="button" class="btn" id="btn-send-square" title="">스퀘어</send-square-button><save-pc-button role="button" class="btn" id="btn-save-pc" title="">PC저장</save-pc-button><print-button role="button" class="btn" id="btn-print" title="">인쇄</print-button></div>
+    <div class="section right"></div>
+  </div>
+  <article class="editor-wrap"><fe-webhwpeditor id="editor1" class="show"><template shadowrootmode="open"><iframe class="fe-webhwpeditor" src="/bms/fe/editor/webhwp/v2/hwpctrlframe.html?id=editor1&amp;v=10.3.0.19.h03.16th_20261026_154447" style="width: 100%; height: 100%; border-width: medium; border-style: none; border-color: currentcolor; border-image: none;"></iframe></template></fe-webhwpeditor></article>
+  <div class="divider"></div>
+  <article class="attach-wrap"><fe-attachbox><template shadowrootmode="open"><link rel="stylesheet" href="/bms/fe/main.css?v=10.3.0.19.h03.16th_20261026_154447"><div class="fe-attachbox dnd-paused">
+      <input type="file" multiple="multiple">
+      <div class="attach-box">
+        
+        <div class="attach-bar top">
+          <div class="bar-item btn_bundle updown_group" style="display: none;">
+            <button type="button" class="btn small only_icon up-down up" id="upBtn" title="순서위로">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00004 4.29291L8.35359 4.64646L14.3536 10.6465L13.6465 11.3536L8.00004 5.70712L2.35359 11.3536L1.64648 10.6465L7.64648 4.64646L8.00004 4.29291Z" fill="currentColor"></path>
+              </svg>
+            </button>
+            <button type="button" class="btn small only_icon up-down down" id="downBtn" title="순서아래로">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00004 11.7071L8.35359 11.3535L14.3536 5.35354L13.6465 4.64643L8.00004 10.2929L2.35359 4.64643L1.64648 5.35354L7.64648 11.3535L8.00004 11.7071Z" fill="currentColor"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="bar-item btn_bundle select_group" style="display: none;">
+            <button type="button" class="btn small bar-item" id="fileSelector">
+              내PC
+            </button>
+            <button type="button" class="btn small bar-item" id="cabinetSelector">
+              문서함
+            </button>
+            
+          </div>
+          <div class="bar-item section_right select_appr_doc">
+            <select class="small"><option value="1">1 안</option></select>
+          </div>
+          <div class="bar-item btn_bundle action_group">
+            <button type="button" class="btn_txt" id="allSelect">
+              <span class="txt">전체선택</span>
+            </button>
+            <span class="line_divide">구분선</span>
+            <button type="button" class="btn_txt" id="selectedDelete" style="display: none;">
+              <span class="txt">삭제</span>
+            </button>
+            <span class="line_divide" style="display: none;">구분선</span>
+            <button type="button" class="btn_txt" id="selectedSave">
+              <span class="txt">PC저장</span>
+            </button>
+            
+          </div>
+        </div>
+        <div class="attach-list">
+          <div class="content pulldown open" id="content_1" data-number="1">
+      <div class="pulldown_title">
+        <span class="btn_icon arrow">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.00006 4.93933L8.53039 5.46966L12.0304 8.96966L10.9697 10.0303L8.00006 7.06065L5.03039 10.0303L3.96973 8.96966L7.46973 5.46966L8.00006 4.93933Z" fill="currentColor"></path></svg>
+        </span>
+        <strong class="title_txt">1 안</strong>
+      </div>
+      <div class="pulldown_cont">
+        <ol><li><fe-attach id="JHOMS263160459905100"><template shadowrootmode="open"><link rel="stylesheet" href="/bms/fe/main.css?v=10.3.0.19.h03.16th_20261026_154447"><div class="fe-attach cabinet">
+      <span class="form">
+        <input type="checkbox" id="fileCheckbox">
+        <label class="file-checkbox blind" for="fileCheckbox"></label>
+      </span>
+      <span class="file-name">
+        <a href="#" ondragstart="return false" id="file-name" title="교통비 산출내역.png" data-contentnumber="1">교통비 산출내역.png</a>
+      </span>
+      <div class="file-name-input input_group width_full">
+        <input type="text" class="basic_input" value="">
+      </div>
+      <span class="file-uploading"></span>
+      <span class="file-size">124KB</span>
+      <div class="toggle_bundle">
+        <span class="toggle small radio-group selected">
+          <input type="radio" name="openFlag" id="openFlag_0" value="true" checked=""><label for="openFlag_0">공개</label>
+        </span>
+        <span class="toggle small radio-group disabled" style="display: none;">
+          <input type="radio" name="openFlag" id="openFlag_1" value="false" disabled=""><label for="openFlag_1">비공개</label>
+        </span>
+      </div>
+      <button class="file-viewer btn_icon sub hide" id="view-doc" title=""></button>
+      <button class="file-remove btn_icon em hide" title="삭제" aria-label="삭제">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.3206 13.9866L7.99332 8.65929L2.66602 13.9866L2 13.3206L7.3273 7.99329L2 2.666L2.66602 2L7.99332 7.32729L13.3206 2L13.9866 2.666L8.6593 7.99329L13.9866 13.3206L13.3206 13.9866Z" fill="#5A79EC"></path>
+        </svg>
+      </button>
+      <button class="file-modify btn_icon sub hide" title="제목수정" aria-label="제목수정">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.78504 15.007C1.57675 15.0068 1.37705 14.9238 1.22986 14.7764C1.08268 14.6291 1 14.4293 1.00001 14.221V11.08C0.999628 10.9747 1.02051 10.8703 1.06141 10.7733C1.1023 10.6762 1.1624 10.5883 1.23804 10.515L1.23096 10.508L4.06495 7.67297L7.60804 4.12903L7.82605 3.91101L10.443 1.29401C10.5359 1.20073 10.6464 1.12673 10.7679 1.07623C10.8895 1.02573 11.0198 0.999695 11.1515 0.999695C11.2831 0.999695 11.4135 1.02573 11.535 1.07623C11.6566 1.12673 11.7671 1.20073 11.86 1.29401L14.695 4.12903C14.7882 4.22194 14.8623 4.33234 14.9128 4.45392C14.9633 4.5755 14.9893 4.70587 14.9893 4.83752C14.9893 4.96918 14.9633 5.09949 14.9128 5.22107C14.8623 5.34265 14.7882 5.45311 14.695 5.54602L12.569 7.672L11.86 8.38098L6.27894 13.962L5.56995 14.671C5.49766 14.7749 5.40143 14.8597 5.28931 14.9184C5.17719 14.9771 5.05257 15.0078 4.92603 15.008L1.78504 15.007ZM2 13.4997C2.00027 13.708 2 13.9997 2 13.9997C2 13.9997 2.28671 13.9997 2.495 13.9997H4.77503L6.422 12.404L11.153 7.67297L8.318 4.83801L4.77405 8.38098L2 11.215V13.4997ZM11.861 6.96301L13.986 4.83801L11.152 2L9.02601 4.12598L11.861 6.96301Z" fill="#A6A6A6"></path>
+        </svg>
+      </button>
+      <button class="file-editor btn_icon sub hide" id="edit-attach" title="문서수정" aria-label="문서수정">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.63184 7.04297L9.98828 7.51953C10.2096 7.56426 10.4135 7.67338 10.5732 7.83301L14.6924 11.9492C15.1409 12.3975 15.1414 13.1245 14.6934 13.5732L13.5752 14.6924C13.1268 15.1409 12.3998 15.1417 11.9512 14.6934L7.83203 10.5771C7.67202 10.4172 7.56228 10.213 7.51758 9.99121L7.04297 7.63184C7.00992 7.46775 7.06137 7.29806 7.17969 7.17969C7.29809 7.06146 7.46781 7.0099 7.63184 7.04297ZM12 1C12.5523 1 13 1.44772 13 2V6H12V2H7V6C7 6.55228 6.55228 7 6 7H2V14H7V15H2C1.44772 15 1 14.5523 1 14V6.70703C1.00002 6.44184 1.10545 6.18752 1.29297 6L6 1.29297C6.18752 1.10545 6.44184 1.00002 6.70703 1H12ZM11.8936 13.2207L12.6582 13.9863C12.7161 14.0439 12.8102 14.0439 12.8682 13.9863L13.9863 12.8672C14.0442 12.8092 14.0433 12.7152 13.9854 12.6572L13.2217 11.8936L11.8936 13.2207ZM8.49805 9.79395C8.50383 9.82258 8.51841 9.84945 8.53906 9.87012L11.1865 12.5146L12.5146 11.1865L9.86621 8.54004C9.84556 8.51943 9.81864 8.50578 9.79004 8.5L8.17188 8.17188L8.49805 9.79395ZM2.70703 6H6V2.70703L2.70703 6Z" fill="#A6A6A6"></path>
+        </svg>
+      </button>
+      <div class="btn_bundle">
+        <button class="file-modify-confirm btn_txt em">
+          <span class="txt">저장</span>
+        </button>
+        <span class="line_divide">구분선</span>
+        <button class="file-modify-cancel btn_txt sub">
+          <span class="txt">취소</span>
+        </button>
+      </div>
+      <iframe class="sr-only"></iframe>
+    </div></template></fe-attach></li><li><fe-attach id="JHOMS263160459905101"><template shadowrootmode="open"><link rel="stylesheet" href="/bms/fe/main.css?v=10.3.0.19.h03.16th_20261026_154447"><div class="fe-attach cabinet">
+      <span class="form">
+        <input type="checkbox" id="fileCheckbox">
+        <label class="file-checkbox blind" for="fileCheckbox"></label>
+      </span>
+      <span class="file-name">
+        <a href="#" ondragstart="return false" id="file-name" title="부산대학교 「2026년도 제2기 공공기관 AX 전문가과정」 교육생 모집 안내.pdf" data-contentnumber="1">부산대학교 「2026년도 제2기 공공기관 AX 전문가과정」 교육생 모집 안내.pdf</a>
+      </span>
+      <div class="file-name-input input_group width_full">
+        <input type="text" class="basic_input" value="">
+      </div>
+      <span class="file-uploading"></span>
+      <span class="file-size">126KB</span>
+      <div class="toggle_bundle">
+        <span class="toggle small radio-group selected">
+          <input type="radio" name="openFlag" id="openFlag_0" value="true" checked=""><label for="openFlag_0">공개</label>
+        </span>
+        <span class="toggle small radio-group disabled" style="display: none;">
+          <input type="radio" name="openFlag" id="openFlag_1" value="false" disabled=""><label for="openFlag_1">비공개</label>
+        </span>
+      </div>
+      <button class="file-viewer btn_icon sub hide" id="view-doc" title=""></button>
+      <button class="file-remove btn_icon em hide" title="삭제" aria-label="삭제">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.3206 13.9866L7.99332 8.65929L2.66602 13.9866L2 13.3206L7.3273 7.99329L2 2.666L2.66602 2L7.99332 7.32729L13.3206 2L13.9866 2.666L8.6593 7.99329L13.9866 13.3206L13.3206 13.9866Z" fill="#5A79EC"></path>
+        </svg>
+      </button>
+      <button class="file-modify btn_icon sub hide" title="제목수정" aria-label="제목수정">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.78504 15.007C1.57675 15.0068 1.37705 14.9238 1.22986 14.7764C1.08268 14.6291 1 14.4293 1.00001 14.221V11.08C0.999628 10.9747 1.02051 10.8703 1.06141 10.7733C1.1023 10.6762 1.1624 10.5883 1.23804 10.515L1.23096 10.508L4.06495 7.67297L7.60804 4.12903L7.82605 3.91101L10.443 1.29401C10.5359 1.20073 10.6464 1.12673 10.7679 1.07623C10.8895 1.02573 11.0198 0.999695 11.1515 0.999695C11.2831 0.999695 11.4135 1.02573 11.535 1.07623C11.6566 1.12673 11.7671 1.20073 11.86 1.29401L14.695 4.12903C14.7882 4.22194 14.8623 4.33234 14.9128 4.45392C14.9633 4.5755 14.9893 4.70587 14.9893 4.83752C14.9893 4.96918 14.9633 5.09949 14.9128 5.22107C14.8623 5.34265 14.7882 5.45311 14.695 5.54602L12.569 7.672L11.86 8.38098L6.27894 13.962L5.56995 14.671C5.49766 14.7749 5.40143 14.8597 5.28931 14.9184C5.17719 14.9771 5.05257 15.0078 4.92603 15.008L1.78504 15.007ZM2 13.4997C2.00027 13.708 2 13.9997 2 13.9997C2 13.9997 2.28671 13.9997 2.495 13.9997H4.77503L6.422 12.404L11.153 7.67297L8.318 4.83801L4.77405 8.38098L2 11.215V13.4997ZM11.861 6.96301L13.986 4.83801L11.152 2L9.02601 4.12598L11.861 6.96301Z" fill="#A6A6A6"></path>
+        </svg>
+      </button>
+      <button class="file-editor btn_icon sub hide" id="edit-attach" title="문서수정" aria-label="문서수정">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.63184 7.04297L9.98828 7.51953C10.2096 7.56426 10.4135 7.67338 10.5732 7.83301L14.6924 11.9492C15.1409 12.3975 15.1414 13.1245 14.6934 13.5732L13.5752 14.6924C13.1268 15.1409 12.3998 15.1417 11.9512 14.6934L7.83203 10.5771C7.67202 10.4172 7.56228 10.213 7.51758 9.99121L7.04297 7.63184C7.00992 7.46775 7.06137 7.29806 7.17969 7.17969C7.29809 7.06146 7.46781 7.0099 7.63184 7.04297ZM12 1C12.5523 1 13 1.44772 13 2V6H12V2H7V6C7 6.55228 6.55228 7 6 7H2V14H7V15H2C1.44772 15 1 14.5523 1 14V6.70703C1.00002 6.44184 1.10545 6.18752 1.29297 6L6 1.29297C6.18752 1.10545 6.44184 1.00002 6.70703 1H12ZM11.8936 13.2207L12.6582 13.9863C12.7161 14.0439 12.8102 14.0439 12.8682 13.9863L13.9863 12.8672C14.0442 12.8092 14.0433 12.7152 13.9854 12.6572L13.2217 11.8936L11.8936 13.2207ZM8.49805 9.79395C8.50383 9.82258 8.51841 9.84945 8.53906 9.87012L11.1865 12.5146L12.5146 11.1865L9.86621 8.54004C9.84556 8.51943 9.81864 8.50578 9.79004 8.5L8.17188 8.17188L8.49805 9.79395ZM2.70703 6H6V2.70703L2.70703 6Z" fill="#A6A6A6"></path>
+        </svg>
+      </button>
+      <div class="btn_bundle">
+        <button class="file-modify-confirm btn_txt em">
+          <span class="txt">저장</span>
+        </button>
+        <span class="line_divide">구분선</span>
+        <button class="file-modify-cancel btn_txt sub">
+          <span class="txt">취소</span>
+        </button>
+      </div>
+      <iframe class="sr-only"></iframe>
+    </div></template></fe-attach></li></ol>
+      </div></div><div class="message_guide row dragndrop">
+            <div class="message_cont">
+              <span class="icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M2 1C1.44772 1 1 1.44772 1 2V8H2V2H14V14H8V15H14C14.5523 15 15 14.5523 15 14V2C15 1.44771 14.5523 1 14 1H2ZM2 10H5.29289L1.14645 14.1464L1.85355 14.8536L6 10.7071V14H7V9.5V9H6.5H2V10Z" fill="#A6A6A6"></path></svg>
+              </span>
+              <span class="txt">작성창으로 파일을 드래그하여 첨부할 수 있습니다.</span>
+            </div>
+          </div>
+          <div class="message_guide column dragover">
+            <div class="message_cont">
+              <span class="icon">
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="path-1-inside-1_6988_15226" fill="white"><path fill-rule="evenodd" clip-rule="evenodd" d="M46 24C46 15.1634 38.8366 8 30 8C21.1634 8 14 15.1634 14 24C14 24.0456 14.0002 24.0911 14.0006 24.1366C7.2157 25.0722 2 30.6988 2 37.5C2 44.3011 7.21541 49.9275 14 50.8633V51H16H44.5H45V50.9921C52.7766 50.7468 59 44.8 59 37.5C59 30.5157 53.3033 24.7701 45.9998 24.0713L46 24Z"></path></mask><path fill-rule="evenodd" clip-rule="evenodd" d="M46 24C46 15.1634 38.8366 8 30 8C21.1634 8 14 15.1634 14 24C14 24.0456 14.0002 24.0911 14.0006 24.1366C7.2157 25.0722 2 30.6988 2 37.5C2 44.3011 7.21541 49.9275 14 50.8633V51H16H44.5H45V50.9921C52.7766 50.7468 59 44.8 59 37.5C59 30.5157 53.3033 24.7701 45.9998 24.0713L46 24Z" fill="white"></path><path d="M46 24L48 24.0044V24H46ZM14.0006 24.1366L14.2738 26.1179L16.0152 25.8778L16.0005 24.1199L14.0006 24.1366ZM14 50.8633H16V49.1202L14.2733 48.882L14 50.8633ZM14 51H12V53H14V51ZM45 51V53H47V51H45ZM45 50.9921L44.9369 48.9931L43 49.0542V50.9921H45ZM45.9998 24.0713L43.9998 24.067L43.9959 25.8887L45.8094 26.0623L45.9998 24.0713ZM30 10C37.732 10 44 16.268 44 24H48C48 14.0589 39.9411 6 30 6V10ZM16 24C16 16.268 22.268 10 30 10V6C20.0589 6 12 14.0589 12 24H16ZM16.0005 24.1199C16.0002 24.08 16 24.04 16 24H12C12 24.0512 12.0002 24.1023 12.0006 24.1534L16.0005 24.1199ZM4 37.5C4 31.7662 8.40921 26.9265 14.2738 26.1179L13.7274 22.1554C6.02219 23.2178 0 29.6313 0 37.5H4ZM14.2733 48.882C8.40897 48.0732 4 43.2337 4 37.5H0C0 45.3685 6.02186 51.7818 13.7267 52.8445L14.2733 48.882ZM16 51V50.8633H12V51H16ZM16 49H14V53H16V49ZM44.5 49H16V53H44.5V49ZM45 49H44.5V53H45V49ZM43 50.9921V51H47V50.9921H43ZM57 37.5C57 43.5905 51.7684 48.7776 44.9369 48.9931L45.0631 52.9911C53.7848 52.716 61 46.0096 61 37.5H57ZM45.8094 26.0623C52.215 26.6751 57 31.6704 57 37.5H61C61 29.3609 54.3916 22.8651 46.1903 22.0804L45.8094 26.0623ZM44 23.9956L43.9998 24.067L47.9998 24.0757L48 24.0044L44 23.9956Z" fill="#5A79EC" mask="url(#path-1-inside-1_6988_15226)"></path><path d="M20 32H26V41H34V32H40L30 22L20 32Z" fill="#5A79EC"></path></svg>
+              </span>
+              <span class="txt">공통첨부에 바로 업로드 하려면 여기에 드롭하세요.</span>
+            </div>
+          </div>
+          <div class="message_guide column transfer">
+            <div class="message_cont">
+              <span class="icon">
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="path-1-inside-1_6988_15226" fill="white"><path fill-rule="evenodd" clip-rule="evenodd" d="M46 24C46 15.1634 38.8366 8 30 8C21.1634 8 14 15.1634 14 24C14 24.0456 14.0002 24.0911 14.0006 24.1366C7.2157 25.0722 2 30.6988 2 37.5C2 44.3011 7.21541 49.9275 14 50.8633V51H16H44.5H45V50.9921C52.7766 50.7468 59 44.8 59 37.5C59 30.5157 53.3033 24.7701 45.9998 24.0713L46 24Z"></path></mask><path fill-rule="evenodd" clip-rule="evenodd" d="M46 24C46 15.1634 38.8366 8 30 8C21.1634 8 14 15.1634 14 24C14 24.0456 14.0002 24.0911 14.0006 24.1366C7.2157 25.0722 2 30.6988 2 37.5C2 44.3011 7.21541 49.9275 14 50.8633V51H16H44.5H45V50.9921C52.7766 50.7468 59 44.8 59 37.5C59 30.5157 53.3033 24.7701 45.9998 24.0713L46 24Z" fill="white"></path><path d="M46 24L48 24.0044V24H46ZM14.0006 24.1366L14.2738 26.1179L16.0152 25.8778L16.0005 24.1199L14.0006 24.1366ZM14 50.8633H16V49.1202L14.2733 48.882L14 50.8633ZM14 51H12V53H14V51ZM45 51V53H47V51H45ZM45 50.9921L44.9369 48.9931L43 49.0542V50.9921H45ZM45.9998 24.0713L43.9998 24.067L43.9959 25.8887L45.8094 26.0623L45.9998 24.0713ZM30 10C37.732 10 44 16.268 44 24H48C48 14.0589 39.9411 6 30 6V10ZM16 24C16 16.268 22.268 10 30 10V6C20.0589 6 12 14.0589 12 24H16ZM16.0005 24.1199C16.0002 24.08 16 24.04 16 24H12C12 24.0512 12.0002 24.1023 12.0006 24.1534L16.0005 24.1199ZM4 37.5C4 31.7662 8.40921 26.9265 14.2738 26.1179L13.7274 22.1554C6.02219 23.2178 0 29.6313 0 37.5H4ZM14.2733 48.882C8.40897 48.0732 4 43.2337 4 37.5H0C0 45.3685 6.02186 51.7818 13.7267 52.8445L14.2733 48.882ZM16 51V50.8633H12V51H16ZM16 49H14V53H16V49ZM44.5 49H16V53H44.5V49ZM45 49H44.5V53H45V49ZM43 50.9921V51H47V50.9921H43ZM57 37.5C57 43.5905 51.7684 48.7776 44.9369 48.9931L45.0631 52.9911C53.7848 52.716 61 46.0096 61 37.5H57ZM45.8094 26.0623C52.215 26.6751 57 31.6704 57 37.5H61C61 29.3609 54.3916 22.8651 46.1903 22.0804L45.8094 26.0623ZM44 23.9956L43.9998 24.067L47.9998 24.0757L48 24.0044L44 23.9956Z" fill="#5A79EC" mask="url(#path-1-inside-1_6988_15226)"></path><path d="M20 32H26V41H34V32H40L30 22L20 32Z" fill="#5A79EC"></path></svg>
+              </span>
+              <span class="txt">파일 업로드 중입니다.</span>
+            </div>
+          </div>
+        </div>
+        <div class="real-dragndrop-zone"></div>
+        <div class="attach-bar bottom" id="attachFooter">
+          <div class="bar-item">
+            <span class="title">첨부파일</span>
+          </div>
+          <div class="bar-item info_group">
+            (<span class="file-count">2</span>/<span class="file-count-limit">20</span>) :
+          </div>
+          <div class="bar-item info_group">
+            <span class="file-length" data-totalsize="256149">250KB</span> / <span class="file-length-limit">1024.0MB</span>
+          </div>
+          <button type="button" class="bar-item section_right btn_icon arrow_fold" id="foldBtn" title="펼치기,접기">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00004 11.7071L8.35359 11.3535L14.3536 5.35354L13.6465 4.64643L8.00004 10.2929L2.35359 4.64643L1.64648 5.35354L7.64648 11.3535L8.00004 11.7071Z" fill="currentColor"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div></template></fe-attachbox></article>
+  <aside id="hie-container" class="connect_area svc_AI">
+    <iframe id="hie-frame" name="hie-frame" src="" frameborder="0" scrolling="no"></iframe>
+  </aside>
+<fe-content class="popup_layer_movable"><template shadowrootmode="open"><link rel="stylesheet" href="/bms/fe/main.css?v=10.3.0.19.h03.16th_20261026_154447"><div class="fe-content layer_movable_layout">
+      <div class="header">
+        <div class="section left">
+          <strong class="title_txt">안 바로가기<br></strong>
+        </div>
+        <div class="section right">
+          <button type="button" class="btn_icon arrow_fold" id="foldBtn" title="펼치기,접기">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00004 11.7071L8.35359 11.3535L14.3536 5.35354L13.6465 4.64643L8.00004 10.2929L2.35359 4.64643L1.64648 5.35354L7.64648 11.3535L8.00004 11.7071Z" fill="currentColor"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="body">
+        <div class="btns_area top">
+          <div class="section left">
+            <button type="button" class="btn" id="addBtn">안 추가</button>
+            <button type="button" class="btn" id="delBtn">안 삭제</button>
+            <button type="button" class="btn" id="moveBtn">안 이동</button>
+          </div>
+        </div>
+        <ol><li>
+      <span class="form hidden">
+        <input type="checkbox" name="contentChecker" value="1" disabled="">
+        <label class="blind">선택</label>
+      </span>
+      <span class="content-number">1 안</span>
+      <span class="content-enforcetype">[내부결재]</span>
+      <span class="content-title">출 장 신 청 서(관외)_AX 전문가 과정 수강</span>
+      </li></ol>
+        <div class="move-control btns_area bottom">
+          <div class="section left">
+            <div class="btn_bundle">
+              <button type="button" class="btn only_icon" id="topBtn" title="맨위로 순서이동">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14 3H1V4H14V3ZM14 11.3014L7.5 5L1 11.3014L1.73089 12L7.5 6.39726L13.2691 12L14 11.3014Z" fill="currentColor"></path>
+                </svg>
+              </button>
+              <button type="button" class="btn only_icon" id="upBtn" title="위로 순서이동">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 4L14 10.3014L13.2691 11L7.5 5.39726L1.73089 11L1 10.3014L7.5 4Z" fill="currentColor"></path>
+                </svg>
+              </button>
+              <button type="button" class="btn only_icon" id="downBtn" title="아래로 순서이동">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M1 4.69863L1.73089 4L7.5 9.60274L13.2691 4L14 4.69863L7.5 11L1 4.69863Z" fill="currentColor"></path>
+                </svg>
+              </button>
+              <button type="button" class="btn only_icon" id="bottomBtn" title="맨아래로 순서이동">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M1.73089 3L1 3.69863L7.5 10L14 3.69863L13.2691 3L7.5 8.60274L1.73089 3ZM14 12V11H1V12H14Z" fill="currentColor"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="section right">
+            <button type="button" class="btn btn-primary" id="moveConfirmBtn" disabled="">확인</button>
+            <button type="button" class="btn" id="moveCancelBtn">취소</button>
+          </div>
+        </div>
+      </div>
+      <div class="resizable"></div>
+    </div></template></fe-content></main>

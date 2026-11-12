@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.22
+// @version      4.23
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -544,7 +544,46 @@
         wrapper.appendChild(linkBtn);
         wrapper.appendChild(docBtn);
         wrapper.appendChild(bodyBtn);
+
+        // 메뉴 줄(공람/붙임문서/.../인쇄)의 기존 버튼 뒤에 같은 모양으로 이어 붙인다.
+        // 메뉴가 그려지기 전에는 화면에 보이지 않게 두었다가, 그려지는 즉시 넣는다.
+        function placeInMenu(slot) {
+            const colors = new Map([[infoBtn, '#37474f'], [linkBtn, '#1a6fd4'], [docBtn, '#2e7d32'], [bodyBtn, '#6a1b9a']]);
+            colors.forEach((color, btn) => {
+                btn.className = 'btn';
+                btn.style.cssText = `background:${color};color:#fff;border-color:${color};`;
+            });
+            const mine = [infoBtn, linkBtn, docBtn, bodyBtn];
+            // 페이지가 메뉴 버튼을 나중에 그려도 항상 맨 끝에 오도록 순서를 유지한다.
+            const keepLast = () => {
+                if (slot.lastElementChild !== bodyBtn || bodyBtn.previousElementSibling !== docBtn) {
+                    mine.forEach(btn => slot.appendChild(btn));
+                }
+            };
+            keepLast();
+            new MutationObserver(keepLast).observe(slot, { childList: true });
+            wrapper.remove();
+        }
+
+        const existingSlot = document.querySelector('.menu-wrap .section.left');
+        if (existingSlot) {
+            placeInMenu(existingSlot);
+            return;
+        }
+
+        wrapper.style.visibility = 'hidden';
         document.body.appendChild(wrapper);
+        const startedAt = Date.now();
+        const placeTimer = setInterval(() => {
+            const slot = document.querySelector('.menu-wrap .section.left');
+            if (slot) {
+                clearInterval(placeTimer);
+                placeInMenu(slot);
+            } else if (Date.now() - startedAt > 20000) {
+                clearInterval(placeTimer);
+                wrapper.style.visibility = '';
+            }
+        }, 50);
     }
 
     function initCopyButtons() {
@@ -1059,6 +1098,11 @@
                 const th = table.querySelectorAll('thead th')[idx];
                 const col = table.querySelectorAll('colgroup col')[idx];
                 if (!th || !col) return;
+                // 숨겨진 표(다른 탭 등)는 너비가 0으로 측정되어 열이 잘못 줄어들므로 건너뛴다.
+                if (!table.offsetParent || !table.getBoundingClientRect().width) return;
+                // 처음 측정한 원래 제목 열 너비를 기억해 그 아래로는 줄이지 않는다.
+                if (!table.dataset.umcaTitleBase) table.dataset.umcaTitleBase = String(Math.round(th.getBoundingClientRect().width));
+                const baseWidth = Number(table.dataset.umcaTitleBase) || 0;
 
                 let needed = 0;
                 table.querySelectorAll('tbody tr').forEach(tr => {
@@ -1075,7 +1119,7 @@
                     needed = Math.max(needed, w);
                 });
                 if (!needed) return;
-                needed = Math.max(TITLE_MIN_WIDTH, Math.min(Math.ceil(needed), TITLE_MAX_WIDTH));
+                needed = Math.max(TITLE_MIN_WIDTH, baseWidth, Math.min(Math.ceil(needed), TITLE_MAX_WIDTH));
 
                 // 페이지를 넘겨 제목이 짧아지면 다시 줄어들도록 늘리기/줄이기 모두 맞춘다.
                 const current = th.getBoundingClientRect().width;
