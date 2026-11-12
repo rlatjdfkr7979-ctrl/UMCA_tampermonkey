@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.23
+// @version      4.24
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -553,19 +553,14 @@
                 btn.className = 'btn';
                 btn.style.cssText = `background:${color};color:#fff;border-color:${color};`;
             });
-            const mine = [infoBtn, linkBtn, docBtn, bodyBtn];
-            // 페이지가 메뉴 버튼을 나중에 그려도 항상 맨 끝에 오도록 순서를 유지한다.
-            const keepLast = () => {
-                if (slot.lastElementChild !== bodyBtn || bodyBtn.previousElementSibling !== docBtn) {
-                    mine.forEach(btn => slot.appendChild(btn));
-                }
-            };
-            keepLast();
-            new MutationObserver(keepLast).observe(slot, { childList: true });
-            wrapper.remove();
+            // 기존 메뉴 줄 아래에 별도의 줄을 만들어 버튼을 둔다.
+            slot.style.flexWrap = 'wrap';
+            wrapper.style.cssText = 'display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:4px;padding-top:8px;box-sizing:border-box;flex:0 0 100%;grid-column:1 / -1;width:100%;';
+            [infoBtn, linkBtn, docBtn, bodyBtn].forEach(btn => wrapper.appendChild(btn));
+            slot.appendChild(wrapper);
         }
 
-        const existingSlot = document.querySelector('.menu-wrap .section.left');
+        const existingSlot = document.querySelector('.menu-wrap');
         if (existingSlot) {
             placeInMenu(existingSlot);
             return;
@@ -575,7 +570,7 @@
         document.body.appendChild(wrapper);
         const startedAt = Date.now();
         const placeTimer = setInterval(() => {
-            const slot = document.querySelector('.menu-wrap .section.left');
+            const slot = document.querySelector('.menu-wrap');
             if (slot) {
                 clearInterval(placeTimer);
                 placeInMenu(slot);
