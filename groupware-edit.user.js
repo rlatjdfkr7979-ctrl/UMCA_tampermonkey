@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         전자문서 링크 복사 + 붙임 번호 자동 부여
 // @namespace    http://tampermonkey.net/
-// @version      4.24
+// @version      4.25
 // @description  전자문서 링크/문서번호/본문 복사 + 결재경로 문서정보 + 접수 확인 바로가기 + 외부 수신문서 최소 링크 + 첨부파일 붙임 번호 자동 부여
 // @match        http://10.10.11.20/*
 // @grant        GM_setClipboard
@@ -684,6 +684,58 @@
 
         btn.addEventListener('click', runAutoPrefix);
         attachBar.appendChild(btn);
+
+        const dedupeBtn = document.createElement('button');
+        dedupeBtn.id = 'btn-dedupe-name';
+        dedupeBtn.textContent = '중복 파일명 제거';
+        dedupeBtn.style.cssText = btn.style.cssText;
+        dedupeBtn.addEventListener('click', runDedupeNames);
+        attachBar.appendChild(dedupeBtn);
+    }
+
+    // 파일명 끝의 (1), (2) 같은 중복 표시를 제거한다. 확장자는 유지한다.
+    async function runDedupeNames() {
+        const attachShadow = document.querySelector('fe-attachbox')?.shadowRoot;
+        if (!attachShadow) {
+            alert('첨부파일 영역을 찾을 수 없습니다.');
+            return;
+        }
+
+        const feAttaches = attachShadow.querySelectorAll('fe-attach');
+        if (feAttaches.length === 0) {
+            alert('첨부파일이 없습니다.');
+            return;
+        }
+
+        for (const fe of feAttaches) {
+            const s = fe.shadowRoot;
+            if (!s) continue;
+
+            const fullName = s.querySelector('a#file-name')?.textContent.trim();
+            if (!fullName) continue;
+
+            const dotIdx = fullName.lastIndexOf('.');
+            const baseName = dotIdx !== -1 ? fullName.substring(0, dotIdx) : fullName;
+            const newBase = baseName.replace(/\s*\(\d+\)$/, '');
+            if (newBase === baseName || !newBase) continue;
+
+            const modifyBtn = s.querySelector('button.file-modify');
+            const confirmBtn = s.querySelector('button.file-modify-confirm');
+            const input = s.querySelector('input.basic_input');
+            if (!modifyBtn || !confirmBtn || !input) continue;
+
+            modifyBtn.click();
+            await delay(300);
+
+            input.value = newBase;
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            await delay(300);
+
+            confirmBtn.click();
+            await delay(300);
+        }
+
+        console.log('[중복 파일명 제거] 완료');
     }
 
     // 첨부 행마다 위/아래 이동 버튼을 붙인다. 이동은 페이지 자체의 순서 버튼(#upBtn/#downBtn)을 그대로 쓰되,
